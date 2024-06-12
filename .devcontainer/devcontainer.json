@@ -1,0 +1,22 @@
+{
+    "name": "Pyiqtree Devcontainer",
+    "context": "..",
+    "dockerFile": "Dockerfile",
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "zsh"
+          }
+        },
+
+    },
+    "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-vscode.cpptools"
+    ],
+    "remoteUser": "user",
+        "python.defaultInterpreterPath": "/home/user/.conda/envs/c312/bin/python",
+      }
+}
