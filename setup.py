@@ -7,8 +7,8 @@ ext_modules = [
         "pyiqtree.libiqtree",
         ["pyiqtree/bindings.cpp"],
         include_dirs=["/path/to/includes"],  # Adjust this path
-        library_dirs=["/workspaces/pyiqtree2/pyiqtree"],  # Path to the directory containing libiqtree.so
-        libraries=["iqtree_wrapper"],  # This is the base name of libiqtree_wrapper.so on linus, libiqtree_wrapper.dylib on MacOS, iqtree_wrapper,dll on Windows
+        library_dirs=["/workspaces/pyiqtree2/pyiqtree/libiqtree"],  # Path to the directory containing libiqtree.so
+        libraries=["iqtree"],  # This is the base name of libiqtree.so on linus, libiqtree.dylib on MacOS, iqtree.dll on Windows
         extra_compile_args=["-std=c++11", "-fopenmp"],
     )
 ]
