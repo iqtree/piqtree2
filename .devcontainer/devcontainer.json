@@ -1,22 +1,30 @@
 {
-    "name": "Pyiqtree Devcontainer",
-    "context": "..",
-    "dockerFile": "Dockerfile",
-    "settings": {
-        "terminal.integrated.shell.linux": "/bin/zsh",
-        "terminal.integrated.profiles.linux": {
-          "zsh": {
-            "path": "zsh"
-          }
-        },
-
-    },
-    "extensions": [
-        "ms-python.python",
-        "ms-toolsai.jupyter",
-        "ms-vscode.cpptools"
-    ],
-    "remoteUser": "user",
-        "python.defaultInterpreterPath": "/home/user/.conda/envs/c312/bin/python",
+  "name": "Pyiqtree Devcontainer",
+  "context": "..",
+  "dockerFile": "Dockerfile",
+  "customizations": {
+      "vscode": {
+          "settings": {
+              "terminal.integrated.shell.linux": "/bin/zsh",
+              "terminal.integrated.profiles.linux": {
+                  "zsh": {
+                      "path": "zsh"
+                  }
+              },
+              "python.defaultInterpreterPath": "/home/user/.conda/envs/c312/bin/python"
+          },
+          "extensions": [
+              "ms-python.python",
+              "ms-toolsai.jupyter",
+              "ms-vscode.cpptools",
+              "ms-vscode.cpptools-extension-pack"
+          ]
       }
+  },
+  "remoteUser": "user",
+  "mounts": [
+      "source=${localEnv:HOME}/.ssh,target=/home/user/.ssh,type=bind,consistency=cached",
+      "source=${localEnv:USERPROFILE}/.ssh,target=/home/user/.ssh,type=bind,consistency=cached"
+  ],
+  "postCreateCommand": "sudo chown -R user:user /home/user/.ssh"
 }

@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     libeigen3-dev \  
     libboost-all-dev \  
+    binutils \  
     && rm -rf /var/lib/apt/lists/*
 
 # Set up a non-root user with sudo
@@ -24,8 +25,9 @@ RUN git clone --branch libiqtree https://github.com/iqtree/iqtree2.git /home/use
     git submodule init && \
     git submodule update && \
     mkdir build && cd build && \
-    cmake -DBUILD_LIB=ON .. && \
-    make -j
+    cmake -DBUILD_LIB=ON .. 
+
+RUN echo "Remember to build the IQTree2 binaries to change directory to /home/user/repos/iqtree2/build and run 'make -j'"
 
 # Install Oh My Zsh
 RUN sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" "" --unattended
