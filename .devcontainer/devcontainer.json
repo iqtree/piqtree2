@@ -17,7 +17,8 @@
               "ms-python.python",
               "ms-toolsai.jupyter",
               "ms-vscode.cpptools",
-              "ms-vscode.cpptools-extension-pack"
+              "ms-vscode.cpptools-extension-pack",
+              "ms-vscode.makefile-tools"
           ]
       }
   },
