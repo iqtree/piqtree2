@@ -1,12 +1,13 @@
-import ctypes
+import subprocess
 
-# Load the shared library
-wrap = ctypes.CDLL('./wrap.so')
+# Example function to call the PIE executable
+def call_wrap_function(*args):
+    result = subprocess.run(['./wrap'] + list(args), capture_output=True, text=True)
+    return result.stdout.strip()
 
-# Define the argument and return types for the function
-wrap.wrap_test_function.argtypes = [ctypes.c_char_p]
-wrap.wrap_test_function.restype = ctypes.c_int
+# Call the functions
+result1 = call_wrap_function('test_function', 'Hello, World!')
+print("Result1:", result1)
 
-# Call the function
-result = wrap.wrap_test_function(b"Hello, World!")
-print("Result:", result)
+result2 = call_wrap_function('non_pic_function', 'Hello, World!')
+print("Result2:", result2)

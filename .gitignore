@@ -163,3 +163,5 @@ cython_debug/
 
 # pyiqtree specific ignores
 /pyiqtree/libiqtree/linux/*.a
+/working/fPIC/*.a
+/working/fPIC/*.o 
