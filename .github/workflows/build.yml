@@ -43,11 +43,8 @@ jobs:
           cd ../..
           mv iqtree2/build/libiqtree2.a pyiqtree/libiqtree/
 
-      - name: Build PyIQTree
-        run: python setup.py build
-      
-      - name: Install PyIQTree
-        run: python setup.py install
+      - name: Build and Install PyIQTree
+        run: pip install ".[dev]"
 
       - name: Test 
         run: |
