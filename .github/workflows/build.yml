@@ -1,0 +1,52 @@
+name: Build
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+          submodules: "recursive"
+
+      # Setup env
+      - uses: "actions/setup-python@v5"
+        with:
+            python-version: "3.12"
+      
+      - name: Installs for Python 3.12
+        run: |
+          python --version
+          pip install --upgrade pip wheel setuptools pybind11
+      
+      - name: Setup Cpp
+        uses: aminya/setup-cpp@v1
+        with:
+          cmake: true
+
+      - name: Setup IQTree
+        run: |
+          cd iqtree2
+          mkdir build && cd build
+          cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
+          
+      - name: Build IQTree 
+        run: |
+          make -j
+          cd ../..
+          mv iqtree2/build/libiqtree2.a pyiqtree/libiqtree/
+
+      - name: Build PyIQTree
+        run: python setup.py build
+      
+      - name: Install PyIQTree
+        run: python setup.py install
+
+      - name: Test 
+        run: |
+          pytest tests/test_RF_distance.py
+          pytest tests/test_generate_random_tree_file.py
