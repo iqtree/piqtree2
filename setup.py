@@ -4,7 +4,7 @@ from setuptools import setup
 __version__ = "0.1"
 
 
-LIBRARY_DIR = "/workspaces/pyiqtree2/pyiqtree/libiqtree"
+LIBRARY_DIR = "pyiqtree/libiqtree"
 
 ext_modules = [
     Pybind11Extension(
