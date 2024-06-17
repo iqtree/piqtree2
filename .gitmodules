@@ -1,0 +1,4 @@
+[submodule "iqtree2"]
+	path = iqtree2
+	url = https://github.com/iqtree/iqtree2.git
+	branch = libiqtree
