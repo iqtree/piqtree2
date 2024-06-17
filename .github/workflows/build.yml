@@ -23,6 +23,10 @@ jobs:
           python --version
           pip install --upgrade pip wheel setuptools pybind11
       
+      - name: Setup Lib Dependencies
+        run: |
+          apt-get install -y libeigen3-dev libboost-all-dev
+      
       - name: Setup Cpp
         uses: aminya/setup-cpp@v1
         with:
@@ -31,6 +35,7 @@ jobs:
       - name: Setup IQTree
         run: |
           cd iqtree2
+          git apply ../fpic-iqtree.patch
           mkdir build && cd build
           cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
           
