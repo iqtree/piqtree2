@@ -1,41 +1,34 @@
-from setuptools import setup, Extension
 from pybind11.setup_helpers import Pybind11Extension, build_ext
-import os
+from setuptools import setup
+
+__version__ = "0.1"
+
+
+LIBRARY_DIR = "/workspaces/pyiqtree2/pyiqtree/libiqtree"
 
 ext_modules = [
     Pybind11Extension(
-        "pyiqtree.libiqtree",
-        ["pyiqtree/bindings.cpp"],
-        include_dirs=["/path/to/includes"],  # Adjust this path
-        library_dirs=["/workspaces/pyiqtree2/pyiqtree/libiqtree"],  # Path to the directory containing libiqtree.so
-        libraries=["iqtree"],  # This is the base name of libiqtree.so on linus, libiqtree.dylib on MacOS, iqtree.dll on Windows
-        extra_compile_args=["-std=c++11", "-fopenmp"],
-    )
+        "pyiqtree",
+        ["pyiqtree/wrapper.cpp"],
+        library_dirs=[LIBRARY_DIR],
+        libraries=["iqtree2"],
+        define_macros=[("VERSION_INFO", __version__)],
+    ),
 ]
 
 setup(
     name="pyiqtree",
-    version="0.1",
-    author="Richard Morris",
+    version=__version__,
+    author="Richard Morris, Robert McArthur",
     author_email="richard.morris@anu.edu.au",
+    url="https://github.com/cogent3/pyiqtree2/",
     description="Python bindings for IQTree",
     long_description=open('README.md').read(),
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     ext_modules=ext_modules,
     cmdclass={"build_ext": build_ext},
-    packages=["pyiqtree"],
-    entry_points={
-        "cogent3.apps": [
-            "RF_distance = pyiqtree:RF_distance",
-            "generate_random_tree_file = pyiqtree:generate_random_tree_file",
-            "phylogenetic_analysis = pyiqtree:phylogenetic_analysis"
-        ]
-    },
-    install_requires=[
-        "pybind11"
-    ],
-    extras_require={
-        "dev": ["pytest"]
-    },
+    install_requires=["pybind11"],
+    extras_require={"dev": ["pytest"]},
     zip_safe=False,
+    python_requires=">=3.9",
 )
