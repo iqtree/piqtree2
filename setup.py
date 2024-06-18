@@ -11,7 +11,7 @@ ext_modules = [
         "pyiqtree",
         ["pyiqtree/wrapper.cpp"],
         library_dirs=[LIBRARY_DIR],
-        libraries=["iqtree2"],
+        libraries=["iqtree2", "z"],
         define_macros=[("VERSION_INFO", __version__)],
     ),
 ]
