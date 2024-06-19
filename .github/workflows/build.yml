@@ -40,7 +40,7 @@ jobs:
         env: # Can specify per os - e.g. CIBW_BEFORE_ALL_LINUX, CIBW_BEFORE_ALL_MACOS, CIBW_BEFORE_ALL_WINDOWS 
           CIBW_BEFORE_ALL_LINUX: |
             ./build_tools/before_all_linux.sh
-          CIBW_SKIP: "*-manylinux_i686"
+          CIBW_SKIP: "*_i686"
 
       # - name: Test 
       #   run: |
