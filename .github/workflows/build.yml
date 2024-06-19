@@ -38,20 +38,19 @@ jobs:
         with:
           cmake: true
 
-      - name: Setup and Build IQTree
-        run: |
-          cd iqtree2
-          git apply ../fpic-iqtree.patch
-          mkdir build && cd build
-          cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
-          make -j
-          cd ../..
-          mv iqtree2/build/libiqtree2.a pyiqtree/libiqtree/
-
       # - name: Build and Install PyIQTree
       #   run: pip install ".[dev]"
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.19.1
+        env:
+          CIBW_BEFORE_ALL: |
+            cd iqtree2
+            git apply ../fpic-iqtree.patch
+            mkdir build && cd build
+            cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
+            make -j
+            cd ../..
+            mv iqtree2/build/libiqtree2.a pyiqtree/libiqtree/
 
       # - name: Test 
       #   run: |
