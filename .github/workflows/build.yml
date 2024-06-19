@@ -48,6 +48,7 @@ jobs:
             make -j
             cd ../..
             mv iqtree2/build/libiqtree2.a pyiqtree/libiqtree/
+          CIBW_SKIP: "*-manylinux_i686"
 
       # - name: Test 
       #   run: |
