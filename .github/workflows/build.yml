@@ -40,7 +40,7 @@ jobs:
         env: # Can specify per os - e.g. CIBW_BEFORE_ALL_LINUX, CIBW_BEFORE_ALL_MACOS, CIBW_BEFORE_ALL_WINDOWS 
           CIBW_BEFORE_ALL_LINUX: |
             yum update -y
-            yum install -y eigen3-devel libboost-all-dev
+            yum install -y eigen3-devel boost-devel
             cd iqtree2
             git apply ../fpic-iqtree.patch
             mkdir build && cd build
