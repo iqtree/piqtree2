@@ -18,32 +18,29 @@ jobs:
           fetch-depth: 0
           submodules: "recursive"
 
-      # Setup env
-      - uses: "actions/setup-python@v5"
-        with:
-            python-version: "3.12"
+      # # Setup env
+      # - uses: "actions/setup-python@v5"
+      #   with:
+      #       python-version: "3.12"
       
-      - name: Installs for Python 3.12
-        run: |
-          python --version
-          pip install --upgrade pip wheel setuptools pybind11
+      # - name: Installs for Python 3.12
+      #   run: |
+      #     python --version
+      #     pip install --upgrade pip wheel setuptools pybind11
       
-      - name: Setup Lib Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libeigen3-dev libboost-all-dev
-      
-      - name: Setup Cpp
-        uses: aminya/setup-cpp@v1
-        with:
-          cmake: true
+      # - name: Setup Cpp
+      #   uses: aminya/setup-cpp@v1
+      #   with:
+      #     cmake: true
 
       # - name: Build and Install PyIQTree
       #   run: pip install ".[dev]"
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.19.1
-        env:
-          CIBW_BEFORE_ALL: |
+        env: # Can specify per os - e.g. CIBW_BEFORE_ALL_LINUX, CIBW_BEFORE_ALL_MACOS, CIBW_BEFORE_ALL_WINDOWS 
+          CIBW_BEFORE_ALL_LINUX: |
+            sudo apt-get update
+            sudo apt-get install -y libeigen3-dev libboost-all-dev
             cd iqtree2
             git apply ../fpic-iqtree.patch
             mkdir build && cd build
