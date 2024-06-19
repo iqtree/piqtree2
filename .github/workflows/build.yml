@@ -39,15 +39,7 @@ jobs:
         uses: pypa/cibuildwheel@v2.19.1
         env: # Can specify per os - e.g. CIBW_BEFORE_ALL_LINUX, CIBW_BEFORE_ALL_MACOS, CIBW_BEFORE_ALL_WINDOWS 
           CIBW_BEFORE_ALL_LINUX: |
-            yum update -y
-            yum install -y eigen3-devel boost-devel
-            cd iqtree2
-            git apply ../fpic-iqtree.patch
-            mkdir build && cd build
-            cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
-            make -j
-            cd ../..
-            mv iqtree2/build/libiqtree2.a pyiqtree/libiqtree/
+            ./build_tools/before_all_linux.sh
           CIBW_SKIP: "*-manylinux_i686"
 
       # - name: Test 
