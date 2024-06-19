@@ -39,8 +39,8 @@ jobs:
         uses: pypa/cibuildwheel@v2.19.1
         env: # Can specify per os - e.g. CIBW_BEFORE_ALL_LINUX, CIBW_BEFORE_ALL_MACOS, CIBW_BEFORE_ALL_WINDOWS 
           CIBW_BEFORE_ALL_LINUX: |
-            apt-get update
-            apt-get install -y libeigen3-dev libboost-all-dev
+            yum update
+            yum install libeigen3-dev libboost-all-dev
             cd iqtree2
             git apply ../fpic-iqtree.patch
             mkdir build && cd build
