@@ -27,8 +27,7 @@ setup(
     long_description_content_type="text/markdown",
     ext_modules=ext_modules,
     cmdclass={"build_ext": build_ext},
-    install_requires=["pybind11"],
-    extras_require={"dev": ["pytest"]},
+    extras_require={"dev": ["pytest","pybind11"]},
     zip_safe=False,
     python_requires=">=3.9",
 )
