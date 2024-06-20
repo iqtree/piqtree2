@@ -20,8 +20,8 @@ int mine(){
     return 42;
 }
 
-PYBIND11_MODULE(pyiqtree, m) {
-    m.doc() = "PyIQTree - Unlock the Power of IQTree with Python!";
+PYBIND11_MODULE(piqtree2, m) {
+    m.doc() = "piqtree2 - Unlock the Power of IQ-TREE2 with Python!";
 
     m.def("calculate_RF_distance", &calculate_RF_distance, "Calculate RF distance between two trees");
     m.def("generate_random_tree_file", &generate_random_tree_file, "Generate a random tree to a file");

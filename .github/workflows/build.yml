@@ -33,7 +33,7 @@ jobs:
       #   with:
       #     cmake: true
 
-      # - name: Build and Install PyIQTree
+      # - name: Build and Install piqtree2
       #   run: pip install ".[dev]"
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.19.1

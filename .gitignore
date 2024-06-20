@@ -1,6 +1,6 @@
 
-# pyiqtree specific ignores
-/pyiqtree/libiqtree/**/*.a
+# piqtree2 specific ignores
+/piqtree2/libiqtree/**/*.a
 
 /working/fPIC/*.a
 /working/fPIC/*.o 

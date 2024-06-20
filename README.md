@@ -1,6 +1,6 @@
-# PyIQTree
+# piqtree2
 
-## Instructions to build and install the PyIQTree Python library
+## Instructions to build and install the piqtree2 Python library
 
 Assumes user is using the devcontainer in this directory.
 
@@ -29,7 +29,7 @@ make -j
 
 ```bash
 cd ../..
-mv iqtree2/build/libiqtree2.a pyiqtree/libiqtree/
+mv iqtree2/build/libiqtree2.a piqtree2/libiqtree/
 ```
 
 5. Build and Install PyIQTree
