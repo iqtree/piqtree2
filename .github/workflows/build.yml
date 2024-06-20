@@ -49,6 +49,13 @@ jobs:
         with:
           fetch-depth: 0
           submodules: "recursive"
+      
+      # Build non-native architectures under emulation
+      - name: Set up QEMU
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.19.1
