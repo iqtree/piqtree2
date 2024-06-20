@@ -4,7 +4,7 @@ on: [workflow_dispatch]
 
 jobs:
   build:
-    name: Build wheel for ${{ matrix.platform_id }}
+    name: Build Wheels for ${{matrix.platform_id}} on ${{matrix.os}}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -13,27 +13,10 @@ jobs:
         # manylinux
         - os: ubuntu-latest
           platform_id: manylinux_x86_64
-        - os: ubuntu-latest
-          platform_id: manylinux_i686
-        - os: ubuntu-latest
-          platform_id: manylinux_aarch64
-        - os: ubuntu-latest
-          platform_id: manylinux_ppc64le
-        - os: ubuntu-latest
-          platform_id: manylinux_s390x
         
         # musllinux
         - os: ubuntu-latest
           platform_id: musllinux_x86_64
-        - os: ubuntu-latest
-          platform_id: musllinux_i686
-        - os: ubuntu-latest
-          platform_id: musllinux_aarch64
-        - os: ubuntu-latest
-          platform_id: musllinux_ppc64le
-        - os: ubuntu-latest
-          platform_id: musllinux_s390x
-
 
         # MacOS x86_64
         - os: macos-13
@@ -49,20 +32,12 @@ jobs:
         with:
           fetch-depth: 0
           submodules: "recursive"
-      
-      # Build non-native architectures under emulation
-      - name: Set up QEMU
-        if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: all
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.19.1
         env: # Can specify per os - e.g. CIBW_BEFORE_ALL_LINUX, CIBW_BEFORE_ALL_MACOS, CIBW_BEFORE_ALL_WINDOWS 
           CIBW_BEFORE_ALL_LINUX: ./build_tools/before_all_linux.sh
           CIBW_BEFORE_ALL_MACOS: ./build_tools/before_all_mac.sh
-          CIBW_ARCHS: all
           CIBW_BUILD: "*${{matrix.platform_id}}"
           CIBW_TEST_REQUIRES: pytest
           CIBW_TEST_COMMAND: pytest {package}/tests
