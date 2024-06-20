@@ -1,3 +1,6 @@
+# vscode
+
+.vscode
 
 # piqtree2 specific ignores
 /piqtree2/libiqtree/**/*.a
