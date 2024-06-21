@@ -1,7 +1,7 @@
 {
   "name": "Pyiqtree Devcontainer",
   "context": "..",
-  "dockerFile": "Dockerfile",
+  "image": "ghcr.io/cogent3/piqtree2:latest",
   "customizations": {
       "vscode": {
           "settings": {
