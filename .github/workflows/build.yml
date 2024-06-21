@@ -10,14 +10,22 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        # manylinux
+        # manylinux (x86)
         - os: ubuntu-latest
           platform_id: manylinux_x86_64
         
-        # musllinux
+        # musllinux (x86)
         - os: ubuntu-latest
           platform_id: musllinux_x86_64
-
+        
+        # manylinux (ARM)
+        - os: ubuntu-latest 
+          platform_id: manylinux_aarch64
+        
+        # musllinux (ARM)
+        - os: ubuntu-latest
+          platform_id: musllinux_aarch64
+        
         # MacOS x86_64
         - os: macos-13
           platform_id: macosx_x86_64
@@ -26,6 +34,11 @@ jobs:
         - os: macos-14
           platform_id: macosx_arm64
 
+        # MacOS universal2 (not necessary, but matching
+        # those available to download on iqtree.org)
+        - os: macos-14
+          platform_id: macosx_universal2
+
 
     steps:
       - uses: "actions/checkout@v4"
@@ -33,11 +46,18 @@ jobs:
           fetch-depth: 0
           submodules: "recursive"
 
+      - name: Set up QEMU for Linux ARM builds
+        if: ${{runner.os == 'Linux' && endsWith(matrix.platform_id, '_aarch64')}}
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.19.1
         env: # Can specify per os - e.g. CIBW_BEFORE_ALL_LINUX, CIBW_BEFORE_ALL_MACOS, CIBW_BEFORE_ALL_WINDOWS 
           CIBW_BEFORE_ALL_LINUX: ./build_tools/before_all_linux.sh
           CIBW_BEFORE_ALL_MACOS: ./build_tools/before_all_mac.sh
+          CIBW_ARCH_LINUX: ${{endsWith(matrix.platform_id, '_x86_64') && 'x86_64' || 'aarch64'}} 
           CIBW_BUILD: "*${{matrix.platform_id}}"
           CIBW_TEST_REQUIRES: pytest
           CIBW_TEST_COMMAND: pytest {package}/tests
