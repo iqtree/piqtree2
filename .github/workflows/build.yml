@@ -62,6 +62,7 @@ jobs:
           CIBW_BUILD: "*${{matrix.platform_id}}"
           CIBW_TEST_REQUIRES: pytest
           CIBW_TEST_COMMAND: pytest {package}/tests
+          CIBW_TEST_SKIP: "*-macosx_universal2:x86_64" # skip x86 on m1 mac
 
       - name: Upload wheels
         uses: actions/upload-artifact@v4
