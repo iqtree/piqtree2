@@ -9,4 +9,4 @@ echo "Unsupported package manager";
 exit 1;
 fi
 
-./build_tools/build_iqtree.sh
+bash build_tools/build_iqtree.sh

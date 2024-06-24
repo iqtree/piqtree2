@@ -1,4 +1,4 @@
 brew update
 brew install eigen boost
 
-./build_tools/build_iqtree.sh
+bash build_tools/build_iqtree.sh

@@ -5,4 +5,4 @@ mkdir build && cd build
 cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
 make
 cd ../..
-mv iqtree2/build/libiqtree2.a piqtree2/libiqtree/
+mv iqtree2/build/libiqtree2.a src/piqtree2/libiqtree/
