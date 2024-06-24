@@ -14,10 +14,6 @@ jobs:
         - os: ubuntu-latest
           platform_id: manylinux_x86_64
         
-        # musllinux (x86)
-        - os: ubuntu-latest
-          platform_id: musllinux_x86_64
-        
         # MacOS x86_64
         - os: macos-13
           platform_id: macosx_x86_64
@@ -52,7 +48,6 @@ jobs:
           CIBW_ARCHS_LINUX: ${{endsWith(matrix.platform_id, '_x86_64') && 'x86_64' || 'aarch64'}} 
           CIBW_ARCHS_MACOS: ${{endsWith(matrix.platform_id, 'universal2') && 'universal2' || 'auto'}} 
           CIBW_BUILD: "*${{matrix.platform_id}}"
-          CIBW_BEFORE_TEST: pip install --upgrade pip
           CIBW_TEST_REQUIRES: pytest
           CIBW_TEST_COMMAND: pytest {package}/tests
           CIBW_TEST_SKIP: "*-macosx_universal2:x86_64" # skip x86 on m1 mac
