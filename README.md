@@ -19,6 +19,8 @@ git apply ../fpic-iqtree.patch
 
 3. Build IQ-TREE
 
+In the iqtree2 folder:
+
 ```bash
 mkdir build && cd build
 cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
@@ -29,10 +31,10 @@ make -j
 
 ```bash
 cd ../..
-mv iqtree2/build/libiqtree2.a piqtree2/libiqtree/
+mv iqtree2/build/libiqtree2.a src/piqtree2/libiqtree/
 ```
 
-5. Build and Install PyIQTree
+5. Build and Install piqtree2
 
 ```bash
 pip install ".[dev]"
@@ -41,5 +43,5 @@ pip install ".[dev]"
 6. Run Tests
 
 ```bash
-pytest tests/test_RF_distance.py tests/test_generate_random_tree_file.py
+pytest
 ```
