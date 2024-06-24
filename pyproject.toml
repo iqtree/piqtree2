@@ -1,3 +1,22 @@
 [build-system]
-requires = ["setuptools", "wheel", "pybind11"]
+requires = ["setuptools >= 61.0", "pybind11 >= 2.12"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "piqtree2"
+dependencies = ["cogent3"]
+requires-python = ">=3.9"
+
+authors = [
+  {name = "Richard Morris", email = "richard.morris@anu.edu.au"},
+  {name = "Robert McArthur"},
+]
+description="Python bindings for IQTree"
+readme = "README.md"
+dynamic = ["version"]
+
+[project.urls]
+Repository = "https://github.com/cogent3/piqtree2"
+
+[project.optional-dependencies]
+dev = ["pytest", "pybind11", "cibuildwheel"]

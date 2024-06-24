@@ -1,8 +1,9 @@
 import typing
-import cogent3
-from  cogent3.composable import define_app
-
 from enum import Enum
+
+import cogent3
+from _piqtree2 import *
+from cogent3.app.composable import define_app
 
 class TreeMode(Enum):
     UNIFORM = "UNIFORM",

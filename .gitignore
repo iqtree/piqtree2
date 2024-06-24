@@ -3,7 +3,7 @@
 .vscode
 
 # piqtree2 specific ignores
-/piqtree2/libiqtree/**/*.a
+src/piqtree2/libiqtree/**/*.a
 
 /working/fPIC/*.a
 /working/fPIC/*.o 
