@@ -3,10 +3,30 @@ name: Release
 on: [workflow_dispatch]
 
 jobs:
-  release:
-    name: Release
-    environment: release
-    runs-on: ubuntu-latest
+  build_wheels:
+    name: Build Wheels for ${{matrix.platform_id}} on ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        # manylinux (x86)
+        - os: ubuntu-latest
+          platform_id: manylinux_x86_64
+        
+        # MacOS x86_64
+        - os: macos-13
+          platform_id: macosx_x86_64
+
+        # MacOS arm64
+        - os: macos-14
+          platform_id: macosx_arm64
+
+        # MacOS universal2 (not necessary, but matching
+        # those available to download on iqtree.org)
+        - os: macos-14
+          platform_id: macosx_universal2
+
 
     steps:
       - uses: "actions/checkout@v4"
@@ -14,4 +34,49 @@ jobs:
           fetch-depth: 0
           submodules: "recursive"
 
-      
+      - name: Set up QEMU for Linux ARM builds
+        if: ${{runner.os == 'Linux' && endsWith(matrix.platform_id, '_aarch64')}}
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.19.1
+        env: # Can specify per os - e.g. CIBW_BEFORE_ALL_LINUX, CIBW_BEFORE_ALL_MACOS, CIBW_BEFORE_ALL_WINDOWS 
+          CIBW_BEFORE_ALL_LINUX: ./build_tools/before_all_linux.sh
+          CIBW_BEFORE_ALL_MACOS: ./build_tools/before_all_mac.sh
+          CIBW_ARCHS_LINUX: ${{endsWith(matrix.platform_id, '_x86_64') && 'x86_64' || 'aarch64'}} 
+          CIBW_ARCHS_MACOS: ${{endsWith(matrix.platform_id, 'universal2') && 'universal2' || 'auto'}} 
+          CIBW_BUILD: "*${{matrix.platform_id}}"
+          CIBW_TEST_REQUIRES: pytest
+          CIBW_TEST_COMMAND: pytest {package}/tests
+          CIBW_TEST_SKIP: "*-macosx_universal2:x86_64" # skip x86 on m1 mac
+          CIBW_SKIP: pp* # Disable building PyPy wheels on all platforms
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-${{ matrix.platform_id }}
+          path: ./wheelhouse/*.whl
+  
+  release:
+    name: Release
+    needs: build_wheels
+    environment: release
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+
+    steps:      
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: cibw-*
+          path: dist
+          merge-multiple: true
+
+      - name: Publish package distributions to Test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+        
