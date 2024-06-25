@@ -13,7 +13,6 @@ authors = [
 ]
 description="Python bindings for IQTree"
 readme = "README.md"
-dynamic = ["version"]
 
 [project.urls]
 Repository = "https://github.com/cogent3/piqtree2"

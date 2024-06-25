@@ -1,7 +1,7 @@
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup, find_packages
 
-__version__ = "0.1"
+__version__ = "0.0.1.dev0"
 
 LIBRARY_DIR = "src/piqtree2/libiqtree"
 
@@ -17,6 +17,7 @@ ext_modules = [
 print(find_packages())
 setup(
     ext_modules=ext_modules,
+    version=__version__,
     cmdclass={"build_ext": build_ext},
     zip_safe=False
 )
