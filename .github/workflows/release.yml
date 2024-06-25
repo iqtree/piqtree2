@@ -1,0 +1,17 @@
+name: Build Wheels
+
+on: [workflow_dispatch]
+
+jobs:
+  release:
+    name: Release
+    environment: release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+          submodules: "recursive"
+
+      
