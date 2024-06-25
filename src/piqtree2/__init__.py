@@ -5,6 +5,8 @@ import cogent3
 from _piqtree2 import *
 from cogent3.app.composable import define_app
 
+__version__ = "0.0.1.dev0"
+
 class TreeMode(Enum):
     UNIFORM = "UNIFORM",
     UNKNOWN = "UNKNOWN"
