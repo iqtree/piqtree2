@@ -7,10 +7,7 @@ name = "piqtree2"
 dependencies = ["cogent3"]
 requires-python = ">=3.9"
 
-authors = [
-  {name = "Richard Morris", email = "richard.morris@anu.edu.au"},
-  {name = "Robert McArthur"},
-]
+authors = [{name="Richard Morris"}, {name="Robert McArthur"}]
 description="Python bindings for IQTree"
 readme = "README.md"
 dynamic = ["version"]
@@ -20,3 +17,6 @@ Repository = "https://github.com/cogent3/piqtree2"
 
 [project.optional-dependencies]
 dev = ["pytest", "pybind11", "cibuildwheel"]
+
+[tool.setuptools.dynamic]
+version = {attr = "piqtree2.__version__"}
