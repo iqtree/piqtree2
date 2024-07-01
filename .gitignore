@@ -2,6 +2,14 @@
 
 .vscode
 
+# iqtree
+*.bionj
+*.ckp.gz
+*.iqtree
+*.log
+*.mldist
+*.treefile
+
 # piqtree2 specific ignores
 src/piqtree2/libiqtree/**/*.a
 
