@@ -41,6 +41,11 @@ def random_trees(
     )
 
 
+def _rename_iq_tree(tree: cogent3.PhyloNode, names: list[str]) -> None:
+    for tip in tree.tips():
+        tip.name = names[int(tip.name)]
+
+
 def build_tree(
     aln: cogent3.Alignment, model: str, rand_seed: int | None = None
 ) -> cogent3.PhyloNode:
@@ -51,7 +56,10 @@ def build_tree(
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
     yaml_result = yaml.safe_load(iq_build_tree(names, seqs, model, rand_seed))
-    return cogent3.make_tree(yaml_result["PhyloTree"]["newick"])
+    tree = cogent3.make_tree(yaml_result["PhyloTree"]["newick"])
+
+    _rename_iq_tree(tree, names)
+    return tree
 
 
 def fit_tree(
@@ -68,4 +76,7 @@ def fit_tree(
     newick = str(tree)
 
     yaml_result = yaml.safe_load(iq_fit_tree(names, seqs, model, newick, rand_seed))
-    return cogent3.make_tree(yaml_result["PhyloTree"]["newick"])
+    tree = cogent3.make_tree(yaml_result["PhyloTree"]["newick"])
+
+    _rename_iq_tree(tree, names)
+    return tree
