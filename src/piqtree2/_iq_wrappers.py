@@ -7,6 +7,13 @@ import numpy as np
 import yaml
 from _piqtree2 import iq_build_tree, iq_fit_tree, iq_random_tree, iq_robinson_fould
 
+from ._decorators import iqtree_func
+
+iq_build_tree = iqtree_func(iq_build_tree)
+iq_fit_tree = iqtree_func(iq_fit_tree)
+iq_random_tree = iqtree_func(iq_random_tree)
+iq_robinson_fould = iqtree_func(iq_robinson_fould)
+
 
 def robinson_foulds(*trees: cogent3.PhyloNode) -> np.ndarray:
     pairwise_distances = np.zeros((len(trees), len(trees)))
@@ -37,7 +44,7 @@ def random_trees(
         rand_seed = 0  # The default rand_seed in IQ-TREE
     trees = iq_random_tree(num_taxa, tree_mode.name, num_trees, rand_seed)
     return tuple(
-        cogent3.make_tree(newick + ";") for newick in trees.split(";") if newick != ""
+        cogent3.make_tree(newick) for newick in trees.split("\n") if newick != ""
     )
 
 
