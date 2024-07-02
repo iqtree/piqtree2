@@ -10,14 +10,7 @@ Assumes user is using the devcontainer in this directory.
 git submodule update --init --recursive
 ```
 
-2. Apply IQ-TREE patch
-
-```bash
-cd iqtree2
-git apply ../fpic-iqtree.patch
-```
-
-3. Build IQ-TREE
+2. Build IQ-TREE
 
 In the iqtree2 folder:
 
@@ -27,20 +20,20 @@ cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
 make -j
 ```
 
-4. Move static library to libiqtree directory
+3. Move static library to libiqtree directory
 
 ```bash
 cd ../..
 mv iqtree2/build/libiqtree2.a src/piqtree2/libiqtree/
 ```
 
-5. Build and Install piqtree2
+4. Build and Install piqtree2
 
 ```bash
 pip install ".[dev]"
 ```
 
-6. Run Tests
+5. Run Tests
 
 ```bash
 pytest
