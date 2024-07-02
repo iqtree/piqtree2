@@ -10,30 +10,18 @@ Assumes user is using the devcontainer in this directory.
 git submodule update --init --recursive
 ```
 
-2. Build IQ-TREE
+2. Build IQ-TREE 2
 
-In the iqtree2 folder:
+Run either `build_tools/before_all_linux.sh` or `build_tools/before_all_mac.sh` depending on your OS.
 
-```bash
-mkdir build && cd build
-cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
-make -j
-```
 
-3. Move static library to libiqtree directory
-
-```bash
-cd ../..
-mv iqtree2/build/libiqtree2.a src/piqtree2/libiqtree/
-```
-
-4. Build and Install piqtree2
+3. Build and Install piqtree2
 
 ```bash
 pip install -e ".[dev]"
 ```
 
-5. Run Tests
+4. Run Tests
 
 ```bash
 pytest
