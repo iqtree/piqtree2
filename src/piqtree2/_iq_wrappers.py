@@ -1,6 +1,5 @@
-from __future__ import annotations
-
 from enum import Enum, auto
+from typing import Optional, Union
 
 import cogent3
 import numpy as np
@@ -38,7 +37,7 @@ def random_trees(
     num_taxa: int,
     tree_mode: TreeGenMode,
     num_trees: int,
-    rand_seed: int | None = None,
+    rand_seed: Optional[int] = None,
 ) -> tuple[cogent3.PhyloNode]:
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
@@ -54,9 +53,9 @@ def _rename_iq_tree(tree: cogent3.PhyloNode, names: list[str]) -> None:
 
 
 def build_tree(
-    aln: cogent3.Alignment | cogent3.ArrayAlignment,
+    aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
     model: str,
-    rand_seed: int | None = None,
+    rand_seed: Optional[int] = None,
 ) -> cogent3.PhyloNode:
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
@@ -72,10 +71,10 @@ def build_tree(
 
 
 def fit_tree(
-    aln: cogent3.Alignment,
+    aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
     tree: cogent3.PhyloNode,
     model: str,
-    rand_seed: int | None = None,
+    rand_seed: Optional[int] = None,
 ) -> cogent3.PhyloNode:
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
