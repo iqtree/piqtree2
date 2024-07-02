@@ -10,6 +10,10 @@ RetType = TypeVar("RetType")
 def iqtree_func(func: Callable[Param, RetType]) -> Callable[Param, RetType]:
     @wraps(func)
     def wrapper_iqtree_func(*args: Param.args, **kwargs: Param.kwargs) -> RetType:
+        # Flush stdout and stderr
+        sys.stdout.flush()
+        sys.stderr.flush()
+
         # Save original stdout and stderr file descriptors
         original_stdout_fd = os.dup(sys.stdout.fileno())
         original_stderr_fd = os.dup(sys.stderr.fileno())
