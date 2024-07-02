@@ -18,6 +18,11 @@ Repository = "https://github.com/cogent3/piqtree2"
 [project.optional-dependencies]
 dev = ["cibuildwheel", "pytest", "pybind11", "ruff"]
 
+[project.entry-points."cogent3.app"]
+piqtree_phylo = "piqtree2._app:piqtree_phylo"
+piqtree_fit = "piqtree2._app:piqtree_fit"
+piqtree_random_trees = "piqtree2._app:piqtree_random_trees"
+
 [tool.setuptools.dynamic]
 version = {attr = "piqtree2.__version__"}
 
