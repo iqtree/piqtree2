@@ -12,4 +12,15 @@ ext_modules = [
     ),
 ]
 
-setup(ext_modules=ext_modules, cmdclass={"build_ext": build_ext}, zip_safe=False)
+setup(
+    ext_modules=ext_modules,
+    cmdclass={"build_ext": build_ext},
+    zip_safe=False,
+    entry_points={
+        "cogent3.app": [
+            "piqtree_phylo = piqtree2._app:piqtree_phylo",
+            "piqtree_fit = piqtree2._app:piqtree_fit",
+            "piqtree_random_trees = piqtree2._app:piqtree_random_trees",
+        ]
+    },
+)
