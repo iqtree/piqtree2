@@ -30,7 +30,7 @@ mv iqtree2/build/libiqtree2.a src/piqtree2/libiqtree/
 4. Build and Install piqtree2
 
 ```bash
-pip install ".[dev]"
+pip install -e ".[dev]"
 ```
 
 5. Run Tests
