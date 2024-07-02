@@ -54,7 +54,9 @@ def _rename_iq_tree(tree: cogent3.PhyloNode, names: list[str]) -> None:
 
 
 def build_tree(
-    aln: cogent3.Alignment, model: str, rand_seed: int | None = None
+    aln: cogent3.Alignment | cogent3.ArrayAlignment,
+    model: str,
+    rand_seed: int | None = None,
 ) -> cogent3.PhyloNode:
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
