@@ -86,5 +86,15 @@ def fit_tree(
     yaml_result = yaml.safe_load(iq_fit_tree(names, seqs, model, newick, rand_seed))
     tree = cogent3.make_tree(yaml_result["PhyloTree"]["newick"])
 
+    candidates = yaml_result["CandidateSet"]
+    likelihood = None
+    for candidate in candidates.values():
+        if yaml_result["PhyloTree"]["newick"] in candidate:
+            likelihood = float(candidate.split(" ")[0])
+            break
+    assert likelihood is not None
+
+    tree.params["lnL"] = likelihood
+
     _rename_iq_tree(tree, names)
     return tree

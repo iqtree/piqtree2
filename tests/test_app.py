@@ -15,4 +15,4 @@ def test_piqtree_fit(three_otu):
     expect = app(three_otu)
     piphylo = get_app("piqtree_fit", tree=tree, model="JC")
     got = piphylo(three_otu)
-    assert got.lnL == expect.lnL
+    assert got.params["lnL"] == pytest.approx(expect.lnL)
