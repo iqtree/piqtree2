@@ -3,6 +3,8 @@ import sys
 from functools import wraps
 from typing import Callable, ParamSpec, TypeVar
 
+from piqtree2.exceptions import IqTreeError
+
 Param = ParamSpec("Param")
 RetType = TypeVar("RetType")
 
@@ -28,6 +30,8 @@ def iqtree_func(func: Callable[Param, RetType]) -> Callable[Param, RetType]:
 
             # Call the wrapped function
             return func(*args, **kwargs)
+        except RuntimeError as e:
+            raise IqTreeError(e) from None
         finally:
             # Flush stdout and stderr
             sys.stdout.flush()

@@ -1,5 +1,6 @@
 cd iqtree2
 rm -rf build
+git apply ../exception.patch
 mkdir build && cd build
 cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
 make -j

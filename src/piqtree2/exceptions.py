@@ -1,0 +1,2 @@
+class IqTreeError(Exception):
+    pass
