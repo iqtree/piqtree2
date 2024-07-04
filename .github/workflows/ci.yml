@@ -30,7 +30,9 @@ jobs:
           fi
 
       - name: Run Nox Testing
-        run: "nox -s test-${{ matrix.python-version }} -- --cov --cov-report=lcov:${{matrix.os}}-${{matrix.python-version}}.lcov --cov-report=term --cov-append --durations=20"
+        run: |
+          pip install nox
+          nox -s test-${{ matrix.python-version }} -- --cov --cov-report=lcov:${{matrix.os}}-${{matrix.python-version}}.lcov --cov-report=term --cov-append --durations=20
 
       # - name: Coveralls Parallel
       #   uses: coverallsapp/github-action@v2
