@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from enum import Enum, auto
-from typing import Any, Optional, Sequence, Union
+from typing import Optional, Union
 
 import cogent3
 import numpy as np
