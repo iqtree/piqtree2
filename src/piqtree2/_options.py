@@ -1,5 +1,6 @@
 # convenience functions for showing user facing options and their descriptions
 import functools
+from typing import Optional
 
 from cogent3 import _Table, make_table
 
@@ -148,7 +149,7 @@ def _make_all_models():
     return _all_models
 
 
-def available_models(model_type: str | None = None) -> _Table:
+def available_models(model_type: Optional[str] = None) -> _Table:
     """returns a table of showing available substitution models
 
     Parameters
