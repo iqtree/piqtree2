@@ -16,18 +16,20 @@ jobs:
           fetch-depth: 0
           submodules: "recursive"
       
-      - name: Build IQ-TREE
-        run: |
-          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            sudo ./build_tools/before_all_linux.sh
-          else
-            ./build_tools/before_all_mac.sh
-          fi
+    #   - name: Build IQ-TREE
+    #     run: |
+    #       if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+    #         sudo ./build_tools/before_all_linux.sh
+    #       else
+    #         ./build_tools/before_all_mac.sh
+    #       fi
+      - name: Mock Build
+        run: echo "hi" > tmp.txt
     
       - uses: actions/upload-artifact@v4
         with:
-            name: ${{matrix.os}}-libiqtree2.a
-            path: src/piqtree2/libiqtree/libiqtree2.a
+            name: ${{matrix.os}}-tmp
+            path: tmp.txt
             if-no-files-found: error
-            retention-days: 90
+            retention-days: 1
             overwrite: true
