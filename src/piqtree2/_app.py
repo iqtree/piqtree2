@@ -1,5 +1,6 @@
-from piqtree2 import _iq_wrappers as iqtree
 from cogent3.app.composable import define_app
+
+from piqtree2 import _iq_wrappers as iqtree
 
 piqtree_phylo = define_app(iqtree.build_tree)
 piqtree_fit = define_app(iqtree.fit_tree)

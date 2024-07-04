@@ -3,7 +3,9 @@ import pathlib
 import sys
 import tempfile
 from functools import wraps
-from typing import Callable, Optional, ParamSpec, TypeVar
+from typing import Callable, Optional, TypeVar
+
+from typing_extensions import ParamSpec
 
 from piqtree2.exceptions import IqTreeError
 

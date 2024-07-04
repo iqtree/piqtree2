@@ -1,6 +1,7 @@
 # convenience functions for showing user facing options and their descriptions
 import functools
-from cogent3 import make_table, _Table
+
+from cogent3 import _Table, make_table
 
 _dna_models = {
     "Abbreviation": [
