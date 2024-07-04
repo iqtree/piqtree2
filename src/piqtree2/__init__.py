@@ -7,7 +7,15 @@ from ._iq_wrappers import (
     random_trees,
     robinson_foulds,
 )
+from ._options import available_models
 
 __version__ = "0.0.1.dev1"
 
-__all__ = ["build_tree", "fit_tree", "random_trees", "robinson_foulds", "TreeGenMode"]
+__all__ = [
+    "build_tree",
+    "fit_tree",
+    "random_trees",
+    "robinson_foulds",
+    "TreeGenMode",
+    "available_models",
+]
