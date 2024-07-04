@@ -7,7 +7,7 @@ name = "piqtree2"
 dependencies = ["cogent3", "pyyaml"]
 requires-python = ">=3.9"
 
-authors = [{name="Richard Morris"}, {name="Robert McArthur"}]
+authors = [{name="Gavin Huttley"}, {name="Robert McArthur"}, {name="Bui Quang Minh "}, {name="Richard Morris"}, {name="Thomas Wong"}]
 description="Python bindings for IQTree"
 readme = "README.md"
 dynamic = ["version"]
