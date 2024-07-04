@@ -16,7 +16,8 @@ dynamic = ["version"]
 Repository = "https://github.com/cogent3/piqtree2"
 
 [project.optional-dependencies]
-dev = ["cibuildwheel", "pytest", "pybind11", "ruff"]
+dev = ["cibuildwheel", "pybind11", "ruff", "piqtree2[test]"]
+test = ["pytest", "pytest-cov", "nox"]
 
 [project.entry-points."cogent3.app"]
 piqtree_phylo = "piqtree2._app:piqtree_phylo"
