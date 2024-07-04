@@ -24,18 +24,19 @@ jobs:
       - name: Get Location of Latest Build
         id: get-latest-build
         run: |
-          echo "::set-output name=latest_build::$(curl -L \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/iqtree/piqtree2/actions/workflows/build_iqtree.yml/runs \
+          workflow_id=$(curl -sSL \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/iqtree/piqtree2/actions/workflows/build_iqtree.yml/runs" \
             | jq -r '.workflow_runs[0].id')
+          echo "::set-output name=workflow_id::$workflow_id"
 
       - uses: actions/download-artifact@v4
         with:
             name: ${{matrix.os}}-tmp
             path: tmp.txt
             github-token: ${{ github.token }}
-            run-id: ${{ steps.get-latest-build.outputs.latest_build }}
+            run-id: ${{ steps.get-latest-build.outputs.workflow_id }}
 
       # - name: Run Nox Testing
       #   run: |
