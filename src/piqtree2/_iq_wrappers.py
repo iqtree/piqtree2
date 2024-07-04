@@ -8,8 +8,8 @@ from _piqtree2 import iq_build_tree, iq_fit_tree, iq_random_tree, iq_robinson_fo
 
 from ._decorators import iqtree_func
 
-iq_build_tree = iqtree_func(iq_build_tree)
-iq_fit_tree = iqtree_func(iq_fit_tree)
+iq_build_tree = iqtree_func(iq_build_tree, hide_files=True)
+iq_fit_tree = iqtree_func(iq_fit_tree, hide_files=True)
 iq_random_tree = iqtree_func(iq_random_tree)
 iq_robinson_fould = iqtree_func(iq_robinson_fould)
 
