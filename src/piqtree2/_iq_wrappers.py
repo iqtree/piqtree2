@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from typing import Optional, Union
+from typing import Any, Optional, Sequence, Union
 
 import cogent3
 import numpy as np
@@ -47,9 +47,29 @@ def random_trees(
     )
 
 
-def _rename_iq_tree(tree: cogent3.PhyloNode, names: list[str]) -> None:
+def _rename_iq_tree(tree: cogent3.PhyloNode, names: Sequence[str]) -> None:
     for tip in tree.tips():
         tip.name = names[int(tip.name)]
+
+
+def _process_tree_yaml(tree_yaml: dict, names: Sequence[str]) -> cogent3.PhyloNode:
+    newick = tree_yaml["PhyloTree"]["newick"]
+    tree = cogent3.make_tree(newick)
+
+    candidates = tree_yaml["CandidateSet"]
+    likelihood = None
+    for candidate in candidates.values():
+        if newick in candidate:
+            likelihood = float(candidate.split(" ")[0])
+            break
+    if likelihood is None:
+        msg = "IQ-TREE output malformated."
+        raise OSError(msg)
+
+    tree.params["lnL"] = likelihood
+
+    _rename_iq_tree(tree, names)
+    return tree
 
 
 def build_tree(
@@ -64,10 +84,7 @@ def build_tree(
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
     yaml_result = yaml.safe_load(iq_build_tree(names, seqs, model, rand_seed))
-    tree = cogent3.make_tree(yaml_result["PhyloTree"]["newick"])
-
-    _rename_iq_tree(tree, names)
-    return tree
+    return _process_tree_yaml(yaml_result, names)
 
 
 def fit_tree(
@@ -84,17 +101,4 @@ def fit_tree(
     newick = str(tree)
 
     yaml_result = yaml.safe_load(iq_fit_tree(names, seqs, model, newick, rand_seed))
-    tree = cogent3.make_tree(yaml_result["PhyloTree"]["newick"])
-
-    candidates = yaml_result["CandidateSet"]
-    likelihood = None
-    for candidate in candidates.values():
-        if yaml_result["PhyloTree"]["newick"] in candidate:
-            likelihood = float(candidate.split(" ")[0])
-            break
-    assert likelihood is not None
-
-    tree.params["lnL"] = likelihood
-
-    _rename_iq_tree(tree, names)
-    return tree
+    return _process_tree_yaml(yaml_result, names)
