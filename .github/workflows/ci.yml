@@ -24,7 +24,7 @@ jobs:
       - name: Build IQ-TREE
         run: |
           if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            ./build_tools/before_all_linux.sh
+            sudo ./build_tools/before_all_linux.sh
           else
             ./build_tools/before_all_mac.sh
           fi
