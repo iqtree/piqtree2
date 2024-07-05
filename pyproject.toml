@@ -48,8 +48,8 @@ piqtree_random_trees = "piqtree2._app:piqtree_random_trees"
 version = {attr = "piqtree2.__version__"}
 
 [tool.ruff]
-# Exclude a variety of commonly ignored directories.
 exclude = [
+    "iqtree2",
     ".bzr",
     ".direnv",
     ".eggs",
@@ -89,7 +89,7 @@ target-version = "py39"
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
 select = ["ALL"]
-ignore = ["EXE002"]
+ignore = ["EXE002", "FA100", "E501", "D"]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
@@ -102,6 +102,16 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 "tests/**/*.py" = [
     "S101", # asserts allowed in tests...
     "INP001", # __init__.py files are not required...
+    "ANN",
+    "N802",
+    "N803"
+]
+"noxfile.py" = [
+    "S101", # asserts allowed in tests...
+    "INP001", # __init__.py files are not required...
+    "ANN",
+    "N802",
+    "N803"
 ]
 
 [tool.ruff.format]

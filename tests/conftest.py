@@ -8,6 +8,6 @@ def DATA_DIR():
     return pathlib.Path(__file__).parent / "data"
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def tmp_dir(tmp_path_factory):
     return tmp_path_factory.mktemp("cli")

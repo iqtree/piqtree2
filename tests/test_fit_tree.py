@@ -3,7 +3,7 @@ import pytest
 from cogent3 import get_app, load_aligned_seqs, make_tree
 
 
-@pytest.fixture
+@pytest.fixture()
 def three_otu(DATA_DIR):
     aln = load_aligned_seqs(DATA_DIR / "example.fasta", moltype="dna")
     aln = aln.take_seqs(["Human", "Rhesus", "Mouse"])
