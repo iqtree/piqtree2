@@ -7,7 +7,7 @@
 
 <!-- [![Coverage Status](https://coveralls.io/repos/github/iqtree/piqtree2/badge.svg?branch=main)](https://coveralls.io/github/iqtree/piqtree2?branch=main) -->
 
-piqtree2 is a library which allows you use IQ-TREE directly from Python!
+`piqtree2` is a library which allows you use IQ-TREE directly from Python! The interface with python is through [cogent3](https://cogent3.org) objects, as shown below.
 
 ## Note
 
@@ -31,7 +31,11 @@ tree = build_tree(aln, "JC", rand_seed=1) # Optionally specify a random seed.
 
 print("Tree topology:", tree) # A cogent3 tree object
 print("Log-likelihood:", tree.params["lnL"])
+# In a Jupyter notebook, try tree.get_figure() to see a dendrogram
 ```
+
+> **Note**
+> See the [cogent3 docs](https://cogent3.org) for examples on what you can do with cogent3 trees.
 
 ### Fit Branch Lengths to Tree Topology
 
