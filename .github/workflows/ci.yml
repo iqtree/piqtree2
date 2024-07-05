@@ -34,9 +34,10 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
             name: ${{matrix.os}}-libiqtree2.a
-            path: src/piqtree2/libiqtree/libiqtree2.a
+            path: src/piqtree2/libiqtree/
             github-token: ${{ github.token }}
-            run-id: ${{ steps.get-latest-build.outputs.workflow_id }}
+            run-id: 9789900457 # ${{ steps.get-latest-build.outputs.workflow_id }}
+      
       - name: Check download
         run: |
           ls src
