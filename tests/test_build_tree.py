@@ -12,5 +12,10 @@ def four_otu(DATA_DIR):
 
 def test_phylogenetic_analysis(four_otu):
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
-    got = piqtree2.build_tree(four_otu, "JC", rand_seed=1)
-    assert expected.same_topology(got)
+
+    got1 = piqtree2.build_tree(four_otu, "JC", rand_seed=1)
+    assert expected.same_topology(got1)
+
+    # Should be similar for any seed
+    got2 = piqtree2.build_tree(four_otu, "JC", rand_seed=None)
+    assert expected.same_topology(got2)

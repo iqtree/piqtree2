@@ -1,4 +1,5 @@
 import piqtree2
+import piqtree2.exceptions
 import pytest
 
 
@@ -20,3 +21,13 @@ def test_random_trees(
 
     for tree in trees:
         assert len(tree.tips()) == num_taxa
+
+
+def test_too_few_taxa() -> None:
+    # Test exception raised on not enought taxa
+    with pytest.raises(piqtree2.exceptions.IqTreeError):
+        _ = piqtree2.random_trees(
+            2,
+            piqtree2.TreeGenMode.UNIFORM,
+            10,
+        )

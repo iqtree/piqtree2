@@ -14,5 +14,10 @@ def test_piqtree_fit(three_otu):
     tree_topology = make_tree(tip_names=three_otu.names)
     app = get_app("model", "JC69", tree=tree_topology)
     expected = app(three_otu)
-    got = piqtree2.fit_tree(three_otu, tree_topology, "JC", rand_seed=1)
-    assert got.params["lnL"] == pytest.approx(expected.lnL)
+
+    got1 = piqtree2.fit_tree(three_otu, tree_topology, "JC", rand_seed=1)
+    assert got1.params["lnL"] == pytest.approx(expected.lnL)
+
+    # Should be within an approximation for any seed
+    got2 = piqtree2.fit_tree(three_otu, tree_topology, "JC", rand_seed=None)
+    assert got2.params["lnL"] == pytest.approx(expected.lnL)
