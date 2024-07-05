@@ -10,7 +10,7 @@ def three_otu(DATA_DIR):
     return aln.omit_gap_pos(allowed_gap_frac=0)
 
 
-def test_piqtree_fit(three_otu):
+def test_fit_tree(three_otu):
     tree_topology = make_tree(tip_names=three_otu.names)
     app = get_app("model", "JC69", tree=tree_topology)
     expected = app(three_otu)

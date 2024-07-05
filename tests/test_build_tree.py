@@ -1,4 +1,5 @@
 import piqtree2
+import piqtree2.exceptions
 import pytest
 from cogent3 import load_aligned_seqs, make_tree
 
@@ -10,7 +11,7 @@ def four_otu(DATA_DIR):
     return aln.omit_gap_pos(allowed_gap_frac=0)
 
 
-def test_phylogenetic_analysis(four_otu):
+def test_build_tree(four_otu):
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
 
     got1 = piqtree2.build_tree(four_otu, "JC", rand_seed=1)
