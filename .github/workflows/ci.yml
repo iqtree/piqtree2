@@ -1,6 +1,15 @@
 name: CI
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 4 2 * *' # Every 2nd day of the month.
+  pull_request:
+  push:
+  workflow_run:
+    workflows: [Build IQ-TREE Static Library]
+    types:
+      - completed
 
 jobs:
   tests:

@@ -1,6 +1,10 @@
 name: Build IQ-TREE Static Library
 
-on: [workflow_dispatch]
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: '35 4 1 * *' # Every 1st day of the month.
+  
 
 jobs:
   tests:
