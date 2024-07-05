@@ -9,7 +9,7 @@ from ._iq_wrappers import (
 )
 from ._options import available_models
 
-__version__ = "0.0.1.dev1"
+__version__ = "0.1.0"
 
 __all__ = [
     "build_tree",
