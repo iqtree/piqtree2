@@ -1,4 +1,5 @@
-# convenience functions for showing user facing options and their descriptions
+"""Convenience functions for showing user facing options and their descriptions."""
+
 import functools
 from typing import Optional
 
@@ -139,7 +140,7 @@ _aa_models = {
 
 
 @functools.cache
-def _make_all_models():
+def _make_all_models() -> dict[str, list[str]]:
     _all_models = {"Model Type": [], "Abbreviation": [], "Description": []}
     for model_type, models in zip(["nucleotide", "protein"], [_dna_models, _aa_models]):
         mtype = [model_type] * len(models["Abbreviation"])
@@ -150,12 +151,13 @@ def _make_all_models():
 
 
 def available_models(model_type: Optional[str] = None) -> _Table:
-    """returns a table of showing available substitution models
+    """Return a table showing available substitution models.
 
     Parameters
     ----------
     model_type
         either "nucleotide", "protein" or None. If None, all models are returned.
+
     """
     if model_type == "dna":
         table = make_table(data=_dna_models)

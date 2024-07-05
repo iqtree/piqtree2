@@ -1,3 +1,5 @@
+"""Decorators for IQ-TREE functions."""
+
 import os
 import pathlib
 import sys
@@ -18,6 +20,29 @@ def iqtree_func(
     *,
     hide_files: Optional[bool] = False,
 ) -> Callable[Param, RetType]:
+    """IQ-TREE function wrapper.
+
+    Hides stdout and stderr, as well as any output files.
+
+    Parameters
+    ----------
+    func : Callable[Param, RetType]
+        The IQ-TREE library function.
+    hide_files : Optional[bool], optional
+        Whether hiding output files is necessary, by default False.
+
+    Returns
+    -------
+    Callable[Param, RetType]
+        The wrappe IQ-TREE function.
+
+    Raises
+    ------
+    IqTreeError
+        An error from the IQ-TREE library.
+
+    """
+
     @wraps(func)
     def wrapper_iqtree_func(*args: Param.args, **kwargs: Param.kwargs) -> RetType:
         # Flush stdout and stderr

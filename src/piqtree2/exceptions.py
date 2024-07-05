@@ -1,2 +1,5 @@
+"""Contains piqtree2 exceptions."""
+
+
 class IqTreeError(Exception):
-    pass
+    """An error thrown by IQ-TREE."""

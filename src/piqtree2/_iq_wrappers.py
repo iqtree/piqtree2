@@ -1,3 +1,5 @@
+"""Python wrappers to functions in the IQ-TREE library."""
+
 from collections.abc import Sequence
 from enum import Enum, auto
 from typing import Optional, Union
@@ -16,6 +18,17 @@ iq_robinson_fould = iqtree_func(iq_robinson_fould)
 
 
 def robinson_foulds(*trees: cogent3.PhyloNode) -> np.ndarray:
+    """Pairwise Robinson-Foulds distance between a collection of trees.
+
+    For the given collection of trees, returns a numpy array containing
+    the pairwise distances between the given trees.
+
+    Returns
+    -------
+    np.ndarray
+        Pairwise Robinson-Foulds distance.
+
+    """
     pairwise_distances = np.zeros((len(trees), len(trees)))
     for i in range(1, len(trees)):
         for j in range(i):
@@ -26,6 +39,8 @@ def robinson_foulds(*trees: cogent3.PhyloNode) -> np.ndarray:
 
 
 class TreeGenMode(Enum):
+    """Setting under which to generate random trees."""
+
     YULE_HARDING = auto()
     UNIFORM = auto()
     CATERPILLAR = auto()
@@ -40,6 +55,27 @@ def random_trees(
     num_trees: int,
     rand_seed: Optional[int] = None,
 ) -> tuple[cogent3.PhyloNode]:
+    """Generate a collection of random trees.
+
+    Generates a random collection of trees through IQ-TREE.
+
+    Parameters
+    ----------
+    num_taxa : int
+        The number of taxa per tree.
+    tree_mode : TreeGenMode
+        How the trees are generated.
+    num_trees : int
+        The number of trees to generate.
+    rand_seed : Optional[int], optional
+        The random seed - 0 or None means no seed, by default None.
+
+    Returns
+    -------
+    tuple[cogent3.PhyloNode]
+        A collection of random trees.
+
+    """
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
     trees = iq_random_tree(num_taxa, tree_mode.name, num_trees, rand_seed)
@@ -78,6 +114,25 @@ def build_tree(
     model: str,
     rand_seed: Optional[int] = None,
 ) -> cogent3.PhyloNode:
+    """Reconstruct a phylogenetic tree.
+
+    Given a sequence alignment, uses IQ-TREE to reconstruct a phylogenetic tree.
+
+    Parameters
+    ----------
+    aln : Union[cogent3.Alignment, cogent3.ArrayAlignment]
+        The sequence alignment.
+    model : str
+        The substitution model.
+    rand_seed : Optional[int], optional
+        The random seed - 0 or None means no seed, by default None.
+
+    Returns
+    -------
+    cogent3.PhyloNode
+        The IQ-TREE maximum likelihood tree from the given alignment.
+
+    """
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
 
@@ -94,6 +149,28 @@ def fit_tree(
     model: str,
     rand_seed: Optional[int] = None,
 ) -> cogent3.PhyloNode:
+    """Fit branch lengths to a tree.
+
+    Given a sequence alignment and a fixed topology,
+    uses IQ-TREE to fit branch lengths to the tree.
+
+    Parameters
+    ----------
+    aln : Union[cogent3.Alignment, cogent3.ArrayAlignment]
+        The sequence alignment.
+    tree : cogent3.PhyloNode
+        The topology to fit branch lengths to.
+    model : str
+        The substitution model.
+    rand_seed : Optional[int], optional
+        The random seed - 0 or None means no seed, by default None.
+
+    Returns
+    -------
+    cogent3.PhyloNode
+        A phylogenetic tree with same given topology fitted with branch lengths.
+
+    """
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
 
