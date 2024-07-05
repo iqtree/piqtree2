@@ -37,6 +37,12 @@ jobs:
             path: src/piqtree2/libiqtree/libiqtree2.a
             github-token: ${{ github.token }}
             run-id: ${{ steps.get-latest-build.outputs.workflow_id }}
+      - name: Check download
+        run: |
+          ls src
+          ls src/piqtree2
+          ls src/piqtree2/libiqtree
+          ls src/piqtree2/libiqtree/libiqtree2.a
 
       - name: Run Nox Testing
         run: |
