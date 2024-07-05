@@ -12,6 +12,26 @@ description="Python bindings for IQTree"
 readme = "README.md"
 dynamic = ["version"]
 
+classifiers = [
+  "Development Status :: 3 - Alpha",
+
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+
+  "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+
+  "Operating System :: MacOS",
+  "Operating System :: POSIX :: Linux",
+
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+
+  "Typing :: Typed"
+]
+
 [project.urls]
 Repository = "https://github.com/cogent3/piqtree2"
 
