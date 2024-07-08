@@ -13,7 +13,6 @@
 
 This project is still in early development, if you encounter any problems or have any feature requests feel free to raise an [issue](https://github.com/iqtree/piqtree2/issues)!
 
-
 ## Examples
 
 ### Phylogenetic Reconstruction
