@@ -10,6 +10,6 @@ def test(session):
     posargs = list(session.posargs)
     env = os.environ.copy()
 
-    install_spec = "-e.[dev]"
+    install_spec = "-e.[test]"
     session.install(install_spec)
     session.run("pytest", *posargs, env=env)
