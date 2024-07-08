@@ -1,31 +1,37 @@
 {
-  "name": "Pyiqtree Devcontainer",
-  "context": "..",
-  "image": "ghcr.io/cogent3/piqtree2:latest",
-  "customizations": {
-      "vscode": {
-          "settings": {
-              "terminal.integrated.shell.linux": "/bin/zsh",
-              "terminal.integrated.profiles.linux": {
-                  "zsh": {
-                      "path": "zsh"
-                  }
-              },
-              "python.defaultInterpreterPath": "/home/user/.conda/envs/c312/bin/python"
-          },
-          "extensions": [
-              "ms-python.python",
-              "ms-toolsai.jupyter",
-              "ms-vscode.cpptools",
-              "ms-vscode.cpptools-extension-pack",
-              "ms-vscode.makefile-tools"
-          ]
-      }
-  },
-  "remoteUser": "user",
-  "mounts": [
-      "source=${localEnv:HOME}/.ssh,target=/home/user/.ssh,type=bind,consistency=cached",
-      "source=${localEnv:USERPROFILE}/.ssh,target=/home/user/.ssh,type=bind,consistency=cached"
-  ],
-  "postCreateCommand": "sudo chown -R user:user /home/user/.ssh"
+    "name": "piqtree2 devcontainer",
+    "context": "..",
+    "image": "ghcr.io/cogent3/piqtree2:latest",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/zsh",
+                "terminal.integrated.profiles.linux": {
+                    "zsh": {
+                        "path": "zsh"
+                    }
+                },
+                "python.defaultInterpreterPath": "/home/user/.conda/envs/c312/bin/python"
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.makefile-tools",
+                "charliermarsh.ruff",
+                "njpwerner.autodocstring",
+                "github.vscode-github-actions",
+                "tamasfe.even-better-toml",
+                "DavidAnson.vscode-markdownlint",
+                "be5invis.toml"
+            ]
+        }
+    },
+    "remoteUser": "user",
+    "mounts": [
+        "source=${localEnv:HOME}/.ssh,target=/home/user/.ssh,type=bind,consistency=cached",
+        "source=${localEnv:USERPROFILE}/.ssh,target=/home/user/.ssh,type=bind,consistency=cached"
+    ],
+    "postCreateCommand": "sudo chown -R user:user /home/user/.ssh"
 }
