@@ -20,16 +20,6 @@ RUN useradd -ms /bin/zsh user && echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudo
 USER user
 WORKDIR /home/user/repos
 
-# Clone and build IQ-TREE2
-RUN git clone --branch libiqtree https://github.com/iqtree/iqtree2.git /home/user/repos/iqtree2 && \
-    cd /home/user/repos/iqtree2 && \
-    git submodule init && \
-    git submodule update && \
-    mkdir build && cd build && \
-    cmake -DBUILD_LIB=ON .. 
-
-RUN echo "Remember to build the IQTree2 binaries to change directory to /home/user/repos/iqtree2/build and run 'make -j'"
-
 # Install Oh My Zsh
 RUN sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" "" --unattended
 
@@ -52,11 +42,11 @@ RUN . /opt/conda/etc/profile.d/conda.sh && \
 RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.zshrc && \
     echo "conda activate c312" >> ~/.zshrc  
 
-# Clone the repositories using SSH
+# Clone cogent3 using SSH
 WORKDIR /home/user/repos
 RUN git clone --branch develop https://github.com/cogent3/cogent3.git /home/user/repos/cogent3 
 
-# Install flit in the conda environment
+# Install flit and pybind11 in the conda environment
 RUN . /opt/conda/etc/profile.d/conda.sh && \
     conda activate c312 && \
     conda install -c conda-forge flit -y  && \
@@ -67,9 +57,6 @@ RUN . /opt/conda/etc/profile.d/conda.sh && \
     conda activate c312 && \
     cd /home/user/repos/cogent3 && \
     flit install -s 
-
-# Set up the project directory
-WORKDIR /home/user/pyiqtree
 
 # Set up zsh as the default shell
 SHELL ["/bin/zsh", "-c"]
