@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-iqtree:
-    name: Run test suite with Python ${{matrix.python-version}} on ${{matrix.os}}
+    name: Build or Fetch IQ-TREE 2 Static Library on ${{matrix.os}}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -55,10 +55,16 @@ jobs:
         with:
           fetch-depth: 0
           submodules: "recursive"
-          
+
       - uses: "actions/setup-python@v5"
         with:
             python-version: "${{ matrix.python-version }}"
+      
+      - uses: actions/cache/restore@v3
+        with:
+          key: ${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
+          path: src/piqtree2/libiqtree/libiqtree2.a
+          fail-on-cache-miss: true
 
       - name: Run Nox Testing
         run: |
