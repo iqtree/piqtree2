@@ -19,7 +19,7 @@ jobs:
       - uses: "actions/checkout@v4"
         with:
           fetch-depth: 0
-          submodules: true
+          submodules: recursive
 
       - name: Get IQ-TREE 2 SHA
         run: |
