@@ -3,14 +3,9 @@ name: CI
 on:
   workflow_dispatch:
   schedule:
-    - cron: '35 4 2 * *' # Every 2nd day of the month.
+    - cron: "35 4 2 * *" # Every 2nd day of the month.
   pull_request:
   push:
-    paths-ignore: iqtree2
-  workflow_run:
-    workflows: [Build IQ-TREE Static Library]
-    types:
-      - completed
 
 jobs:
   tests:
@@ -30,25 +25,27 @@ jobs:
       - uses: "actions/setup-python@v5"
         with:
             python-version: "${{ matrix.python-version }}"
-      
-      - name: Get Latest IQ-TREE Build
-        id: get-latest-build
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          workflow_id=$(gh api --method GET \
-            /repos/iqtree/piqtree2/actions/workflows/build_iqtree.yml/runs \
-            -H 'Accept: application/vnd.github+json' \
-            -H 'X-GitHub-Api-Version: 2022-11-28' \
-            | jq -r '.workflow_runs[0].id')
-          echo "workflow_id=$workflow_id" >> $GITHUB_OUTPUT
 
-      - uses: actions/download-artifact@v4
+      - name: Get IQ-TREE 2 SHA
+        run: |
+          cd iqtree2
+          IQ_TREE_2_SHA=$(git rev-parse HEAD)
+          echo "IQ_TREE_2_SHA=${IQ_TREE_2_SHA}" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        id: cache
         with:
-            name: ${{matrix.os}}-libiqtree2.a
-            path: src/piqtree2/libiqtree/
-            github-token: ${{ github.token }}
-            run-id: ${{ steps.get-latest-build.outputs.workflow_id }}
+          key: ${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
+          path: src/piqtree2/libiqtree/libiqtree2.a
+      
+      - name: Build IQ-TREE
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+            sudo ./build_tools/before_all_linux.sh
+          else
+            ./build_tools/before_all_mac.sh
+          fi
 
       - name: Run Nox Testing
         run: |
