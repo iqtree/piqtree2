@@ -33,12 +33,13 @@ jobs:
       
       - name: Get Latest IQ-TREE Build
         id: get-latest-build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          workflow_id=$(curl -sSL \
+          workflow_id=$(gh api --method GET \
+            /repos/iqtree/piqtree2/actions/workflows/build_iqtree.yml/runs \
             -H 'Accept: application/vnd.github+json' \
-            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
             -H 'X-GitHub-Api-Version: 2022-11-28' \
-            "https://api.github.com/repos/iqtree/piqtree2/actions/workflows/build_iqtree.yml/runs" \
             | jq -r '.workflow_runs[0].id')
           echo "workflow_id=$workflow_id" >> $GITHUB_OUTPUT
 
