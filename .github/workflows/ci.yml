@@ -8,23 +8,18 @@ on:
   push:
 
 jobs:
-  tests:
+  build-iqtree:
     name: Run test suite with Python ${{matrix.python-version}} on ${{matrix.os}}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-13, macos-14] # Intel linux, Intel Mac, ARM Mac
-        python-version: ["3.9", "3.10", "3.11", "3.12"] 
 
     steps:
       - uses: "actions/checkout@v4"
         with:
           fetch-depth: 0
           submodules: "recursive"
-      
-      - uses: "actions/setup-python@v5"
-        with:
-            python-version: "${{ matrix.python-version }}"
 
       - name: Get IQ-TREE 2 SHA
         run: |
@@ -47,11 +42,28 @@ jobs:
             ./build_tools/before_all_mac.sh
           fi
 
+  tests:
+    name: Run test suite with Python ${{matrix.python-version}} on ${{matrix.os}}
+    needs: build-iqtree
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-13, macos-14] # Intel linux, Intel Mac, ARM Mac
+        python-version: ["3.9", "3.10", "3.11", "3.12"] 
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+          submodules: "recursive"
+          
+      - uses: "actions/setup-python@v5"
+        with:
+            python-version: "${{ matrix.python-version }}"
+
       - name: Run Nox Testing
         run: |
           pip install nox
           nox -s test-${{ matrix.python-version }} -- --cov --cov-report=lcov:${{matrix.os}}-${{matrix.python-version}}.lcov --cov-report=term --cov-append --durations=20
-
   #     - name: Coveralls Parallel
   #       uses: coverallsapp/github-action@v2
   #       with:
