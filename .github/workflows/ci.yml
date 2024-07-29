@@ -3,7 +3,7 @@ name: CI
 on:
   workflow_dispatch:
   schedule:
-    - cron: "35 4 2 * *" # Every 2nd day of the month.
+    - cron: "35 4 */6 * *" # Every 6 days.
   pull_request:
   push:
 
