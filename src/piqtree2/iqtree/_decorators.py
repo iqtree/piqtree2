@@ -7,8 +7,9 @@ import tempfile
 from functools import wraps
 from typing import Callable, Optional, TypeVar
 
-from piqtree2.exceptions import IqTreeError
 from typing_extensions import ParamSpec
+
+from piqtree2.exceptions import IqTreeError
 
 Param = ParamSpec("Param")
 RetType = TypeVar("RetType")
