@@ -40,7 +40,7 @@ classifiers = [
 Repository = "https://github.com/cogent3/piqtree2"
 
 [project.optional-dependencies]
-dev = ["cibuildwheel", "pybind11", "ruff", "piqtree2[test]"]
+dev = ["cibuildwheel", "pybind11", "ruff", "piqtree2[test]", "scriv"]
 test = ["pytest", "pytest-cov", "nox"]
 
 [project.entry-points."cogent3.app"]
@@ -144,3 +144,12 @@ docstring-code-format = false
 # This only has an effect when the `docstring-code-format` setting is
 # enabled.
 docstring-code-line-length = "dynamic"
+
+[tool.scriv]
+format="md"
+categories=["Contributors", "ENH", "BUG", "DOC", "Deprecations", "Discontinued"]
+output_file="changelog.md"
+version="literal: src/piqtree2/_version.py:__version__"
+skip_fragments="README.*"
+new_fragment_template="file: changelog.d/templates/new.md.j2"
+entry_title_template="file: changelog.d/templates/title.md.j2"
