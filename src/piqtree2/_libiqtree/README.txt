@@ -1,0 +1,1 @@
+Place the IQ-TREE static library, `libiqtree2.a`, in this directory.

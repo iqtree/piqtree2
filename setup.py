@@ -1,12 +1,12 @@
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup
 
-LIBRARY_DIR = "src/piqtree2/libiqtree"
+LIBRARY_DIR = "src/piqtree2/_libiqtree"
 
 ext_modules = [
     Pybind11Extension(
         "_piqtree2",
-        ["src/piqtree2/_piqtree2.cpp"],
+        ["src/piqtree2/_libiqtree/_piqtree2.cpp"],
         library_dirs=[LIBRARY_DIR],
         libraries=["iqtree2", "z"],
     ),

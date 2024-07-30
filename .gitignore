@@ -11,7 +11,7 @@
 *.treefile
 
 # piqtree2 specific ignores
-src/piqtree2/libiqtree/**/*.a
+src/piqtree2/_libiqtree/**/*.a
 
 /working/fPIC/*.a
 /working/fPIC/*.o 

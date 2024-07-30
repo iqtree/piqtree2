@@ -1,1 +1,0 @@
-Place static library `libiqtree2.a` in this directory for setup.py to work.
