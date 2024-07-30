@@ -8,8 +8,7 @@ from ._iq_wrappers import (
     robinson_foulds,
 )
 from ._options import available_models
-
-__version__ = "0.1.1.dev0"
+from ._version import __version__
 
 __all__ = [
     "build_tree",
