@@ -31,7 +31,7 @@ jobs:
         id: cache
         with:
           key: libiqtree-${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
-          path: src/piqtree2/libiqtree/libiqtree2.a
+          path: src/piqtree2/_libiqtree/libiqtree2.a
           lookup-only: true
       
       - name: Build IQ-TREE
@@ -64,7 +64,7 @@ jobs:
       - uses: actions/cache/restore@v3
         with:
           key: libiqtree-${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
-          path: src/piqtree2/libiqtree/libiqtree2.a
+          path: src/piqtree2/_libiqtree/libiqtree2.a
           fail-on-cache-miss: true
 
       - name: Run Nox Testing
