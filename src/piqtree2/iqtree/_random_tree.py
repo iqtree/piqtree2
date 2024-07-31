@@ -6,7 +6,7 @@ from typing import Optional
 import cogent3
 from _piqtree2 import iq_random_tree
 
-from piqtree2.iqtree._decorators import iqtree_func
+from piqtree2.iqtree._decorator import iqtree_func
 
 iq_random_tree = iqtree_func(iq_random_tree)
 
