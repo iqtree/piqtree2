@@ -7,7 +7,7 @@ import cogent3
 import yaml
 from _piqtree2 import iq_build_tree, iq_fit_tree
 
-from piqtree2.iqtree._decorators import iqtree_func
+from piqtree2.iqtree._decorator import iqtree_func
 
 iq_build_tree = iqtree_func(iq_build_tree, hide_files=True)
 iq_fit_tree = iqtree_func(iq_fit_tree, hide_files=True)
