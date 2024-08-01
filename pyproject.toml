@@ -108,7 +108,8 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "INP001", # __init__.py files are not required...
     "ANN",
     "N802",
-    "N803"
+    "N803",
+    "SLF001"
 ]
 "noxfile.py" = [
     "S101", # asserts allowed in tests...
