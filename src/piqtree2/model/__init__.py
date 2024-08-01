@@ -1,3 +1,5 @@
+"""Models available in IQ-TREE."""
+
 from ._model import AaModel, DnaModel, Model
 from ._options import available_models
 

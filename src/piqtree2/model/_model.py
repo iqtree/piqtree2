@@ -6,20 +6,48 @@ from typing_extensions import Self
 
 
 class Model(Enum):
-    @staticmethod
-    @abstractmethod
-    def model_type() -> str: ...
+    """Base class for models."""
 
     @staticmethod
     @abstractmethod
-    def _descriptions() -> dict[Self, str]: ...
+    def model_type() -> str:
+        """Get the type of the model.
+
+        Returns
+        -------
+        str
+            The type of the model.
+
+        """
+
+    @staticmethod
+    @abstractmethod
+    def _descriptions() -> dict[Self, str]:
+        """Get the description of each model.
+
+        Returns
+        -------
+        dict[Self, str]
+            A mapping of models to their description.
+
+        """
 
     @property
     def description(self) -> str:
+        """The model's description.
+
+        Returns
+        -------
+        str
+            The model's description.
+
+        """
         return self._descriptions()[self]
 
 
 class DnaModel(Model):
+    """DNA substitution models."""
+
     JC = auto()
     F81 = auto()
     K80 = auto()
@@ -77,6 +105,8 @@ class DnaModel(Model):
 
 
 class AaModel(Model):
+    """Protein substitution models."""
+
     Blosum62 = auto()
     cpREV = auto()
     Dayhoff = auto()
