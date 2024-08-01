@@ -117,6 +117,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "N802",
     "N803"
 ]
+"src/piqtree2/model/_model.py" = ["N815"] # use IQ-TREE naming scheme
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.
