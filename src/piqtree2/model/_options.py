@@ -5,6 +5,8 @@ from typing import Optional
 
 from cogent3 import _Table, make_table
 
+from piqtree2.model._model import ALL_MODELS_CLASSES, AaModel, DnaModel, Model
+
 _dna_models = {
     "Abbreviation": [
         "JC",
@@ -140,14 +142,18 @@ _aa_models = {
 
 
 @functools.cache
-def _make_all_models() -> dict[str, list[str]]:
-    _all_models = {"Model Type": [], "Abbreviation": [], "Description": []}
-    for model_type, models in zip(["nucleotide", "protein"], [_dna_models, _aa_models]):
-        mtype = [model_type] * len(models["Abbreviation"])
-        _all_models["Model Type"].extend(mtype)
-        _all_models["Abbreviation"].extend(models["Abbreviation"])
-        _all_models["Description"].extend(models["Description"])
-    return _all_models
+def _make_models(model_type: type[Model]) -> dict[str, list[str]]:
+    data = {"Model Type": [], "Abbreviation": [], "Description": []}
+
+    model_classes = ALL_MODELS_CLASSES if model_type == Model else [model_type]
+
+    for model_class in model_classes:
+        for model in model_class:
+            data["Model Type"].append(model.model_type())
+            data["Abbreviation"].append(model.name)
+            data["Description"].append(model.description)
+
+    return data
 
 
 def available_models(model_type: Optional[str] = None) -> _Table:
@@ -160,10 +166,10 @@ def available_models(model_type: Optional[str] = None) -> _Table:
 
     """
     if model_type == "dna":
-        table = make_table(data=_dna_models)
+        table = make_table(data=_make_models(DnaModel))
     elif model_type == "protein":
-        table = make_table(data=_aa_models)
+        table = make_table(data=_make_models(AaModel))
     else:
-        table = make_table(data=_make_all_models())
+        table = make_table(data=_make_models(Model))
 
     return table
