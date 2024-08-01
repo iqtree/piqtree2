@@ -7,6 +7,7 @@ import cogent3
 import yaml
 from _piqtree2 import iq_build_tree, iq_fit_tree
 
+from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._decorator import iqtree_func
 
 iq_build_tree = iqtree_func(iq_build_tree, hide_files=True)
@@ -30,7 +31,7 @@ def _process_tree_yaml(tree_yaml: dict, names: Sequence[str]) -> cogent3.PhyloNo
             break
     if likelihood is None:
         msg = "IQ-TREE output malformated."
-        raise OSError(msg)
+        raise ParseIqTreeError(msg)
 
     tree.params["lnL"] = likelihood
 
