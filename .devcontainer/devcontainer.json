@@ -1,6 +1,5 @@
 {
     "name": "piqtree2 devcontainer",
-    "context": "..",
     "image": "ghcr.io/cogent3/piqtree2:latest",
     "customizations": {
         "vscode": {
@@ -24,7 +23,8 @@
                 "github.vscode-github-actions",
                 "tamasfe.even-better-toml",
                 "DavidAnson.vscode-markdownlint",
-                "be5invis.toml"
+                "be5invis.toml",
+                "mhutchie.git-graph"
             ]
         }
     },
@@ -33,5 +33,5 @@
         "source=${localEnv:HOME}/.ssh,target=/home/user/.ssh,type=bind,consistency=cached",
         "source=${localEnv:USERPROFILE}/.ssh,target=/home/user/.ssh,type=bind,consistency=cached"
     ],
-    "postCreateCommand": "sudo chown -R user:user /home/user/.ssh"
+    "postCreateCommand": "sudo chown -R user:user /home/user/.ssh && git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
