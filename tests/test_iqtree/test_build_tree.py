@@ -2,6 +2,7 @@ import piqtree2
 import piqtree2.exceptions
 import pytest
 from cogent3 import load_aligned_seqs, make_tree
+from piqtree2.model import DnaModel
 
 
 @pytest.fixture()
@@ -14,9 +15,9 @@ def four_otu(DATA_DIR):
 def test_build_tree(four_otu):
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
 
-    got1 = piqtree2.build_tree(four_otu, "JC", rand_seed=1)
+    got1 = piqtree2.build_tree(four_otu, DnaModel.JC, rand_seed=1)
     assert expected.same_topology(got1)
 
     # Should be similar for any seed
-    got2 = piqtree2.build_tree(four_otu, "JC", rand_seed=None)
+    got2 = piqtree2.build_tree(four_otu, DnaModel.JC, rand_seed=None)
     assert expected.same_topology(got2)
