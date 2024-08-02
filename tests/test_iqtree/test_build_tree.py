@@ -12,12 +12,13 @@ def four_otu(DATA_DIR):
     return aln.omit_gap_pos(allowed_gap_frac=0)
 
 
-def test_build_tree(four_otu):
+@pytest.mark.parametrize("dna_model", list(DnaModel))
+def test_build_tree(four_otu, dna_model):
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
 
-    got1 = piqtree2.build_tree(four_otu, DnaModel.JC, rand_seed=1)
+    got1 = piqtree2.build_tree(four_otu, dna_model, rand_seed=1)
     assert expected.same_topology(got1)
 
     # Should be similar for any seed
-    got2 = piqtree2.build_tree(four_otu, DnaModel.JC, rand_seed=None)
+    got2 = piqtree2.build_tree(four_otu, dna_model, rand_seed=None)
     assert expected.same_topology(got2)
