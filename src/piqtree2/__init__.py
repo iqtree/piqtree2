@@ -9,7 +9,7 @@ from piqtree2.iqtree import (
 )
 from piqtree2.model import available_models
 
-__version__ = "0.1.1.dev0"
+__version__ = "0.2.0"
 
 __all__ = [
     "available_models",
