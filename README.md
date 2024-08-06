@@ -19,6 +19,7 @@ This project is still in early development, if you encounter any problems or hav
 
 ```python
 from piqtree2 import build_tree
+from piqtree2.model import DnaModel
 from cogent3 import load_aligned_seqs # Included with piqtree2!
 
 # Load Sequences
@@ -26,7 +27,7 @@ aln = load_aligned_seqs("tests/data/example.fasta", moltype="dna")
 aln = aln.take_seqs(["Human", "Chimpanzee", "Rhesus", "Mouse"])
 
 # Reconstruct a phylogenetic tree with IQ-TREE!
-tree = build_tree(aln, "JC", rand_seed=1) # Optionally specify a random seed.
+tree = build_tree(aln, DnaModel.JC, rand_seed=1) # Optionally specify a random seed.
 
 print("Tree topology:", tree) # A cogent3 tree object
 print("Log-likelihood:", tree.params["lnL"])
@@ -40,6 +41,7 @@ print("Log-likelihood:", tree.params["lnL"])
 
 ```python
 from piqtree2 import fit_tree
+from piqtree2.model import DnaModel
 from cogent3 import load_aligned_seqs, make_tree # Included with piqtree2!
 
 # Load Sequences
@@ -50,7 +52,7 @@ aln = aln.take_seqs(["Human", "Chimpanzee", "Rhesus", "Mouse"])
 tree = make_tree("(Human, Chimpanzee, (Rhesus, Mouse));")
 
 # Fit branch lengths with IQ-TREE!
-tree = fit_tree(aln, tree, "JC", rand_seed=1) # Optionally specify a random seed.
+tree = fit_tree(aln, tree, DnaModel.JC, rand_seed=1) # Optionally specify a random seed.
 
 print("Tree with branch lengths:", tree) # A cogent3 tree object
 print("Log-likelihood:", tree.params["lnL"])
