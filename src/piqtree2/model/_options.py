@@ -5,7 +5,12 @@ from typing import Optional
 
 from cogent3 import _Table, make_table
 
-from piqtree2.model._model import ALL_MODELS_CLASSES, AaModel, DnaModel, Model
+from piqtree2.model._model import (
+    ALL_MODELS_CLASSES,
+    AaModel,
+    DnaModel,
+    SubstitutionModel,
+)
 
 _dna_models = {
     "Abbreviation": [
@@ -142,10 +147,12 @@ _aa_models = {
 
 
 @functools.cache
-def _make_models(model_type: type[Model]) -> dict[str, list[str]]:
+def _make_models(model_type: type[SubstitutionModel]) -> dict[str, list[str]]:
     data = {"Model Type": [], "Abbreviation": [], "Description": []}
 
-    model_classes = ALL_MODELS_CLASSES if model_type == Model else [model_type]
+    model_classes = (
+        ALL_MODELS_CLASSES if model_type == SubstitutionModel else [model_type]
+    )
 
     for model_class in model_classes:
         for model in model_class:
@@ -170,6 +177,6 @@ def available_models(model_type: Optional[str] = None) -> _Table:
     elif model_type == "protein":
         table = make_table(data=_make_models(AaModel))
     else:
-        table = make_table(data=_make_models(Model))
+        table = make_table(data=_make_models(SubstitutionModel))
 
     return table

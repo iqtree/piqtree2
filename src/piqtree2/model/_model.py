@@ -1,11 +1,11 @@
 import functools
 from abc import abstractmethod
-from enum import Enum, auto
+from enum import Enum, unique
 
 from typing_extensions import Self
 
 
-class Model(Enum):
+class SubstitutionModel(Enum):
     """Base class for models."""
 
     @staticmethod
@@ -45,31 +45,32 @@ class Model(Enum):
         return self._descriptions()[self]
 
 
-class DnaModel(Model):
+@unique
+class DnaModel(SubstitutionModel):
     """DNA substitution models."""
 
-    JC = auto()
-    F81 = auto()
-    K80 = auto()
-    HKY = auto()
-    TN = auto()
-    TNe = auto()
-    K81 = auto()
-    K81u = auto()
-    TPM2 = auto()
-    TPM2u = auto()
-    TPM3 = auto()
-    TPM3u = auto()
-    TIM = auto()
-    TIMe = auto()
-    TIM2 = auto()
-    TIM2e = auto()
-    TIM3 = auto()
-    TIM3e = auto()
-    TVM = auto()
-    TVMe = auto()
-    SYM = auto()
-    GTR = auto()
+    JC = "JC"
+    F81 = "F81"
+    K80 = "K80"
+    HKY = "HKY"
+    TN = "TN"
+    TNe = "TNe"
+    K81 = "K81"
+    K81u = "K81u"
+    TPM2 = "TPM2"
+    TPM2u = "TPM2u"
+    TPM3 = "TPM3"
+    TPM3u = "TPM3u"
+    TIM = "TIM"
+    TIMe = "TIMe"
+    TIM2 = "TIM2"
+    TIM2e = "TIM2e"
+    TIM3 = "TIM3"
+    TIM3e = "TIM3e"
+    TVM = "TVM"
+    TVMe = "TVMe"
+    SYM = "SYM"
+    GTR = "GTR"
 
     @staticmethod
     def model_type() -> str:
@@ -104,47 +105,48 @@ class DnaModel(Model):
         }
 
 
-class AaModel(Model):
+@unique
+class AaModel(SubstitutionModel):
     """Protein substitution models."""
 
-    Blosum62 = auto()
-    cpREV = auto()
-    Dayhoff = auto()
-    DCMut = auto()
-    EAL = auto()
-    ELM = auto()
-    FLAVI = auto()
-    FLU = auto()
-    GTR20 = auto()
-    HIVb = auto()
-    HIVw = auto()
-    JTT = auto()
-    JTTDCMut = auto()
-    LG = auto()
-    mtART = auto()
-    mtMAM = auto()
-    mtREV = auto()
-    mtZOA = auto()
-    mtMet = auto()
-    mtVer = auto()
-    mtInv = auto()
-    NQ_bird = auto()
-    NQ_insect = auto()
-    NQ_mammal = auto()
-    NQ_pfam = auto()
-    NQ_plant = auto()
-    NQ_yeast = auto()
-    Poisson = auto()
-    PMB = auto()
-    Q_bird = auto()
-    Q_insect = auto()
-    Q_mammal = auto()
-    Q_pfam = auto()
-    Q_plant = auto()
-    Q_yeast = auto()
-    rtREV = auto()
-    VT = auto()
-    WAG = auto()
+    Blosum62 = "Blosum62"
+    cpREV = "cpREV"
+    Dayhoff = "Dayhoff"
+    DCMut = "DCMut"
+    EAL = "EAL"
+    ELM = "ELM"
+    FLAVI = "FLAVI"
+    FLU = "FLU"
+    GTR20 = "GTR20"
+    HIVb = "HIVb"
+    HIVw = "HIVw"
+    JTT = "JTT"
+    JTTDCMut = "JTTDCMut"
+    LG = "LG"
+    mtART = "mtART"
+    mtMAM = "mtMAM"
+    mtREV = "mtREV"
+    mtZOA = "mtZOA"
+    mtMet = "mtMet"
+    mtVer = "mtVer"
+    mtInv = "mtInv"
+    NQ_bird = "NQ.bird"
+    NQ_insect = "NQ.insect"
+    NQ_mammal = "NQ.mammal"
+    NQ_pfam = "NQ.pfam"
+    NQ_plant = "NQ.plant"
+    NQ_yeast = "NQ.yeast"
+    Poisson = "Poisson"
+    PMB = "PMB"
+    Q_bird = "Q.bird"
+    Q_insect = "Q.insect"
+    Q_mammal = "Q.mammal"
+    Q_pfam = "Q.pfam"
+    Q_plant = "Q.plant"
+    Q_yeast = "Q.yeast"
+    rtREV = "rtREV"
+    VT = "VT"
+    WAG = "WAG"
 
     @staticmethod
     def model_type() -> str:
@@ -195,4 +197,4 @@ class AaModel(Model):
         }
 
 
-ALL_MODELS_CLASSES: list[type[Model]] = [DnaModel, AaModel]
+ALL_MODELS_CLASSES: list[type[SubstitutionModel]] = [DnaModel, AaModel]
