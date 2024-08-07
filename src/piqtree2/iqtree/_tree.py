@@ -9,7 +9,7 @@ from _piqtree2 import iq_build_tree, iq_fit_tree
 
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._decorator import iqtree_func
-from piqtree2.model import SubstitutionModel
+from piqtree2.model import Model
 
 iq_build_tree = iqtree_func(iq_build_tree, hide_files=True)
 iq_fit_tree = iqtree_func(iq_fit_tree, hide_files=True)
@@ -42,7 +42,7 @@ def _process_tree_yaml(tree_yaml: dict, names: Sequence[str]) -> cogent3.PhyloNo
 
 def build_tree(
     aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
-    model: SubstitutionModel,
+    model: Model,
     rand_seed: Optional[int] = None,
 ) -> cogent3.PhyloNode:
     """Reconstruct a phylogenetic tree.
@@ -70,14 +70,14 @@ def build_tree(
     names = aln.names
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
-    yaml_result = yaml.safe_load(iq_build_tree(names, seqs, model.value, rand_seed))
+    yaml_result = yaml.safe_load(iq_build_tree(names, seqs, str(model), rand_seed))
     return _process_tree_yaml(yaml_result, names)
 
 
 def fit_tree(
     aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
     tree: cogent3.PhyloNode,
-    model: SubstitutionModel,
+    model: Model,
     rand_seed: Optional[int] = None,
 ) -> cogent3.PhyloNode:
     """Fit branch lengths to a tree.
@@ -110,6 +110,6 @@ def fit_tree(
     newick = str(tree)
 
     yaml_result = yaml.safe_load(
-        iq_fit_tree(names, seqs, model.value, newick, rand_seed),
+        iq_fit_tree(names, seqs, str(model), newick, rand_seed),
     )
     return _process_tree_yaml(yaml_result, names)

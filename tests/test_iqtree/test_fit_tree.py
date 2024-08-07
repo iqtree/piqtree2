@@ -1,7 +1,7 @@
 import piqtree2
 import pytest
 from cogent3 import get_app, load_aligned_seqs, make_tree
-from piqtree2.model import DnaModel
+from piqtree2.model import DnaModel, Model
 
 
 @pytest.fixture()
@@ -27,9 +27,9 @@ def test_fit_tree(three_otu, iq_model, c3_model):
     app = get_app("model", c3_model, tree=tree_topology)
     expected = app(three_otu)
 
-    got1 = piqtree2.fit_tree(three_otu, tree_topology, iq_model, rand_seed=1)
+    got1 = piqtree2.fit_tree(three_otu, tree_topology, Model(iq_model), rand_seed=1)
     assert got1.params["lnL"] == pytest.approx(expected.lnL)
 
     # Should be within an approximation for any seed
-    got2 = piqtree2.fit_tree(three_otu, tree_topology, iq_model, rand_seed=None)
+    got2 = piqtree2.fit_tree(three_otu, tree_topology, Model(iq_model), rand_seed=None)
     assert got2.params["lnL"] == pytest.approx(expected.lnL)
