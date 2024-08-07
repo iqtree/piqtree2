@@ -5,7 +5,7 @@ from typing import Optional
 
 from cogent3 import _Table, make_table
 
-from piqtree2.model._model import (
+from piqtree2.model._substitution_model import (
     ALL_MODELS_CLASSES,
     AaModel,
     DnaModel,
