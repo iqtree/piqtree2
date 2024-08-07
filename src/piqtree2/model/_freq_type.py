@@ -1,5 +1,6 @@
+import functools
 from enum import Enum, unique
-from typing import ClassVar
+from typing import Self
 
 
 @unique
@@ -8,11 +9,14 @@ class FreqType(Enum):
     FO = "FO"
     FQ = "FQ"
 
-    _descriptions: ClassVar[dict["FreqType", str]] = {
-        F: "Empirical state frequency observed from the data.",
-        FO: "State frequency optimized by maximum-likelihood from the data. Note that this is with letter-O and not digit-0.",
-        FQ: "Equal state frequency.",
-    }
+    @staticmethod
+    @functools.cache
+    def _descriptions() -> dict[Self, str]:
+        return {
+            FreqType.F: "Empirical state frequency observed from the data.",
+            FreqType.FO: "State frequency optimized by maximum-likelihood from the data. Note that this is with letter-O and not digit-0.",
+            FreqType.FQ: "Equal state frequency.",
+        }
 
     @property
     def description(self) -> str:
