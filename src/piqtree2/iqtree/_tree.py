@@ -53,8 +53,8 @@ def build_tree(
     ----------
     aln : Union[cogent3.Alignment, cogent3.ArrayAlignment]
         The sequence alignment.
-    model : SubstitutionModel
-        The substitution model.
+    model : Model
+        The substitution model with base frequencies.
     rand_seed : Optional[int], optional
         The random seed - 0 or None means no seed, by default None.
 
@@ -91,8 +91,8 @@ def fit_tree(
         The sequence alignment.
     tree : cogent3.PhyloNode
         The topology to fit branch lengths to.
-    model : SubstitutionModel
-        The substitution model.
+    model : Model
+        The substitution model with base frequencies.
     rand_seed : Optional[int], optional
         The random seed - 0 or None means no seed, by default None.
 

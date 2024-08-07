@@ -6,7 +6,7 @@ from typing_extensions import Self
 
 
 class SubstitutionModel(Enum):
-    """Base class for models."""
+    """Base class for substitution models."""
 
     @staticmethod
     @abstractmethod
