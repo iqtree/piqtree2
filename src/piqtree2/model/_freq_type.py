@@ -6,6 +6,8 @@ from typing_extensions import Self
 
 @unique
 class FreqType(Enum):
+    """Types of base frequencies."""
+
     F = "F"
     FO = "FO"
     FQ = "FQ"
@@ -21,12 +23,12 @@ class FreqType(Enum):
 
     @property
     def description(self) -> str:
-        """The model's description.
+        """The description of the FreqType.
 
         Returns
         -------
         str
-            The model's description.
+            The description of the FreqType.
 
         """
         return self._descriptions()[self]
