@@ -54,7 +54,7 @@ def build_tree(
     aln : Union[cogent3.Alignment, cogent3.ArrayAlignment]
         The sequence alignment.
     model : Model
-        The substitution model with base frequencies.
+        The substitution model with base frequencies and rate heterogeneity.
     rand_seed : Optional[int], optional
         The random seed - 0 or None means no seed, by default None.
 
@@ -92,7 +92,7 @@ def fit_tree(
     tree : cogent3.PhyloNode
         The topology to fit branch lengths to.
     model : Model
-        The substitution model with base frequencies.
+        The substitution model with base frequencies and rate heterogeneity.
     rand_seed : Optional[int], optional
         The random seed - 0 or None means no seed, by default None.
 
