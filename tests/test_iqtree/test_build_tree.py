@@ -1,8 +1,15 @@
 import piqtree2
-import piqtree2.exceptions
 import pytest
 from cogent3 import load_aligned_seqs, make_tree
-from piqtree2.model import DnaModel, FreqType, Model
+from piqtree2.exceptions import IqTreeError
+from piqtree2.model import (
+    DiscreteGammaModel,
+    DnaModel,
+    FreeRateModel,
+    FreqType,
+    Model,
+    RateType,
+)
 
 
 @pytest.fixture()
@@ -14,12 +21,29 @@ def four_otu(DATA_DIR):
 
 @pytest.mark.parametrize("dna_model", list(DnaModel))
 @pytest.mark.parametrize("freq_type", list(FreqType))
-def test_build_tree(four_otu, dna_model, freq_type):
+@pytest.mark.parametrize("invariable_sites", [False, True])
+@pytest.mark.parametrize(
+    "rate_model",
+    [
+        None,
+        DiscreteGammaModel(),
+        FreeRateModel(),
+        DiscreteGammaModel(6),
+        FreeRateModel(6),
+    ],
+)
+def test_build_tree(four_otu, dna_model, freq_type, invariable_sites, rate_model):
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
 
-    got1 = piqtree2.build_tree(four_otu, Model(dna_model, freq_type), rand_seed=1)
+    model = Model(
+        dna_model,
+        freq_type,
+        RateType(invariable_sites=invariable_sites, model=rate_model),
+    )
+
+    got1 = piqtree2.build_tree(four_otu, model, rand_seed=1)
     assert expected.same_topology(got1)
 
     # Should be similar for any seed
-    got2 = piqtree2.build_tree(four_otu, Model(dna_model, freq_type), rand_seed=None)
+    got2 = piqtree2.build_tree(four_otu, model, rand_seed=None)
     assert expected.same_topology(got2)
