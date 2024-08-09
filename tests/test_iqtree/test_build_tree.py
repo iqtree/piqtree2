@@ -1,7 +1,6 @@
 import piqtree2
 import pytest
 from cogent3 import load_aligned_seqs, make_tree
-from piqtree2.exceptions import IqTreeError
 from piqtree2.model import (
     DiscreteGammaModel,
     DnaModel,
