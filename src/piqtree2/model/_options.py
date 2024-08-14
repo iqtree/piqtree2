@@ -5,6 +5,8 @@ from typing import Optional
 
 from cogent3 import _Table, make_table
 
+from piqtree2.model._freq_type import FreqType
+from piqtree2.model._rate_type import ALL_BASE_RATE_TYPES, get_description
 from piqtree2.model._substitution_model import (
     ALL_MODELS_CLASSES,
     AaModel,
@@ -47,3 +49,25 @@ def available_models(model_type: Optional[str] = None) -> _Table:
         table = make_table(data=_make_models(SubstitutionModel))
 
     return table
+
+
+def available_freq_type() -> _Table:
+    """Return a table showing available freq type options."""
+    data = {"Freq Type": [], "Description": []}
+
+    for freq_type in FreqType:
+        data["Freq Type"].append(freq_type.name)
+        data["Description"].append(freq_type.description)
+
+    return make_table(data=data)
+
+
+def available_rate_type() -> _Table:
+    """Return a table showing available rate type options."""
+    data = {"Rate Type": [], "Description": []}
+
+    for rate_type in ALL_BASE_RATE_TYPES:
+        data["Rate Type"].append(rate_type.iqtree_str())
+        data["Description"].append(get_description(rate_type))
+
+    return make_table(data=data)
