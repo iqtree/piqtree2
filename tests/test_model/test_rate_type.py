@@ -12,10 +12,10 @@ def test_rate_model_uninstantiable():
     [
         (False, None, ""),
         (True, None, "+I"),
-        (False, DiscreteGammaModel(), "+G4"),
-        (True, DiscreteGammaModel(), "+I+G4"),
-        (False, FreeRateModel(), "+R4"),
-        (True, FreeRateModel(), "+I+R4"),
+        (False, DiscreteGammaModel(), "+G"),
+        (True, DiscreteGammaModel(), "+I+G"),
+        (False, FreeRateModel(), "+R"),
+        (True, FreeRateModel(), "+I+R"),
         (False, DiscreteGammaModel(8), "+G8"),
         (True, DiscreteGammaModel(8), "+I+G8"),
         (False, FreeRateModel(8), "+R8"),
@@ -33,3 +33,11 @@ def test_invariable_sites(
 ):
     model = RateType(invariable_sites=invariable_sites, model=rate_model)
     assert model.iqtree_str() == iqtree_str
+
+    if rate_model is None:
+        model = RateType(invariable_sites=invariable_sites)
+        assert model.iqtree_str() == iqtree_str
+
+    if not invariable_sites:
+        model = RateType(model=rate_model)
+        assert model.iqtree_str() == iqtree_str
