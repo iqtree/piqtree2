@@ -36,7 +36,6 @@ def test_two_fit_random_trees():
         random_trees(2, TreeGenMode.BALANCED, 3, 1)
 
 
-@pytest.mark.skip()
 @pytest.mark.parametrize("rate_type_class", [DiscreteGammaModel, FreeRateModel])
 @pytest.mark.parametrize("categories", [0, -4])
 def test_two_invalid_models(rate_type_class, categories):
