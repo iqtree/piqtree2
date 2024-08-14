@@ -1,7 +1,8 @@
 # testing the display of functions
 import pytest
-from piqtree2 import available_models
-from piqtree2.model import AaModel, DnaModel
+from piqtree2 import available_freq_type, available_models, available_rate_type
+from piqtree2.model import AaModel, DnaModel, FreqType
+from piqtree2.model._rate_type import ALL_BASE_RATE_TYPES
 
 
 @pytest.mark.parametrize(
@@ -30,3 +31,19 @@ def test_available_models_types(model_fetch, model_type):
     else:
         for check_model_type in table[:, 0]:
             assert check_model_type[0] == model_type
+
+
+def test_num_freq_type():
+    table = available_freq_type()
+    total_freq_types = len(FreqType)
+
+    assert total_freq_types > 0
+    assert table.shape[0] == total_freq_types
+
+
+def test_num_rate_type():
+    table = available_rate_type()
+    total_rate_types = len(ALL_BASE_RATE_TYPES)
+
+    assert total_rate_types > 0
+    assert table.shape[0] == total_rate_types
