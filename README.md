@@ -3,7 +3,9 @@
 [![PyPI Version](https://img.shields.io/pypi/v/piqtree2)](https://pypi.org/project/piqtree2/)
 [![Python Version](https://img.shields.io/pypi/pyversions/piqtree2)](https://pypi.org/project/piqtree2/)
 [![License](https://img.shields.io/github/license/iqtree/piqtree2)](https://github.com/iqtree/piqtree2/blob/main/LICENSE)
+
 [![CI](https://github.com/iqtree/piqtree2/workflows/CI/badge.svg)](https://github.com/iqtree/piqtree2/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/iqtree/piqtree2/badge.svg?branch=main)](https://coveralls.io/github/iqtree/piqtree2?branch=main)
 
 <!-- [![Coverage Status](https://coveralls.io/repos/github/iqtree/piqtree2/badge.svg?branch=main)](https://coveralls.io/github/iqtree/piqtree2?branch=main) -->
 
