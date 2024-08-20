@@ -73,6 +73,7 @@ jobs:
           nox -s test-${{ matrix.python-version }} -- --cov --cov-report=lcov:${{matrix.os}}-${{matrix.python-version}}.lcov --cov-report=term --cov-append --durations=20
   
       - name: Coveralls Parallel
+        if: matrix.os != 'macos-13'
         uses: coverallsapp/github-action@v2
         with:
           parallel: true
