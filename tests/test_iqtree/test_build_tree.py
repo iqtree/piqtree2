@@ -41,8 +41,10 @@ def test_build_tree(four_otu, dna_model, freq_type, invariable_sites, rate_model
     )
 
     got1 = piqtree2.build_tree(four_otu, model, rand_seed=1)
-    assert expected.same_topology(got1)
+    got1 = got1.unrooted()
+    assert expected.same_topology(got1.unrooted())
 
     # Should be similar for any seed
     got2 = piqtree2.build_tree(four_otu, model, rand_seed=None)
+    got2 = got2.unrooted()
     assert expected.same_topology(got2)
