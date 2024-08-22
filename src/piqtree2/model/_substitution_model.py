@@ -71,6 +71,43 @@ class DnaModel(SubstitutionModel):
     TVMe = "TVMe"
     SYM = "SYM"
     GTR = "GTR"
+    LIE_1_1 = "1.1"
+    LIE_2_2b = "2.2b"
+    LIE_3_3a = "3.3a"
+    LIE_3_3b = "3.3b"
+    LIE_3_3c = "3.3c"
+    LIE_3_4 = "3.4"
+    LIE_4_4a = "4.4a"
+    LIE_4_4b = "4.4b"
+    LIE_4_5a = "4.5a"
+    LIE_4_5b = "4.5b"
+    LIE_5_6a = "5.6a"
+    LIE_5_6b = "5.6b"
+    LIE_5_7a = "5.7a"
+    LIE_5_7b = "5.7b"
+    LIE_5_7c = "5.7c"
+    LIE_5_11a = "5.11a"
+    LIE_5_11b = "5.11b"
+    LIE_5_11c = "5.11c"
+    LIE_5_16 = "5.16"
+    LIE_6_6 = "6.6"
+    LIE_6_7a = "6.7a"
+    LIE_6_7b = "6.7b"
+    LIE_6_8a = "6.8a"
+    LIE_6_8b = "6.8b"
+    LIE_6_17a = "6.17a"
+    LIE_6_17b = "6.17b"
+    LIE_8_8 = "8.8"
+    LIE_8_10a = "8.10a"
+    LIE_8_10b = "8.10b"
+    LIE_8_16 = "8.16"
+    LIE_8_17 = "8.17"
+    LIE_8_18 = "8.18"
+    LIE_9_20a = "9.20a"
+    LIE_9_20b = "9.20b"
+    LIE_10_12 = "10.12"
+    LIE_10_34 = "10.34"
+    LIE_12_12 = "12.12"
 
     @staticmethod
     def model_type() -> str:
@@ -102,6 +139,43 @@ class DnaModel(SubstitutionModel):
             DnaModel.TVMe: "Like TVM but equal base freq.",
             DnaModel.SYM: "Symmetric model with unequal rates but equal base freq. (Zharkikh, 1994).",
             DnaModel.GTR: "General time reversible model with unequal rates and unequal base freq. (Tavare, 1986).",
+            DnaModel.LIE_1_1: "Reversible model. Equal base frequencies. equiv. to JC",
+            DnaModel.LIE_2_2b: "Reversible model. Equal base frequencies. equiv. to K2P",
+            DnaModel.LIE_3_3a: "Reversible model. Equal base frequencies. equiv. to K3P",
+            DnaModel.LIE_3_3b: "Non-reversible model. Equal base frequencies.",
+            DnaModel.LIE_3_3c: "Reversible model. Equal base frequencies. equiv. to TNe",
+            DnaModel.LIE_3_4: "Reversible model. f(A)=f(G) and f(C)=f(T).",
+            DnaModel.LIE_4_4a: "Reversible model. Unconstrained base frequencies. equiv. to F81",
+            DnaModel.LIE_4_4b: "Reversible model. f(A)=f(G) and f(C)=f(T).",
+            DnaModel.LIE_4_5a: "Non-reversible model. f(A)=f(G) and f(C)=f(T).",
+            DnaModel.LIE_4_5b: "Non-reversible model. f(A)=f(G) and f(C)=f(T).",
+            DnaModel.LIE_5_6a: "Non-reversible model. Equal base frequencies.",
+            DnaModel.LIE_5_6b: "Non-reversible model. Unconstrained base frequencies.",
+            DnaModel.LIE_5_7a: "Non-reversible model. f(A)+f(G)=0.5=f(C)+f(T).",
+            DnaModel.LIE_5_7b: "Non-reversible model. Equal base frequencies.",
+            DnaModel.LIE_5_7c: "Non-reversible model. Equal base frequencies.",
+            DnaModel.LIE_5_11a: "Non-reversible model. f(A)+f(G)=0.5=f(C)+f(T).",
+            DnaModel.LIE_5_11b: "Non-reversible model. Equal base frequencies.",
+            DnaModel.LIE_5_11c: "Non-reversible model. Equal base frequencies.",
+            DnaModel.LIE_5_16: "Non-reversible model. f(A)=f(G) and f(C)=f(T).",
+            DnaModel.LIE_6_6: "Non-reversible model. f(A)=f(G) and f(C)=f(T). equiv. to STRSYM for strand-symmetric model (Bielawski and Gold, 2002)",
+            DnaModel.LIE_6_7a: "Non-reversible model. Unconstrained base frequencies. F81+K3P",
+            DnaModel.LIE_6_7b: "Non-reversible model. Unconstrained base frequencies.",
+            DnaModel.LIE_6_8a: "Non-reversible model. Unconstrained base frequencies.",
+            DnaModel.LIE_6_8b: "Non-reversible model. f(A)=f(G) and f(C)=f(T).",
+            DnaModel.LIE_6_17a: "Non-reversible model. f(A)=f(G) and f(C)=f(T).",
+            DnaModel.LIE_6_17b: "Non-reversible model. f(A)=f(G) and f(C)=f(T).",
+            DnaModel.LIE_8_8: "Non-reversible model. Unconstrained base frequencies.",
+            DnaModel.LIE_8_10a: "Non-reversible model. Unconstrained base frequencies.",
+            DnaModel.LIE_8_10b: "Non-reversible model. f(A)=f(G) and f(C)=f(T).",
+            DnaModel.LIE_8_16: "Non-reversible model. Unconstrained base frequencies.",
+            DnaModel.LIE_8_17: "Non-reversible model. Unconstrained base frequencies.",
+            DnaModel.LIE_8_18: "Non-reversible model. Unconstrained base frequencies.",
+            DnaModel.LIE_9_20a: "Non-reversible model. f(A)+f(G)=0.5=f(C)+f(T).",
+            DnaModel.LIE_9_20b: "Non-reversible model. Equal base frequencies. Doubly stochastic",
+            DnaModel.LIE_10_12: "Non-reversible model. Unconstrained base frequencies.",
+            DnaModel.LIE_10_34: "Non-reversible model. Unconstrained base frequencies.",
+            DnaModel.LIE_12_12: "Non-reversible model. Unconstrained base frequencies. equiv. to UNREST (unrestricted model)",
         }
 
 
