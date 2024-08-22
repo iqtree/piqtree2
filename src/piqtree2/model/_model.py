@@ -14,7 +14,7 @@ class Model:
     def __init__(
         self,
         substitution_model: SubstitutionModel,
-        freq_type: Optional[FreqType] = FreqType.F,
+        freq_type: Optional[FreqType] = None,
         rate_type: Optional[RateType] = None,
     ) -> None:
         """Constructor for the model.
@@ -24,18 +24,15 @@ class Model:
         substitution_model : SubstitutionModel
             The substitution model to use
         freq_type : Optional[FreqType], optional
-            Base frequency specification, by default FreqType.F
+            Base frequency specification, by default None. (defaults
+            to empirical base frequencies if not specified by model).
         rate_type : Optional[FreqType], optional
             Rate heterogeneity across sites model, by default
-            no invariable sites, no Gamma, and no FreeRate
+            no invariable sites, no Gamma, and no FreeRate.
         """
         self.substitution_model = substitution_model
-        self.freq_type = FreqType.F if freq_type is None else freq_type
-        self.rate_type = (
-            RateType(invariable_sites=False, model=None)
-            if rate_type is None
-            else rate_type
-        )
+        self.freq_type = freq_type
+        self.rate_type = rate_type
 
     def __str__(self) -> str:
         """Convert the model into the IQ-TREE representation.
@@ -45,9 +42,6 @@ class Model:
         str
             The IQ-TREE representation of the mode.
         """
-        return (
-            self.substitution_model.value
-            + "+"
-            + self.freq_type.value
-            + self.rate_type.iqtree_str()
-        )
+        freq_str = "" if self.freq_type is None else "+" + self.freq_type.value
+        rate_str = "" if self.rate_type is None else self.rate_type.iqtree_str()
+        return self.substitution_model.value + freq_str + rate_str
