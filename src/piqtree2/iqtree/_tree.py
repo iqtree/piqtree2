@@ -14,10 +14,18 @@ from piqtree2.model import Model
 iq_build_tree = iqtree_func(iq_build_tree, hide_files=True)
 iq_fit_tree = iqtree_func(iq_fit_tree, hide_files=True)
 
+PAR_NAMES = ["A/C",  "A/G",  "A/T",  "C/G",  "C/T",  "G/T"]
+
 
 def _rename_iq_tree(tree: cogent3.PhyloNode, names: Sequence[str]) -> None:
     for tip in tree.tips():
         tip.name = names[int(tip.name)]
+
+def _intrude_edge_params(tree: cogent3.PhyloNode, edge_params: dict) -> None:
+    for node in tree.traverse():
+        if not node.is_root():
+            # add global rate parameters to the edge
+            node.params.update(edge_params)
 
 
 def _process_tree_yaml(tree_yaml: dict, names: Sequence[str]) -> cogent3.PhyloNode:
@@ -37,6 +45,10 @@ def _process_tree_yaml(tree_yaml: dict, names: Sequence[str]) -> cogent3.PhyloNo
     tree.params["lnL"] = likelihood
 
     _rename_iq_tree(tree, names)
+
+    edge_params = dict(zip(PAR_NAMES, map(float, tree_yaml["ModelDNA"]["rates"].split(", "))))
+    _intrude_edge_params(tree, edge_params)
+
     return tree
 
 
