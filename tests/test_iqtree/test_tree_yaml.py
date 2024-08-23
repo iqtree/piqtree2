@@ -1,6 +1,7 @@
 from typing import Any
 
 import pytest
+
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._tree import _process_tree_yaml
 
@@ -73,21 +74,25 @@ def test_newick_not_in_candidates(newick_not_in_candidates: dict[str, Any]) -> N
     with pytest.raises(ParseIqTreeError):
         _ = _process_tree_yaml(newick_not_in_candidates, ["a", "b", "c"])
 
+
 def test_motif_params(standard_yaml):
-    params = {"mprobs": {
+    params = {
+        "mprobs": {
             "A": 0.3628523161,
             "C": 0.1852938562,
             "G": 0.2173913044,
             "T": 0.2344625233,
-        }}
+        }
+    }
     tree = _process_tree_yaml(standard_yaml, ["a", "b", "c", "d"])
     for vector in tree.get_edge_vector():
         for k, v in params.items():
             assert k in vector.params
             assert vector.params[k] == v
 
+
 def test_rate_params(standard_yaml):
-    params ={
+    params = {
         "A/C": 1,
         "A/G": 3.82025079,
         "A/T": 1,
@@ -97,8 +102,7 @@ def test_rate_params(standard_yaml):
     }
     tree = _process_tree_yaml(standard_yaml, ["a", "b", "c", "d"])
     vectors = tree.get_edge_vector()
-    for vector in vectors[:-1]: # skip the root
+    for vector in vectors[:-1]:  # skip the root
         for k, v in params.items():
             assert k in vector.params
             assert vector.params[k] == v
-
