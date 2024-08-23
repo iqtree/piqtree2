@@ -14,22 +14,25 @@ from piqtree2.model import Model
 iq_build_tree = iqtree_func(iq_build_tree, hide_files=True)
 iq_fit_tree = iqtree_func(iq_fit_tree, hide_files=True)
 
-PAR_NAMES = ["A/C",  "A/G",  "A/T",  "C/G",  "C/T",  "G/T"]
-
+# the order defined in IQ-TREE
+RATE_PARS = ["A/C",  "A/G",  "A/T",  "C/G",  "C/T",  "G/T"]
+MOTIF_PARS = ["A", "C", "G", "T"]
 
 def _rename_iq_tree(tree: cogent3.PhyloNode, names: Sequence[str]) -> None:
     for tip in tree.tips():
         tip.name = names[int(tip.name)]
 
-def _intrude_edge_params(tree: cogent3.PhyloNode, edge_params: dict) -> None:
-    for node in tree.traverse():
-        if not node.is_root():
-            # add global rate parameters to the edge
-            node.params.update(edge_params)
+def _intrude_edge_params(tree: cogent3.PhyloNode, **kwargs:dict) -> None:
+    for node in tree.get_edge_vector():
+        # skip the rate parameters when node is the root
+        if node.is_root():
+            kwargs = {k: v for k,v in kwargs.items() if k == "mprobs"}
+        node.params.update(kwargs)
 
 
 def _process_tree_yaml(tree_yaml: dict, names: Sequence[str]) -> cogent3.PhyloNode:
     newick = tree_yaml["PhyloTree"]["newick"]
+
     tree = cogent3.make_tree(newick)
 
     candidates = tree_yaml["CandidateSet"]
@@ -46,8 +49,10 @@ def _process_tree_yaml(tree_yaml: dict, names: Sequence[str]) -> cogent3.PhyloNo
 
     _rename_iq_tree(tree, names)
 
-    edge_params = dict(zip(PAR_NAMES, map(float, tree_yaml["ModelDNA"]["rates"].split(", "))))
-    _intrude_edge_params(tree, edge_params)
+    if "ModelDNA" in tree_yaml: # parse only DNA model which is not in Lie model list
+        rate_pars = dict(zip(RATE_PARS, map(float, tree_yaml["ModelDNA"]["rates"].split(", "))))
+        motif_pars = {"mprobs":dict(zip(MOTIF_PARS, map(float, tree_yaml["ModelDNA"]["state_freq"].split(", "))))}
+        _intrude_edge_params(tree, **rate_pars, **motif_pars) # add global rate parameters to the edges
 
     return tree
 
