@@ -9,7 +9,7 @@ from _piqtree2 import iq_build_tree, iq_fit_tree
 
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._decorator import iqtree_func
-from piqtree2.model import Model
+from piqtree2.model import DnaModel, Model
 
 iq_build_tree = iqtree_func(iq_build_tree, hide_files=True)
 iq_fit_tree = iqtree_func(iq_fit_tree, hide_files=True)
@@ -32,7 +32,19 @@ def _intrude_edge_params(tree: cogent3.PhyloNode, **kwargs: dict) -> None:
         node.params.update(kwargs)
 
 
-def _process_tree_yaml(tree_yaml: dict, names: Sequence[str]) -> cogent3.PhyloNode:
+def _reform_rate_params(rate_pars: dict, model: Model) -> dict:
+    if model.substitution_model in {DnaModel.K80, DnaModel.HKY}:
+        rate_pars = {"kappa": rate_pars["A/G"]}
+    elif model.substitution_model is DnaModel.TN:
+        rate_pars = {"kappa_r": rate_pars["A/G"], "kappa_y": rate_pars["C/T"]}
+    elif model.substitution_model is DnaModel.GTR:
+        del rate_pars["G/T"]
+    return rate_pars
+
+
+def _process_tree_yaml(
+    tree_yaml: dict, names: Sequence[str], model: Model,
+) -> cogent3.PhyloNode:
     newick = tree_yaml["PhyloTree"]["newick"]
 
     tree = cogent3.make_tree(newick)
@@ -63,9 +75,21 @@ def _process_tree_yaml(tree_yaml: dict, names: Sequence[str]) -> cogent3.PhyloNo
                 ),
             ),
         }
-        _intrude_edge_params(
-            tree, **rate_pars, **motif_pars,
-        )  # add global rate parameters to the edges
+
+        if model.substitution_model in {DnaModel.JC, DnaModel.F81}:
+            _intrude_edge_params(
+                tree,
+                **motif_pars,  # skip rate_pars since rate parameters are constant in JC and F81
+            )
+        else:
+            rate_pars = _reform_rate_params(
+                rate_pars, model,
+            )  # reform rate parameters in cogent3 way
+            _intrude_edge_params(
+                tree,
+                **rate_pars,
+                **motif_pars,
+            )  # add global rate parameters to the edges
 
     return tree
 
@@ -101,7 +125,7 @@ def build_tree(
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
     yaml_result = yaml.safe_load(iq_build_tree(names, seqs, str(model), rand_seed))
-    return _process_tree_yaml(yaml_result, names)
+    return _process_tree_yaml(yaml_result, names, model)
 
 
 def fit_tree(
@@ -142,4 +166,4 @@ def fit_tree(
     yaml_result = yaml.safe_load(
         iq_fit_tree(names, seqs, str(model), newick, rand_seed),
     )
-    return _process_tree_yaml(yaml_result, names)
+    return _process_tree_yaml(yaml_result, names, model)
