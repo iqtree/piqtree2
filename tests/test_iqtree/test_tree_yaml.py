@@ -1,9 +1,9 @@
 from typing import Any
 
 import pytest
-
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._tree import _process_tree_yaml
+from piqtree2.model import DnaModel, Model
 
 
 @pytest.fixture()
@@ -72,7 +72,9 @@ def standard_yaml():
 
 def test_newick_not_in_candidates(newick_not_in_candidates: dict[str, Any]) -> None:
     with pytest.raises(ParseIqTreeError):
-        _ = _process_tree_yaml(newick_not_in_candidates, ["a", "b", "c"])
+        _ = _process_tree_yaml(
+            newick_not_in_candidates, ["a", "b", "c"], Model(DnaModel.JC),
+        )
 
 
 def test_motif_params(standard_yaml):
@@ -82,9 +84,9 @@ def test_motif_params(standard_yaml):
             "C": 0.1852938562,
             "G": 0.2173913044,
             "T": 0.2344625233,
-        }
+        },
     }
-    tree = _process_tree_yaml(standard_yaml, ["a", "b", "c", "d"])
+    tree = _process_tree_yaml(standard_yaml, ["a", "b", "c", "d"], Model(DnaModel.HKY))
     for vector in tree.get_edge_vector():
         for k, v in params.items():
             assert k in vector.params
@@ -92,15 +94,8 @@ def test_motif_params(standard_yaml):
 
 
 def test_rate_params(standard_yaml):
-    params = {
-        "A/C": 1,
-        "A/G": 3.82025079,
-        "A/T": 1,
-        "C/G": 1,
-        "C/T": 3.82025079,
-        "G/T": 1,
-    }
-    tree = _process_tree_yaml(standard_yaml, ["a", "b", "c", "d"])
+    params = {"kappa": 3.82025079}
+    tree = _process_tree_yaml(standard_yaml, ["a", "b", "c", "d"], Model(DnaModel.HKY))
     vectors = tree.get_edge_vector()
     for vector in vectors[:-1]:  # skip the root
         for k, v in params.items():
