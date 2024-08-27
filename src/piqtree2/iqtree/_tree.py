@@ -24,26 +24,56 @@ def _rename_iq_tree(tree: cogent3.PhyloNode, names: Sequence[str]) -> None:
         tip.name = names[int(tip.name)]
 
 
-def _intrude_edge_params(tree: cogent3.PhyloNode, **kwargs: dict) -> None:
+def _intrude_edge_pars(tree: cogent3.PhyloNode, **kwargs: dict) -> None:
     for node in tree.get_edge_vector():
         # skip the rate parameters when node is the root
         if node.is_root():
             kwargs = {k: v for k, v in kwargs.items() if k == "mprobs"}
+            del node.params["edge_pars"]
         node.params.update(kwargs)
 
 
-def _reform_rate_params(rate_pars: dict, model: Model) -> dict:
+def _reform_edge_pars(tree: cogent3.PhyloNode, model: Model) -> cogent3.PhyloNode:
+    rate_pars = dict(
+        zip(RATE_PARS, map(float, tree.params["edge_pars"]["rates"].split(", "))),
+    )
+    motif_pars = {
+        "mprobs": dict(
+            zip(
+                MOTIF_PARS,
+                map(float, tree.params["edge_pars"]["state_freq"].split(", ")),
+            ),
+        ),
+    }
+
+    if model.substitution_model in {DnaModel.JC, DnaModel.F81}:
+        _intrude_edge_pars(
+            tree,
+            **motif_pars,  # skip rate_pars since rate parameters are constant in JC and F81
+        )
+        return tree
+
     if model.substitution_model in {DnaModel.K80, DnaModel.HKY}:
         rate_pars = {"kappa": rate_pars["A/G"]}
+
     elif model.substitution_model is DnaModel.TN:
         rate_pars = {"kappa_r": rate_pars["A/G"], "kappa_y": rate_pars["C/T"]}
+
     elif model.substitution_model is DnaModel.GTR:
         del rate_pars["G/T"]
-    return rate_pars
+
+    _intrude_edge_pars(
+        tree,
+        **rate_pars,
+        **motif_pars,
+    )  # add global rate parameters to the edges
+
+    return tree
 
 
 def _process_tree_yaml(
-    tree_yaml: dict, names: Sequence[str], model: Model,
+    tree_yaml: dict,
+    names: Sequence[str],
 ) -> cogent3.PhyloNode:
     newick = tree_yaml["PhyloTree"]["newick"]
 
@@ -61,35 +91,13 @@ def _process_tree_yaml(
 
     tree.params["lnL"] = likelihood
 
-    _rename_iq_tree(tree, names)
-
     if "ModelDNA" in tree_yaml:  # parse only DNA model which is not in Lie model list
-        rate_pars = dict(
-            zip(RATE_PARS, map(float, tree_yaml["ModelDNA"]["rates"].split(", "))),
-        )
-        motif_pars = {
-            "mprobs": dict(
-                zip(
-                    MOTIF_PARS,
-                    map(float, tree_yaml["ModelDNA"]["state_freq"].split(", ")),
-                ),
-            ),
+        tree.params["edge_pars"] = {
+            "rates": tree_yaml["ModelDNA"]["rates"],
+            "state_freq": tree_yaml["ModelDNA"]["state_freq"],
         }
 
-        if model.substitution_model in {DnaModel.JC, DnaModel.F81}:
-            _intrude_edge_params(
-                tree,
-                **motif_pars,  # skip rate_pars since rate parameters are constant in JC and F81
-            )
-        else:
-            rate_pars = _reform_rate_params(
-                rate_pars, model,
-            )  # reform rate parameters in cogent3 way
-            _intrude_edge_params(
-                tree,
-                **rate_pars,
-                **motif_pars,
-            )  # add global rate parameters to the edges
+    _rename_iq_tree(tree, names)
 
     return tree
 
@@ -125,7 +133,11 @@ def build_tree(
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
     yaml_result = yaml.safe_load(iq_build_tree(names, seqs, str(model), rand_seed))
-    return _process_tree_yaml(yaml_result, names, model)
+    tree = _process_tree_yaml(yaml_result, names)
+
+    if "edge_pars" in tree.params:
+        tree = _reform_edge_pars(tree, model)
+    return tree
 
 
 def fit_tree(
@@ -166,4 +178,8 @@ def fit_tree(
     yaml_result = yaml.safe_load(
         iq_fit_tree(names, seqs, str(model), newick, rand_seed),
     )
-    return _process_tree_yaml(yaml_result, names, model)
+    tree = _process_tree_yaml(yaml_result, names)
+
+    if "edge_pars" in tree.params:
+        tree = _reform_edge_pars(tree, model)
+    return tree
