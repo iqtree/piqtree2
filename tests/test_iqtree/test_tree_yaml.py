@@ -3,7 +3,6 @@ from typing import Any
 import pytest
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._tree import _process_tree_yaml
-from piqtree2.model import DnaModel, Model
 
 
 @pytest.fixture()
@@ -73,31 +72,15 @@ def standard_yaml():
 def test_newick_not_in_candidates(newick_not_in_candidates: dict[str, Any]) -> None:
     with pytest.raises(ParseIqTreeError):
         _ = _process_tree_yaml(
-            newick_not_in_candidates, ["a", "b", "c"], Model(DnaModel.JC),
+            newick_not_in_candidates,
+            ["a", "b", "c"],
         )
 
 
-def test_motif_params(standard_yaml):
+def test_edge_params(standard_yaml):
     params = {
-        "mprobs": {
-            "A": 0.3628523161,
-            "C": 0.1852938562,
-            "G": 0.2173913044,
-            "T": 0.2344625233,
-        },
+        "rates": "1, 3.82025079, 1, 1, 3.82025079, 1",
+        "state_freq": "0.3628523161, 0.1852938562, 0.2173913044, 0.2344625233",
     }
-    tree = _process_tree_yaml(standard_yaml, ["a", "b", "c", "d"], Model(DnaModel.HKY))
-    for vector in tree.get_edge_vector():
-        for k, v in params.items():
-            assert k in vector.params
-            assert vector.params[k] == v
-
-
-def test_rate_params(standard_yaml):
-    params = {"kappa": 3.82025079}
-    tree = _process_tree_yaml(standard_yaml, ["a", "b", "c", "d"], Model(DnaModel.HKY))
-    vectors = tree.get_edge_vector()
-    for vector in vectors[:-1]:  # skip the root
-        for k, v in params.items():
-            assert k in vector.params
-            assert vector.params[k] == v
+    tree = _process_tree_yaml(standard_yaml, ["a", "b", "c", "d"])
+    assert tree.params["edge_pars"] == params
