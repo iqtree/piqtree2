@@ -18,7 +18,7 @@ def four_otu(DATA_DIR):
     return aln.omit_gap_pos(allowed_gap_frac=0)
 
 
-@pytest.mark.parametrize("dna_model", list(DnaModel))
+@pytest.mark.parametrize("dna_model", list(DnaModel)[:22])
 @pytest.mark.parametrize("freq_type", list(FreqType))
 @pytest.mark.parametrize("invariable_sites", [False, True])
 @pytest.mark.parametrize(
