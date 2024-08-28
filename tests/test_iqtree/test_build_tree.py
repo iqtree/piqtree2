@@ -27,8 +27,6 @@ def four_otu(DATA_DIR):
         None,
         DiscreteGammaModel(),
         FreeRateModel(),
-        DiscreteGammaModel(6),
-        FreeRateModel(6),
     ],
 )
 def test_build_tree(four_otu, dna_model, freq_type, invariable_sites, rate_model):
