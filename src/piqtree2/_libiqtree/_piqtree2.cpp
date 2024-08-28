@@ -1,5 +1,6 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/iostream.h>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -24,15 +25,17 @@ extern string build_tree(vector<string> names, vector<string> seqs, string model
 extern string fit_tree(vector<string> names, vector<string> seqs, string model, string intree, int rand_seed = 0);
 
 int mine(){
+    // Useful function for testing pybind11
+    std::cout << "Hello" << std::endl;
     return 42;
 }
 
 PYBIND11_MODULE(_piqtree2, m) {
     m.doc() = "piqtree2 - Unlock the Power of IQ-TREE2 with Python!";
 
-    m.def("iq_robinson_fould", &robinson_fould, "Calculates the robinson fould distance between two trees");
-    m.def("iq_random_tree", &random_tree, "Generates a set of random phylogenetic trees. tree_gen_mode allows:\"YULE_HARDING\", \"UNIFORM\", \"CATERPILLAR\", \"BALANCED\", \"BIRTH_DEATH\", \"STAR_TREE\".");
-    m.def("iq_build_tree", &build_tree, "Perform phylogenetic analysis on the input alignment (in string format). With estimation of the best topology.");
-    m.def("iq_fit_tree", &fit_tree, "Perform phylogenetic analysis on the input alignment (in string format). With restriction to the input toplogy.");
-    m.def("mine", &mine, "The meaning of life, the universe (and everything)!");
+    m.def("iq_robinson_fould", &robinson_fould, py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>(), "Calculates the robinson fould distance between two trees");
+    m.def("iq_random_tree", &random_tree, py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>(), "Generates a set of random phylogenetic trees. tree_gen_mode allows:\"YULE_HARDING\", \"UNIFORM\", \"CATERPILLAR\", \"BALANCED\", \"BIRTH_DEATH\", \"STAR_TREE\".");
+    m.def("iq_build_tree", &build_tree, py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>(), "Perform phylogenetic analysis on the input alignment (in string format). With estimation of the best topology.");
+    m.def("iq_fit_tree", &fit_tree, py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>(), "Perform phylogenetic analysis on the input alignment (in string format). With restriction to the input toplogy.");
+    m.def("mine", &mine, py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>(), "The meaning of life, the universe (and everything)!");
 }
