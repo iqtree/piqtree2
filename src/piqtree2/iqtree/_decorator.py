@@ -49,11 +49,12 @@ def iqtree_func(
         sys.stdout.flush()
         sys.stderr.flush()
 
-        old_out = sys.stdout
-        old_err = sys.stderr
+        # Save original stdout and stderr file descriptors
+        original_stdout_fd = os.dup(sys.stdout.fileno())
+        original_stderr_fd = os.dup(sys.stderr.fileno())
 
         # Open /dev/null (or NUL on Windows) as destination for stdout and stderr
-        devnull = open(os.devnull, "w")
+        devnull_fd = os.open(os.devnull, os.O_WRONLY)
 
         if hide_files:
             original_dir = pathlib.Path.cwd()
@@ -62,8 +63,8 @@ def iqtree_func(
 
         try:
             # Replace stdout and stderr with /dev/null
-            sys.stdout = devnull
-            sys.stderr = devnull
+            os.dup2(devnull_fd, sys.stdout.fileno())
+            os.dup2(devnull_fd, sys.stderr.fileno())
 
             # Call the wrapped function
             return func(*args, **kwargs)
@@ -75,11 +76,11 @@ def iqtree_func(
             sys.stderr.flush()
 
             # Restore stdout and stderr
-            sys.stdout = old_out
-            sys.stderr = old_err
+            os.dup2(original_stdout_fd, sys.stdout.fileno())
+            os.dup2(original_stderr_fd, sys.stderr.fileno())
 
-            # Close devnull
-            devnull.close()
+            # Close the devnull file descriptor
+            os.close(devnull_fd)
 
             if hide_files:
                 tempdir.cleanup()
