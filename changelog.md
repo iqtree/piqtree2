@@ -1,4 +1,16 @@
 
+<a id='changelog-0.3.1'></a>
+# Changes in release "0.3.1"
+
+## ENH
+
+- Add support for Lie Markov Models.
+- Base frequencies default to None (specified by model).
+
+## BUG
+
+- `piqtree2` apps are now pickleable (they can now be run with `parallel=True` in the cogent3 app infrastructure)
+
 <a id='changelog-0.3.0'></a>
 # Changes in release "0.3.0"
 
