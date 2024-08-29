@@ -18,20 +18,13 @@ def four_otu(DATA_DIR):
     return aln.omit_gap_pos(allowed_gap_frac=0)
 
 
-@pytest.mark.parametrize("dna_model", list(DnaModel))
-@pytest.mark.parametrize("freq_type", list(FreqType))
-@pytest.mark.parametrize("invariable_sites", [False, True])
-@pytest.mark.parametrize(
-    "rate_model",
-    [
-        None,
-        DiscreteGammaModel(),
-        FreeRateModel(),
-        DiscreteGammaModel(6),
-        FreeRateModel(6),
-    ],
-)
-def test_build_tree(four_otu, dna_model, freq_type, invariable_sites, rate_model):
+def check_build_tree(
+    four_otu,
+    dna_model,
+    freq_type=None,
+    invariable_sites=None,
+    rate_model=None,
+):
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
 
     model = Model(
@@ -48,3 +41,39 @@ def test_build_tree(four_otu, dna_model, freq_type, invariable_sites, rate_model
     got2 = piqtree2.build_tree(four_otu, model, rand_seed=None)
     got2 = got2.unrooted()
     assert expected.same_topology(got2)
+
+
+@pytest.mark.parametrize("dna_model", list(DnaModel)[:22])
+@pytest.mark.parametrize("freq_type", list(FreqType))
+def test_non_lie_build_tree(
+    four_otu,
+    dna_model,
+    freq_type,
+):
+    check_build_tree(four_otu, dna_model, freq_type)
+
+
+@pytest.mark.parametrize("dna_model", list(DnaModel)[22:])
+def test_lie_build_tree(four_otu, dna_model):
+    check_build_tree(four_otu, dna_model)
+
+
+@pytest.mark.parametrize("dna_model", list(DnaModel)[:5])
+@pytest.mark.parametrize("invariable_sites", [False, True])
+@pytest.mark.parametrize(
+    "rate_model",
+    [
+        None,
+        DiscreteGammaModel(),
+        FreeRateModel(),
+        DiscreteGammaModel(6),
+        FreeRateModel(6),
+    ],
+)
+def test_rate_model_build_tree(four_otu, dna_model, invariable_sites, rate_model):
+    check_build_tree(
+        four_otu,
+        dna_model,
+        invariable_sites=invariable_sites,
+        rate_model=rate_model,
+    )
