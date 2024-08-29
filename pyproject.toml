@@ -106,11 +106,11 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 "tests/**/*.py" = [
     "S101", # asserts allowed in tests...
     "INP001", # __init__.py files are not required...
-    "ANN",
-    "N802",
-    "N803",
-    "SLF001",
-    "D"
+    "N802", # allow non snake_case function names for fixtures
+    "N803", # allow use of fixture constants
+    "SLF001", # private member access is useufl for testing
+    "FBT001", # allow bool pos args for parameterisation
+    "D", # don't require docstrings
 ]
 "noxfile.py" = [
     "S101", # asserts allowed in tests...

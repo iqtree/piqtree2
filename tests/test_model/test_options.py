@@ -1,7 +1,9 @@
 # testing the display of functions
+from typing import Optional
+
 import pytest
 from piqtree2 import available_freq_type, available_models, available_rate_type
-from piqtree2.model import AaModel, DnaModel, FreqType
+from piqtree2.model import AaModel, DnaModel, FreqType, SubstitutionModel
 from piqtree2.model._rate_type import ALL_BASE_RATE_TYPES
 
 
@@ -9,7 +11,10 @@ from piqtree2.model._rate_type import ALL_BASE_RATE_TYPES
     ("model_class", "model_type"),
     [(None, None), (DnaModel, "dna"), (AaModel, "protein")],
 )
-def test_num_available_models(model_class, model_type):
+def test_num_available_models(
+    model_class: Optional[SubstitutionModel],
+    model_type: Optional[str],
+) -> None:
     table = available_models(model_type)
     total_models = (
         len(DnaModel) + len(AaModel) if model_class is None else len(model_class)
@@ -22,7 +27,10 @@ def test_num_available_models(model_class, model_type):
     ("model_fetch", "model_type"),
     [(None, None), ("dna", "nucleotide"), ("protein", "protein")],
 )
-def test_available_models_types(model_fetch, model_type):
+def test_available_models_types(
+    model_fetch: Optional[str],
+    model_type: Optional[str],
+) -> None:
     table = available_models(model_fetch)
 
     if model_type is None:
@@ -33,7 +41,7 @@ def test_available_models_types(model_fetch, model_type):
             assert check_model_type[0] == model_type
 
 
-def test_num_freq_type():
+def test_num_freq_type() -> None:
     table = available_freq_type()
     total_freq_types = len(FreqType)
 
@@ -41,7 +49,7 @@ def test_num_freq_type():
     assert table.shape[0] == total_freq_types
 
 
-def test_num_rate_type():
+def test_num_rate_type() -> None:
     table = available_rate_type()
     total_rate_types = len(ALL_BASE_RATE_TYPES)
 
