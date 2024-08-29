@@ -1,30 +1,26 @@
+from typing import Optional
+
 import piqtree2
 import pytest
-from cogent3 import load_aligned_seqs, make_tree
+from cogent3 import ArrayAlignment, make_tree
 from piqtree2.model import (
     DiscreteGammaModel,
     DnaModel,
     FreeRateModel,
     FreqType,
     Model,
+    RateModel,
     RateType,
 )
 
 
-@pytest.fixture()
-def four_otu(DATA_DIR):
-    aln = load_aligned_seqs(DATA_DIR / "example.fasta", moltype="dna")
-    aln = aln.take_seqs(["Human", "Chimpanzee", "Rhesus", "Mouse"])
-    return aln.omit_gap_pos(allowed_gap_frac=0)
-
-
 def check_build_tree(
-    four_otu,
-    dna_model,
-    freq_type=None,
-    invariable_sites=None,
-    rate_model=None,
-):
+    four_otu: ArrayAlignment,
+    dna_model: DnaModel,
+    freq_type: Optional[FreqType] = None,
+    invariable_sites: Optional[bool] = None,
+    rate_model: Optional[RateModel] = None,
+) -> None:
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
 
     model = Model(
@@ -46,15 +42,15 @@ def check_build_tree(
 @pytest.mark.parametrize("dna_model", list(DnaModel)[:22])
 @pytest.mark.parametrize("freq_type", list(FreqType))
 def test_non_lie_build_tree(
-    four_otu,
-    dna_model,
-    freq_type,
-):
+    four_otu: ArrayAlignment,
+    dna_model: DnaModel,
+    freq_type: FreqType,
+) -> None:
     check_build_tree(four_otu, dna_model, freq_type)
 
 
 @pytest.mark.parametrize("dna_model", list(DnaModel)[22:])
-def test_lie_build_tree(four_otu, dna_model):
+def test_lie_build_tree(four_otu: ArrayAlignment, dna_model: DnaModel) -> None:
     check_build_tree(four_otu, dna_model)
 
 
@@ -70,7 +66,12 @@ def test_lie_build_tree(four_otu, dna_model):
         FreeRateModel(6),
     ],
 )
-def test_rate_model_build_tree(four_otu, dna_model, invariable_sites, rate_model):
+def test_rate_model_build_tree(
+    four_otu: ArrayAlignment,
+    dna_model: DnaModel,
+    invariable_sites: Optional[bool],
+    rate_model: RateModel,
+) -> None:
     check_build_tree(
         four_otu,
         dna_model,

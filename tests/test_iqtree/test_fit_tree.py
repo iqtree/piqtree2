@@ -1,14 +1,7 @@
 import piqtree2
 import pytest
-from cogent3 import get_app, load_aligned_seqs, make_tree
+from cogent3 import ArrayAlignment, get_app, make_tree
 from piqtree2.model import DnaModel, Model
-
-
-@pytest.fixture()
-def three_otu(DATA_DIR):
-    aln = load_aligned_seqs(DATA_DIR / "example.fasta", moltype="dna")
-    aln = aln.take_seqs(["Human", "Rhesus", "Mouse"])
-    return aln.omit_gap_pos(allowed_gap_frac=0)
 
 
 @pytest.mark.parametrize(
@@ -22,7 +15,7 @@ def three_otu(DATA_DIR):
         (DnaModel.F81, "F81"),
     ],
 )
-def test_fit_tree(three_otu, iq_model, c3_model):
+def test_fit_tree(three_otu: ArrayAlignment, iq_model: DnaModel, c3_model: str) -> None:
     tree_topology = make_tree(tip_names=three_otu.names)
     app = get_app("model", c3_model, tree=tree_topology)
     expected = app(three_otu)

@@ -1,10 +1,12 @@
+from typing import Any
+
 import pytest
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._tree import _process_tree_yaml
 
 
 @pytest.fixture()
-def newick_not_in_candidates():
+def newick_not_in_candidates() -> dict[str, Any]:
     # The newick string does not appear in the CandidateSet
     return {
         "CandidateSet": {
@@ -36,6 +38,6 @@ def newick_not_in_candidates():
     }
 
 
-def test_newick_not_in_candidates(newick_not_in_candidates):
+def test_newick_not_in_candidates(newick_not_in_candidates: dict[str, Any]) -> None:
     with pytest.raises(ParseIqTreeError):
         _ = _process_tree_yaml(newick_not_in_candidates, ["a", "b", "c"])
