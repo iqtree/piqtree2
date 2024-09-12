@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
     gdb \
+    gh \
     git \
     zsh \
     sudo \
@@ -39,24 +40,22 @@ RUN . /opt/conda/etc/profile.d/conda.sh && \
     conda activate c312
 
 # Initialize conda for zsh shell
-RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.zshrc && \
-    echo "conda activate c312" >> ~/.zshrc  
+RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.zshrc
 
 # Clone cogent3 using SSH
 WORKDIR /home/user/repos
 RUN git clone --branch develop https://github.com/cogent3/cogent3.git /home/user/repos/cogent3 
 
-# Install flit and pybind11 in the conda environment
+# Install pybind11 in the conda environment
 RUN . /opt/conda/etc/profile.d/conda.sh && \
     conda activate c312 && \
-    conda install -c conda-forge flit -y  && \
     pip install pybind11
     
-# Install the repositories using flit
+# Install the cogent3 repository
 RUN . /opt/conda/etc/profile.d/conda.sh && \
     conda activate c312 && \
     cd /home/user/repos/cogent3 && \
-    flit install -s 
+    pip install -e . 
 
 # Set up zsh as the default shell
 SHELL ["/bin/zsh", "-c"]
