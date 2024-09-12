@@ -29,9 +29,5 @@
         }
     },
     "remoteUser": "user",
-    "mounts": [
-        "source=${localEnv:HOME}/.ssh,target=/home/user/.ssh,type=bind,consistency=cached",
-        "source=${localEnv:USERPROFILE}/.ssh,target=/home/user/.ssh,type=bind,consistency=cached"
-    ],
     "postCreateCommand": "sudo chown -R user:user /home/user/.ssh && git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
