@@ -17,11 +17,11 @@ extern string random_tree(int num_taxa, string tree_gen_mode, int num_trees, int
 
 // Perform phylogenetic analysis on the input alignment (in string format)
 // With estimation of the best topology
-extern string build_tree(vector<string> names, vector<string> seqs, string model, int rand_seed = 0);
+extern string build_tree(vector<string>& names, vector<string>& seqs, string model, int rand_seed = 0);
 
 // Perform phylogenetic analysis on the input alignment (in string format)
 // With restriction to the input toplogy
-extern string fit_tree(vector<string> names, vector<string> seqs, string model, string intree, int rand_seed = 0);
+extern string fit_tree(vector<string>& names, vector<string>& seqs, string model, string intree, int rand_seed = 0);
 
 int mine(){
     return 42;
