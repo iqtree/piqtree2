@@ -4,6 +4,8 @@ from piqtree2.iqtree import (
     TreeGenMode,
     build_tree,
     fit_tree,
+    jc_distances,
+    model_finder,
     random_trees,
     robinson_foulds,
 )
@@ -17,6 +19,8 @@ __all__ = [
     "available_rate_type",
     "build_tree",
     "fit_tree",
+    "jc_distances",
+    "model_finder",
     "random_trees",
     "robinson_foulds",
     "TreeGenMode",
