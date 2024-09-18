@@ -67,5 +67,11 @@ PYBIND11_MODULE(_piqtree2, m) {
   m.def("iq_fit_tree", &fit_tree,
         "Perform phylogenetic analysis on the input alignment (in string "
         "format). With restriction to the input toplogy.");
+  m.def("iq_model_finder", &modelfinder,
+        "Find optimal model for an alignment.");
+  m.def("iq_jc_distances", &build_distmatrix,
+        "Construct pairwise distance matrix for alignment.");
+  m.def("iq_nj_tree", &build_njtree,
+        "Build neighbour-joining tree from distance matrix.");
   m.def("mine", &mine, "The meaning of life, the universe (and everything)!");
 }
