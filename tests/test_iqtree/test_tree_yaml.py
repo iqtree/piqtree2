@@ -39,7 +39,7 @@ def newick_not_in_candidates() -> dict[str, Any]:
 
 
 @pytest.fixture()
-def standard_yaml():
+def standard_yaml() -> dict[str, Any]:
     return {
         "CandidateSet": {
             0: "-6736.94578464 (0:0.0063211201,1:0.0029675780,(2:0.0228519739,3:0.3072009029):0.01373649616);",
@@ -77,7 +77,7 @@ def test_newick_not_in_candidates(newick_not_in_candidates: dict[str, Any]) -> N
         )
 
 
-def test_edge_params(standard_yaml):
+def test_edge_params(standard_yaml: dict[str, Any]) -> None:
     params = {
         "rates": "1, 3.82025079, 1, 1, 3.82025079, 1",
         "state_freq": "0.3628523161, 0.1852938562, 0.2173913044, 0.2344625233",
