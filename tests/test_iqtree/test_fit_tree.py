@@ -42,5 +42,5 @@ def test_fit_tree(three_otu: ArrayAlignment, iq_model: DnaModel, c3_model: str) 
     for k, v in expected_rates.items():
         assert k in got2.get_edge_vector()[0].params
         assert got2.get_edge_vector()[0].params[k] == pytest.approx(
-            v, abs=1e-1,
-        )  # values can differ by up to 0.1
+            v,
+        )
