@@ -79,8 +79,20 @@ def test_newick_not_in_candidates(newick_not_in_candidates: dict[str, Any]) -> N
 
 def test_edge_params(standard_yaml: dict[str, Any]) -> None:
     params = {
-        "rates": "1, 3.82025079, 1, 1, 3.82025079, 1",
-        "state_freq": "0.3628523161, 0.1852938562, 0.2173913044, 0.2344625233",
+        "rates": {
+            "A/C": 1.0,
+            "A/G": 3.82025079,
+            "A/T": 1.0,
+            "C/G": 1.0,
+            "C/T": 3.82025079,
+            "G/T": 1,
+        },
+        "mprobs": {
+            "A": 0.3628523161,
+            "C": 0.1852938562,
+            "G": 0.2173913044,
+            "T": 0.2344625233,
+        },
     }
     tree = _process_tree_yaml(standard_yaml, ["a", "b", "c", "d"])
     assert tree.params["edge_pars"] == params
