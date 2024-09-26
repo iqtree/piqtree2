@@ -35,20 +35,9 @@ def _insert_edge_pars(tree: cogent3.PhyloNode, **kwargs: dict) -> None:
         node.params.update(kwargs)
 
 
-def _format_edge_pars(tree: cogent3.PhyloNode, model: Model) -> None:
-    # converts the strings of rate and motif parameters into a dictionary format
-    rate_pars = dict(
-        zip(RATE_PARS, map(float, tree.params["edge_pars"]["rates"].split(", "))),
-    )
-    motif_pars = {
-        "mprobs": dict(
-            zip(
-                MOTIF_PARS,
-                map(float, tree.params["edge_pars"]["state_freq"].split(", ")),
-            ),
-        ),
-    }
-
+def _edge_pars_for_cogent3(tree: cogent3.PhyloNode, model: Model) -> None:
+    rate_pars = tree.params["edge_pars"]["rates"]
+    motif_pars = {"mprobs": tree.params["edge_pars"]["mprobs"]}
     # renames parameters to conform to cogent3's naming conventions
     if model.substitution_model in {DnaModel.JC, DnaModel.F81}:
         # skip rate_pars since rate parameters are constant in JC and F81
@@ -96,9 +85,17 @@ def _process_tree_yaml(
 
     # parse only DNA model which is not in Lie model list
     if "ModelDNA" in tree_yaml:
+        # converts the strings of rate and motif parameters into dictionary
         tree.params["edge_pars"] = {
-            "rates": tree_yaml["ModelDNA"]["rates"],
-            "state_freq": tree_yaml["ModelDNA"]["state_freq"],
+            "rates": dict(
+                zip(RATE_PARS, map(float, tree_yaml["ModelDNA"]["rates"].split(", "))),
+            ),
+            "mprobs": dict(
+                zip(
+                    MOTIF_PARS,
+                    map(float, tree_yaml["ModelDNA"]["state_freq"].split(", ")),
+                ),
+            ),
         }
 
     _rename_iq_tree(tree, names)
@@ -142,7 +139,7 @@ def build_tree(
     # if edge parameters been extracted from IQ-TREE output,
     # modify tree to mimic cogent3.PhyloNode
     if "edge_pars" in tree.params:
-        _format_edge_pars(tree, model)
+        _edge_pars_for_cogent3(tree, model)
     return tree
 
 
@@ -189,5 +186,5 @@ def fit_tree(
     # if edge parameters been extracted from IQ-TREE output,
     # modify tree to mimic cogent3.PhyloNode
     if "edge_pars" in tree.params:
-        _format_edge_pars(tree, model)
+        _edge_pars_for_cogent3(tree, model)
     return tree
