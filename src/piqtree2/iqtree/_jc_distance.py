@@ -1,27 +1,33 @@
+from collections.abc import Sequence
 from typing import Union
 
 import cogent3
+import cogent3.app.typing as c3_types
 import numpy as np
 from _piqtree2 import iq_jc_distances
+from cogent3.evolve.fast_distance import DistanceMatrix
 
 from piqtree2.iqtree._decorator import iqtree_func
 
 iq_jc_distances = iqtree_func(iq_jc_distances, hide_files=True)
 
 
+def dists_to_distmatrix(
+    distances: np.ndarray,
+    names: Sequence[str],
+) -> c3_types.PairwiseDistanceType:
+    dist_dict = {}
+    for i in range(1, len(distances)):
+        for j in range(i):
+            dist_dict[(names[i], names[j])] = distances[i, j]
+    return DistanceMatrix(dist_dict)
+
+
 def jc_distances(
     aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
-) -> np.ndarray:
+) -> c3_types.PairwiseDistanceType:
     names = aln.names
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
-    result = iq_jc_distances(names, seqs).strip()
-    data = result.split("\n")[1:]
-
-    distances = np.zeros((len(names), len(names)))
-
-    for i, row in enumerate(data):
-        distance_part = row.strip().split()[-len(names) :]
-        distances[i] = tuple(map(float, distance_part))
-
-    return distances
+    distances = np.array(iq_jc_distances(names, seqs)).reshape((len(names), len(names)))
+    return dists_to_distmatrix(distances, names)
