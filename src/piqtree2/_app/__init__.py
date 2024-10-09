@@ -3,11 +3,11 @@
 from typing import Optional, Union
 
 import cogent3
-import cogent3.app.typing
+import cogent3.app.typing as c3_types
 from cogent3.app.composable import define_app
 from cogent3.util.misc import extend_docstring_from
 
-from piqtree2 import TreeGenMode, build_tree, fit_tree, random_trees
+from piqtree2 import TreeGenMode, build_tree, fit_tree, nj_tree, random_trees
 from piqtree2.model import Model
 
 
@@ -43,4 +43,10 @@ def piqtree_random_trees(
     return random_trees(num_taxa, tree_mode, num_trees, rand_seed)
 
 
-_ALL_APP_NAMES = ["piqtree_phylo", "piqtree_fit", "piqtree_random_trees"]
+@define_app
+@extend_docstring_from(nj_tree)
+def piqtree_nj(dists: c3_types.PairwiseDistanceType) -> cogent3.PhyloNode:
+    return nj_tree(dists)
+
+
+_ALL_APP_NAMES = ["piqtree_phylo", "piqtree_fit", "piqtree_random_trees", "piqtree_nj"]

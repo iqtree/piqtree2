@@ -1,6 +1,8 @@
-import piqtree2
 import pytest
 from cogent3 import ArrayAlignment, get_app, make_tree
+
+import piqtree2
+from piqtree2 import jc_distances
 from piqtree2.model import DnaModel, Model
 
 
@@ -38,3 +40,15 @@ def test_piqtree_random_trees(
 
     for tree in trees:
         assert len(tree.tips()) == num_taxa
+
+
+def test_piqtree_nj(five_otu: ArrayAlignment) -> None:
+    dists = jc_distances(five_otu)
+
+    expected = make_tree("(((Human, Chimpanzee), Rhesus), Manatee, Dugong);")
+
+    app = get_app("piqtree_nj")
+
+    actual = app(dists)
+
+    assert expected.same_topology(actual)
