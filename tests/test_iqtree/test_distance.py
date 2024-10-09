@@ -3,7 +3,7 @@ from cogent3 import ArrayAlignment
 from piqtree2 import jc_distances
 
 
-def test_mash_distance(five_otu: ArrayAlignment) -> None:
+def test_jc_distance(five_otu: ArrayAlignment) -> None:
     dists = jc_distances(five_otu)
 
     assert (
