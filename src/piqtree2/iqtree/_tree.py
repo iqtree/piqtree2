@@ -4,6 +4,7 @@ from collections.abc import Sequence
 from typing import Optional, Union
 
 import cogent3
+import numpy as np
 import yaml
 from _piqtree2 import iq_build_tree, iq_fit_tree
 
@@ -188,3 +189,7 @@ def fit_tree(
     if "edge_pars" in tree.params:
         _edge_pars_for_cogent3(tree, model)
     return tree
+
+
+def nj_tree(pairwise_distances: np.ndarray, names: Sequence[str]) -> cogent3.PhyloNode:
+    pass
