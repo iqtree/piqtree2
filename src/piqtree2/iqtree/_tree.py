@@ -4,9 +4,11 @@ from collections.abc import Sequence
 from typing import Optional, Union
 
 import cogent3
+import cogent3.app.typing as c3_types
 import numpy as np
 import yaml
-from _piqtree2 import iq_build_tree, iq_fit_tree
+from _piqtree2 import iq_build_tree, iq_fit_tree, iq_nj_tree
+from cogent3 import make_tree
 
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._decorator import iqtree_func
@@ -14,6 +16,8 @@ from piqtree2.model import DnaModel, Model
 
 iq_build_tree = iqtree_func(iq_build_tree, hide_files=True)
 iq_fit_tree = iqtree_func(iq_fit_tree, hide_files=True)
+iq_nj_tree = iqtree_func(iq_nj_tree, hide_files=True)
+
 
 # the order defined in IQ-TREE
 RATE_PARS = "A/C", "A/G", "A/T", "C/G", "C/T", "G/T"
@@ -191,5 +195,9 @@ def fit_tree(
     return tree
 
 
-def nj_tree(pairwise_distances: np.ndarray, names: Sequence[str]) -> cogent3.PhyloNode:
-    pass
+def nj_tree(pairwise_distances: c3_types.PairwiseDistanceType) -> cogent3.PhyloNode:
+    newick_tree = iq_nj_tree(
+        pairwise_distances.keys(),
+        np.array(pairwise_distances).flatten(),
+    )
+    return make_tree(newick_tree)

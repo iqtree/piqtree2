@@ -6,6 +6,7 @@ from piqtree2.iqtree import (
     fit_tree,
     jc_distances,
     model_finder,
+    nj_tree,
     random_trees,
     robinson_foulds,
 )
@@ -21,6 +22,7 @@ __all__ = [
     "fit_tree",
     "jc_distances",
     "model_finder",
+    "nj_tree",
     "random_trees",
     "robinson_foulds",
     "TreeGenMode",
