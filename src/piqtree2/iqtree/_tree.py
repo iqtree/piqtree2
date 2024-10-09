@@ -196,6 +196,22 @@ def fit_tree(
 
 
 def nj_tree(pairwise_distances: c3_types.PairwiseDistanceType) -> cogent3.PhyloNode:
+    """Construct a neighbour joining tree from a pairwise distance matrix.
+
+    Parameters
+    ----------
+    pairwise_distances : c3_types.PairwiseDistanceType
+        Pairwise distances to construct neighbour joining tree from.
+
+    Returns
+    -------
+    cogent3.PhyloNode
+        The neigbour joining tree.
+
+    See Also
+    --------
+    jc_distances : construction of pairwise JC distance matrix from alignment.
+    """
     newick_tree = iq_nj_tree(
         pairwise_distances.keys(),
         np.array(pairwise_distances).flatten(),
