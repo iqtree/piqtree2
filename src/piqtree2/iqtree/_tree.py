@@ -4,8 +4,11 @@ from collections.abc import Sequence
 from typing import Optional, Union
 
 import cogent3
+import cogent3.app.typing as c3_types
+import numpy as np
 import yaml
-from _piqtree2 import iq_build_tree, iq_fit_tree
+from _piqtree2 import iq_build_tree, iq_fit_tree, iq_nj_tree
+from cogent3 import make_tree
 
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._decorator import iqtree_func
@@ -13,6 +16,8 @@ from piqtree2.model import DnaModel, Model
 
 iq_build_tree = iqtree_func(iq_build_tree, hide_files=True)
 iq_fit_tree = iqtree_func(iq_fit_tree, hide_files=True)
+iq_nj_tree = iqtree_func(iq_nj_tree, hide_files=True)
+
 
 # the order defined in IQ-TREE
 RATE_PARS = "A/C", "A/G", "A/T", "C/G", "C/T", "G/T"
@@ -188,3 +193,27 @@ def fit_tree(
     if "edge_pars" in tree.params:
         _edge_pars_for_cogent3(tree, model)
     return tree
+
+
+def nj_tree(pairwise_distances: c3_types.PairwiseDistanceType) -> cogent3.PhyloNode:
+    """Construct a neighbour joining tree from a pairwise distance matrix.
+
+    Parameters
+    ----------
+    pairwise_distances : c3_types.PairwiseDistanceType
+        Pairwise distances to construct neighbour joining tree from.
+
+    Returns
+    -------
+    cogent3.PhyloNode
+        The neigbour joining tree.
+
+    See Also
+    --------
+    jc_distances : construction of pairwise JC distance matrix from alignment.
+    """
+    newick_tree = iq_nj_tree(
+        pairwise_distances.keys(),
+        np.array(pairwise_distances).flatten(),
+    )
+    return make_tree(newick_tree)
