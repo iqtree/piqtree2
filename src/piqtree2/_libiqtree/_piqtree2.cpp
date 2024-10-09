@@ -43,10 +43,11 @@ extern string modelfinder(vector<string>& names,
                           string rate_set = "");
 
 // Build pairwise JC distance matrix
-string build_distmatrix(vector<string>& names, vector<string>& seqs);
+extern vector<double> build_distmatrix(vector<string>& names,
+                                       vector<string>& seqs);
 
 // Using Rapid-NJ to build tree from a distance matrix
-string build_njtree(string dist_matrix);
+extern string build_njtree(vector<string>& names, vector<double>& distances);
 
 int mine() {
   return 42;
