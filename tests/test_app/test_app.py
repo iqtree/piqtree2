@@ -3,8 +3,6 @@ from cogent3 import ArrayAlignment, get_app, make_tree
 
 import piqtree2
 from piqtree2 import jc_distances
-from piqtree2.model import DnaModel, Model
-
 
 def test_piqtree_phylo(four_otu: ArrayAlignment) -> None:
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
