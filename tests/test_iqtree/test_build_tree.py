@@ -1,8 +1,9 @@
 from typing import Optional
 
-import piqtree2
 import pytest
 from cogent3 import ArrayAlignment, make_tree
+
+import piqtree2
 from piqtree2.model import (
     DiscreteGammaModel,
     DnaModel,
@@ -31,12 +32,16 @@ def check_build_tree(
 
     got1 = piqtree2.build_tree(four_otu, model, rand_seed=1)
     got1 = got1.unrooted()
+    # Check topology
     assert expected.same_topology(got1.unrooted())
+    # Check if branch lengths exist
+    assert all("length" in v.params for v in got1.get_edge_vector())
 
     # Should be similar for any seed
     got2 = piqtree2.build_tree(four_otu, model, rand_seed=None)
     got2 = got2.unrooted()
     assert expected.same_topology(got2)
+    assert all("length" in v.params for v in got2.get_edge_vector())
 
 
 @pytest.mark.parametrize("dna_model", list(DnaModel)[:22])
