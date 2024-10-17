@@ -2,7 +2,7 @@ from typing import Optional
 
 from piqtree2.model._freq_type import FreqType
 from piqtree2.model._rate_type import RateType
-from piqtree2.model._substitution_model import SubstitutionModel
+from piqtree2.model._substitution_model import SubstitutionModel, get_model
 
 
 class Model:
@@ -30,7 +30,7 @@ class Model:
             Rate heterogeneity across sites model, by default
             no invariable sites, no Gamma, and no FreeRate.
         """
-        self.substitution_model = substitution_model
+        self.substitution_model = get_model(substitution_model)
         self.freq_type = freq_type
         self.rate_type = rate_type
 

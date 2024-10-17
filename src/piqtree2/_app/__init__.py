@@ -8,7 +8,12 @@ from cogent3.app import composable
 from cogent3.util.misc import extend_docstring_from
 
 from piqtree2 import TreeGenMode, build_tree, fit_tree, nj_tree, random_trees
-from piqtree2.model import Model
+from piqtree2.model import (
+    Model,
+    available_freq_type,
+    available_models,
+    available_rate_type,
+)
 
 
 @composable.define_app
