@@ -42,6 +42,8 @@ Repository = "https://github.com/cogent3/piqtree2"
 [project.optional-dependencies]
 dev = ["cibuildwheel", "pybind11", "ruff", "scriv", "piqtree2[test]"]
 test = ["pytest", "pytest-cov", "nox"]
+extra = ["cogent3[extra]"]
+doc = ["mkdocs-jupyter", "mkdocs", "jupytext", "piqtree2[test]", "cogent3[extra]", "rich"]
 
 [project.entry-points."cogent3.app"]
 piqtree_phylo = "piqtree2._app:piqtree_phylo"
