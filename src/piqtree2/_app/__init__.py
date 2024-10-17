@@ -42,6 +42,7 @@ def piqtree_fit(
     model: Model,
     rand_seed: Optional[int] = None,
 ) -> Union[cogent3.PhyloNode, cogent3.app.typing.SerialisableType]:
+    model = Model(model)
     return fit_tree(aln, tree, model, rand_seed)
 
 
