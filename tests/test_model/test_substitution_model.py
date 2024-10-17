@@ -1,6 +1,7 @@
 from typing import Union
 
 import pytest
+
 from piqtree2.model import AaModel, DnaModel
 
 

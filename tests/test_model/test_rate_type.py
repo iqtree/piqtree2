@@ -1,6 +1,7 @@
 from typing import Optional
 
 import pytest
+
 from piqtree2.model import DiscreteGammaModel, FreeRateModel, RateModel, RateType
 
 

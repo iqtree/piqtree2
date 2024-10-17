@@ -1,11 +1,12 @@
 from typing import Any
 
 import pytest
+
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._tree import _process_tree_yaml
 
 
-@pytest.fixture()
+@pytest.fixture
 def newick_not_in_candidates() -> dict[str, Any]:
     # The newick string does not appear in the CandidateSet
     return {
@@ -38,7 +39,7 @@ def newick_not_in_candidates() -> dict[str, Any]:
     }
 
 
-@pytest.fixture()
+@pytest.fixture
 def standard_yaml() -> dict[str, Any]:
     return {
         "CandidateSet": {

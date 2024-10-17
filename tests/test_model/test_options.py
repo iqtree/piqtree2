@@ -2,6 +2,7 @@
 from typing import Optional
 
 import pytest
+
 from piqtree2 import available_freq_type, available_models, available_rate_type
 from piqtree2.model import AaModel, DnaModel, FreqType, SubstitutionModel
 from piqtree2.model._rate_type import ALL_BASE_RATE_TYPES
