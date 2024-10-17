@@ -1,7 +1,6 @@
 """Python wrappers to tree searching functions in the IQ-TREE library."""
 
 from collections.abc import Sequence
-from typing import Optional, Union
 
 import cogent3
 import cogent3.app.typing as c3_types
@@ -93,12 +92,17 @@ def _process_tree_yaml(
         # converts the strings of rate and motif parameters into dictionary
         tree.params["edge_pars"] = {
             "rates": dict(
-                zip(RATE_PARS, map(float, tree_yaml["ModelDNA"]["rates"].split(", "))),
+                zip(
+                    RATE_PARS,
+                    map(float, tree_yaml["ModelDNA"]["rates"].split(", ")),
+                    strict=True,
+                ),
             ),
             "mprobs": dict(
                 zip(
                     MOTIF_PARS,
                     map(float, tree_yaml["ModelDNA"]["state_freq"].split(", ")),
+                    strict=True,
                 ),
             ),
         }
@@ -109,9 +113,9 @@ def _process_tree_yaml(
 
 
 def build_tree(
-    aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
+    aln: cogent3.Alignment | cogent3.ArrayAlignment,
     model: Model,
-    rand_seed: Optional[int] = None,
+    rand_seed: int | None = None,
 ) -> cogent3.PhyloNode:
     """Reconstruct a phylogenetic tree.
 
@@ -149,10 +153,10 @@ def build_tree(
 
 
 def fit_tree(
-    aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
+    aln: cogent3.Alignment | cogent3.ArrayAlignment,
     tree: cogent3.PhyloNode,
     model: Model,
-    rand_seed: Optional[int] = None,
+    rand_seed: int | None = None,
 ) -> cogent3.PhyloNode:
     """Fit branch lengths to a tree.
 

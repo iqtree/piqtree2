@@ -1,5 +1,3 @@
-from typing import Optional
-
 import pytest
 
 from piqtree2.model import DiscreteGammaModel, FreeRateModel, RateModel, RateType
@@ -31,7 +29,7 @@ def test_rate_model_uninstantiable() -> None:
 )
 def test_invariable_sites(
     invariable_sites: bool,
-    rate_model: Optional[RateModel],
+    rate_model: RateModel | None,
     iqtree_str: str,
 ) -> None:
     model = RateType(invariable_sites=invariable_sites, model=rate_model)

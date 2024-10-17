@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Optional
 
 
 class RateModel(ABC):
@@ -21,7 +20,7 @@ class RateType:
         self,
         *,
         invariable_sites: bool = False,
-        model: Optional[RateModel] = None,
+        model: RateModel | None = None,
     ) -> None:
         """Rate heterogeneity across sites model.
 

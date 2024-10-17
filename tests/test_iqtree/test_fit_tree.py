@@ -25,7 +25,8 @@ def check_motif_probs(got: PhyloNode, expected: PhyloNode) -> None:
     expected_values = [expected[key] for key in expected_keys]
     got_values = [got[key] for key in expected_keys]
     assert all(
-        got == pytest.approx(exp) for got, exp in zip(got_values, expected_values)
+        got == pytest.approx(exp)
+        for got, exp in zip(got_values, expected_values, strict=True)
     )
 
 
@@ -46,7 +47,7 @@ def check_rate_parameters(got: PhyloNode, expected: PhyloNode) -> None:
 
     assert all(
         got == pytest.approx(exp, rel=1e-2)
-        for got, exp in zip(got_values, expected_values)
+        for got, exp in zip(got_values, expected_values, strict=True)
     )
 
 
@@ -62,7 +63,7 @@ def check_branch_lengths(got: PhyloNode, expected: PhyloNode) -> None:
 
     assert all(
         got == pytest.approx(exp, rel=1e-2)
-        for got, exp in zip(got_values, expected_values)
+        for got, exp in zip(got_values, expected_values, strict=True)
     )
 
 
