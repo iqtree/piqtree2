@@ -68,6 +68,50 @@ def _edge_pars_for_cogent3(tree: cogent3.PhyloNode, model: Model) -> None:
     )
 
 
+def _parse_nonlie_model(tree: cogent3.PhyloNode, tree_yaml: dict) -> None:
+    # converts the strings of rate and motif parameters into dictionary
+    tree.params["edge_pars"] = {
+        "rates": dict(
+            zip(RATE_PARS, map(float, tree_yaml["ModelDNA"]["rates"].split(", "))),
+        ),
+        "mprobs": dict(
+            zip(
+                MOTIF_PARS,
+                map(float, tree_yaml["ModelDNA"]["state_freq"].split(", ")),
+            ),
+        ),
+    }
+
+
+def _parse_lie_model(
+    tree: cogent3.PhyloNode, tree_yaml: dict, lie_model_name: str,
+) -> None:
+    model_fits = tree_yaml.get(lie_model_name, {})
+
+    # parse motif parameters
+    state_freq_str = model_fits.get("state_freq", "")
+    if state_freq_str:
+            state_freq_list = [float(value) for value in state_freq_str.replace(" ", "").split(",")]
+            tree.params[lie_model_name] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list))}
+    else:
+        msg = f"Motif parameters not found for {lie_model_name}"
+        raise KeyError(msg)
+
+    # skip LIE_1_1 (JC69), since its rate parameter is constant.
+    if "model_parameters" in model_fits:
+        model_parameters = model_fits["model_parameters"]
+
+        # if model parameters are a string, convert them to a list of floats.
+        if isinstance(model_parameters, str):
+            tree.params[lie_model_name]["model_parameters"] = [
+                float(value)
+                for value in model_parameters.replace(" ", "").split(",")
+            ]
+        else:
+            # directly use the float.
+            tree.params[lie_model_name]["model_parameters"] = model_parameters
+
+
 def _process_tree_yaml(
     tree_yaml: dict,
     names: Sequence[str],
@@ -88,20 +132,19 @@ def _process_tree_yaml(
 
     tree.params["lnL"] = likelihood
 
-    # parse only DNA model which is not in Lie model list
+    # parse non-Lie DNA model
     if "ModelDNA" in tree_yaml:
-        # converts the strings of rate and motif parameters into dictionary
-        tree.params["edge_pars"] = {
-            "rates": dict(
-                zip(RATE_PARS, map(float, tree_yaml["ModelDNA"]["rates"].split(", "))),
-            ),
-            "mprobs": dict(
-                zip(
-                    MOTIF_PARS,
-                    map(float, tree_yaml["ModelDNA"]["state_freq"].split(", ")),
-                ),
-            ),
-        }
+        _parse_nonlie_model(tree, tree_yaml)
+
+    # parse Lie DNA model
+    elif key := next(
+        (key for key in tree_yaml if key.startswith("ModelLieMarkov")), None,
+    ):
+        _parse_lie_model(tree, tree_yaml, key)
+
+    # parse rate model
+    if key := next((key for key in tree_yaml if key.startswith("Rate")), None):
+        tree.params[key] = tree_yaml[key]
 
     _rename_iq_tree(tree, names)
 
