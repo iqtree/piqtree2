@@ -41,17 +41,24 @@ def available_models(model_type: Optional[str] = None) -> _Table:
         either "nucleotide", "protein" or None. If None, all models are returned.
 
     """
+    template = "Available {}substitution models"
     if model_type == "dna":
-        table = make_table(data=_make_models(DnaModel))
+        table = make_table(
+            data=_make_models(DnaModel), title=template.format("nucleotide ")
+        )
     elif model_type == "protein":
-        table = make_table(data=_make_models(AaModel))
+        table = make_table(
+            data=_make_models(AaModel), title=template.format("protein ")
+        )
     else:
-        table = make_table(data=_make_models(SubstitutionModel))
+        table = make_table(
+            data=_make_models(SubstitutionModel), title=template.format("")
+        )
 
     return table
 
 
-def available_freq_type() -> _Table:
+def available_freq_type(*args) -> _Table:
     """Return a table showing available freq type options."""
     data = {"Freq Type": [], "Description": []}
 
@@ -59,10 +66,10 @@ def available_freq_type() -> _Table:
         data["Freq Type"].append(freq_type.name)
         data["Description"].append(freq_type.description)
 
-    return make_table(data=data)
+    return make_table(data=data, title="Available frequency types")
 
 
-def available_rate_type() -> _Table:
+def available_rate_type(*args) -> _Table:
     """Return a table showing available rate type options."""
     data = {"Rate Type": [], "Description": []}
 
@@ -70,4 +77,4 @@ def available_rate_type() -> _Table:
         data["Rate Type"].append(rate_type.iqtree_str())
         data["Description"].append(get_description(rate_type))
 
-    return make_table(data=data)
+    return make_table(data=data, title="Available rate heterogeneity types")

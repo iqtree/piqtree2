@@ -62,4 +62,32 @@ def piqtree_nj(dists: c3_types.PairwiseDistanceType) -> cogent3.PhyloNode:
     return nj_tree(dists)
 
 
-_ALL_APP_NAMES = ["piqtree_phylo", "piqtree_fit", "piqtree_random_trees", "piqtree_nj"]
+@composable.define_app(app_type=composable.NON_COMPOSABLE)
+def piqtree_list_available(select: str, element_type: str = "model") -> cogent3._Table:
+    """returns a table of listing the available options
+
+    Parameters
+    ----------
+    moltype
+        "dna" or "protein". If None, all models are returned.
+
+    Returns
+    -------
+    A cogent3 Table
+    """
+    func = {
+        "model": available_models,
+        "rate": available_rate_type,
+        "freq": available_freq_type,
+    }[element_type]
+
+    return func(select)
+
+
+_ALL_APP_NAMES = [
+    "piqtree_phylo",
+    "piqtree_fit",
+    "piqtree_random_trees",
+    "piqtree_nj",
+    "piqtree_list_available",
+]
