@@ -75,7 +75,7 @@ def _parse_nonlie_model(tree: cogent3.PhyloNode, tree_yaml: dict) -> None:
     state_freq_str = model_fits.get("state_freq", "")
     rate_str = model_fits.get("rates", "")
 
-    # handle motif and rate parameters separately incase missing
+    # parse motif parameters, assign each to a name, and raise an error if not found
     if state_freq_str:
         # converts the strings of motif parameters into dictionary
         state_freq_list = [
@@ -86,6 +86,7 @@ def _parse_nonlie_model(tree: cogent3.PhyloNode, tree_yaml: dict) -> None:
         msg = "Motif parameters not found"
         raise KeyError(msg)
 
+    # parse rate parameters, assign each to a name, and raise an error if not found
     if rate_str:
         rate_list = [float(value) for value in rate_str.replace(" ", "").split(",")]
         tree.params["edge_pars"]["rates"] = dict(zip(RATE_PARS, rate_list))
@@ -102,7 +103,7 @@ def _parse_lie_model(
     # parse motif and rate parameters in the tree_yaml for Lie DnaModel
     model_fits = tree_yaml.get(lie_model_name, {})
 
-    # parse motif parameters
+    # parse motif parameters, assign each to a name, and raise an error if not found
     state_freq_str = model_fits.get("state_freq", "")
     if state_freq_str:
         state_freq_list = [
@@ -113,11 +114,11 @@ def _parse_lie_model(
         msg = "Motif parameters not found"
         raise KeyError(msg)
 
-    # skip LIE_1_1 (aka JC69), since its rate parameter is constant
+    # parse rate parameters, skipping LIE_1_1 (aka JC69) since its rate parameter is constant thus absent
     if "model_parameters" in model_fits:
         model_parameters = model_fits["model_parameters"]
 
-        # if model parameters are a string, convert them to a list of floats
+        # convert model parameters to a list of floats if they are a string
         if isinstance(model_parameters, str):
             tree.params[lie_model_name]["model_parameters"] = [
                 float(value) for value in model_parameters.replace(" ", "").split(",")
@@ -151,14 +152,14 @@ def _process_tree_yaml(
     if "ModelDNA" in tree_yaml:
         _parse_nonlie_model(tree, tree_yaml)
 
-    # parse Lie DnaModel parameters
+    # parse Lie DnaModel parameters, handling various Lie model names
     elif key := next(
         (key for key in tree_yaml if key.startswith("ModelLieMarkov")),
         None,
     ):
         _parse_lie_model(tree, tree_yaml, key)
 
-    # parse rate model
+    # parse rate model, handling various rate model names
     if key := next((key for key in tree_yaml if key.startswith("Rate")), None):
         tree.params[key] = tree_yaml[key]
 
