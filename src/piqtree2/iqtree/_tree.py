@@ -197,7 +197,7 @@ def build_tree(
     names = aln.names
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
-    yaml_result = yaml.safe_load(iq_build_tree(names, seqs, str(model), rand_seed))
+    yaml_result = yaml.safe_load(iq_build_tree(names, seqs, str(model), rand_seed, 0))
     tree = _process_tree_yaml(yaml_result, names)
 
     # if edge parameters been extracted from IQ-TREE output,
