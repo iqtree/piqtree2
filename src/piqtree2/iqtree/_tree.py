@@ -83,16 +83,16 @@ def _parse_nonlie_model(tree: cogent3.PhyloNode, tree_yaml: dict) -> None:
         ]
         tree.params["edge_pars"] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list))}
     else:
-        msg = "Motif parameters not found"
-        raise KeyError(msg)
+        msg = "IQ-TREE output malformated, motif parameters not found"
+        raise ParseIqTreeError(msg)
 
     # parse rate parameters, assign each to a name, and raise an error if not found
     if rate_str:
         rate_list = [float(value) for value in rate_str.replace(" ", "").split(",")]
         tree.params["edge_pars"]["rates"] = dict(zip(RATE_PARS, rate_list))
     else:
-        msg = "Rate parameters not found"
-        raise KeyError(msg)
+        msg = "IQ-TREE output malformated, rate parameters not found"
+        raise ParseIqTreeError(msg)
 
 
 def _parse_lie_model(
@@ -111,8 +111,8 @@ def _parse_lie_model(
         ]
         tree.params[lie_model_name] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list))}
     else:
-        msg = "Motif parameters not found"
-        raise KeyError(msg)
+        msg = "IQ-TREE output malformated, motif parameters not found"
+        raise ParseIqTreeError(msg)
 
     # parse rate parameters, skipping LIE_1_1 (aka JC69) since its rate parameter is constant thus absent
     if "model_parameters" in model_fits:
@@ -143,7 +143,7 @@ def _process_tree_yaml(
             likelihood = float(candidate.split(" ")[0])
             break
     if likelihood is None:
-        msg = "IQ-TREE output malformated."
+        msg = "IQ-TREE output malformated, likelihood not found"
         raise ParseIqTreeError(msg)
 
     tree.params["lnL"] = likelihood
