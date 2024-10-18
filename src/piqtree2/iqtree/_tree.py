@@ -201,8 +201,8 @@ def build_tree(
     yaml_result = yaml.safe_load(iq_build_tree(names, seqs, str(model), rand_seed, 0))
     tree = _process_tree_yaml(yaml_result, names)
 
-    # For non-Lie models, extract parameters from
-    # IQ-TREE output and populate them to each branch to mimic cogent3.PhyloNode
+    # for non-Lie models, populate parameters to each branch and
+    # rename them to mimic cogent3.PhyloNode
     if "edge_pars" in tree.params:
         _edge_pars_for_cogent3(tree, model)
     return tree
@@ -248,8 +248,8 @@ def fit_tree(
     )
     tree = _process_tree_yaml(yaml_result, names)
 
-    # For non-Lie models, extract parameters from
-    # IQ-TREE output and populate them to each branch to mimic cogent3.PhyloNode
+    # for non-Lie models, populate parameters to each branch and
+    # rename them to mimic cogent3.PhyloNode
     if "edge_pars" in tree.params:
         _edge_pars_for_cogent3(tree, model)
     return tree
