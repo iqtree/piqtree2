@@ -1,5 +1,3 @@
-from typing import Optional
-
 import pytest
 from cogent3 import ArrayAlignment, make_tree
 
@@ -18,9 +16,9 @@ from piqtree2.model import (
 def check_build_tree(
     four_otu: ArrayAlignment,
     dna_model: DnaModel,
-    freq_type: Optional[FreqType] = None,
-    invariable_sites: Optional[bool] = None,
-    rate_model: Optional[RateModel] = None,
+    freq_type: FreqType | None = None,
+    invariable_sites: bool | None = None,
+    rate_model: RateModel | None = None,
 ) -> None:
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
 
@@ -74,7 +72,7 @@ def test_lie_build_tree(four_otu: ArrayAlignment, dna_model: DnaModel) -> None:
 def test_rate_model_build_tree(
     four_otu: ArrayAlignment,
     dna_model: DnaModel,
-    invariable_sites: Optional[bool],
+    invariable_sites: bool | None,
     rate_model: RateModel,
 ) -> None:
     check_build_tree(

@@ -1,7 +1,6 @@
 """Python wrappers to tree searching functions in the IQ-TREE library."""
 
 from collections.abc import Sequence
-from typing import Optional, Union
 
 import cogent3
 import cogent3.app.typing as c3_types
@@ -68,6 +67,66 @@ def _edge_pars_for_cogent3(tree: cogent3.PhyloNode, model: Model) -> None:
     )
 
 
+def _parse_nonlie_model(tree: cogent3.PhyloNode, tree_yaml: dict) -> None:
+    # parse motif and rate parameters in the tree_yaml for non-Lie DnaModel
+    model_fits = tree_yaml.get("ModelDNA", {})
+
+    state_freq_str = model_fits.get("state_freq", "")
+    rate_str = model_fits.get("rates", "")
+
+    # parse motif parameters, assign each to a name, and raise an error if not found
+    if state_freq_str:
+        # converts the strings of motif parameters into dictionary
+        state_freq_list = [
+            float(value) for value in state_freq_str.replace(" ", "").split(",")
+        ]
+        tree.params["edge_pars"] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list))}
+    else:
+        msg = "IQ-TREE output malformated, motif parameters not found"
+        raise ParseIqTreeError(msg)
+
+    # parse rate parameters, assign each to a name, and raise an error if not found
+    if rate_str:
+        rate_list = [float(value) for value in rate_str.replace(" ", "").split(",")]
+        tree.params["edge_pars"]["rates"] = dict(zip(RATE_PARS, rate_list))
+    else:
+        msg = "IQ-TREE output malformated, rate parameters not found"
+        raise ParseIqTreeError(msg)
+
+
+def _parse_lie_model(
+    tree: cogent3.PhyloNode,
+    tree_yaml: dict,
+    lie_model_name: str,
+) -> None:
+    # parse motif and rate parameters in the tree_yaml for Lie DnaModel
+    model_fits = tree_yaml.get(lie_model_name, {})
+
+    # parse motif parameters, assign each to a name, and raise an error if not found
+    state_freq_str = model_fits.get("state_freq", "")
+    if state_freq_str:
+        state_freq_list = [
+            float(value) for value in state_freq_str.replace(" ", "").split(",")
+        ]
+        tree.params[lie_model_name] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list))}
+    else:
+        msg = "IQ-TREE output malformated, motif parameters not found"
+        raise ParseIqTreeError(msg)
+
+    # parse rate parameters, skipping LIE_1_1 (aka JC69) since its rate parameter is constant thus absent
+    if "model_parameters" in model_fits:
+        model_parameters = model_fits["model_parameters"]
+
+        # convert model parameters to a list of floats if they are a string
+        if isinstance(model_parameters, str):
+            tree.params[lie_model_name]["model_parameters"] = [
+                float(value) for value in model_parameters.replace(" ", "").split(",")
+            ]
+        else:
+            # directly use the float
+            tree.params[lie_model_name]["model_parameters"] = model_parameters
+
+
 def _process_tree_yaml(
     tree_yaml: dict,
     names: Sequence[str],
@@ -83,25 +142,25 @@ def _process_tree_yaml(
             likelihood = float(candidate.split(" ")[0])
             break
     if likelihood is None:
-        msg = "IQ-TREE output malformated."
+        msg = "IQ-TREE output malformated, likelihood not found"
         raise ParseIqTreeError(msg)
 
     tree.params["lnL"] = likelihood
 
-    # parse only DNA model which is not in Lie model list
+    # parse non-Lie DnaModel parameters
     if "ModelDNA" in tree_yaml:
-        # converts the strings of rate and motif parameters into dictionary
-        tree.params["edge_pars"] = {
-            "rates": dict(
-                zip(RATE_PARS, map(float, tree_yaml["ModelDNA"]["rates"].split(", "))),
-            ),
-            "mprobs": dict(
-                zip(
-                    MOTIF_PARS,
-                    map(float, tree_yaml["ModelDNA"]["state_freq"].split(", ")),
-                ),
-            ),
-        }
+        _parse_nonlie_model(tree, tree_yaml)
+
+    # parse Lie DnaModel parameters, handling various Lie model names
+    elif key := next(
+        (key for key in tree_yaml if key.startswith("ModelLieMarkov")),
+        None,
+    ):
+        _parse_lie_model(tree, tree_yaml, key)
+
+    # parse rate model, handling various rate model names
+    if key := next((key for key in tree_yaml if key.startswith("Rate")), None):
+        tree.params[key] = tree_yaml[key]
 
     _rename_iq_tree(tree, names)
 
@@ -109,9 +168,9 @@ def _process_tree_yaml(
 
 
 def build_tree(
-    aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
+    aln: cogent3.Alignment | cogent3.ArrayAlignment,
     model: Model,
-    rand_seed: Optional[int] = None,
+    rand_seed: int | None = None,
 ) -> cogent3.PhyloNode:
     """Reconstruct a phylogenetic tree.
 
@@ -138,21 +197,21 @@ def build_tree(
     names = aln.names
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
-    yaml_result = yaml.safe_load(iq_build_tree(names, seqs, str(model), rand_seed))
+    yaml_result = yaml.safe_load(iq_build_tree(names, seqs, str(model), rand_seed, 0))
     tree = _process_tree_yaml(yaml_result, names)
 
-    # if edge parameters been extracted from IQ-TREE output,
-    # modify tree to mimic cogent3.PhyloNode
+    # for non-Lie models, populate parameters to each branch and
+    # rename them to mimic cogent3.PhyloNode
     if "edge_pars" in tree.params:
         _edge_pars_for_cogent3(tree, model)
     return tree
 
 
 def fit_tree(
-    aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
+    aln: cogent3.Alignment | cogent3.ArrayAlignment,
     tree: cogent3.PhyloNode,
     model: Model,
-    rand_seed: Optional[int] = None,
+    rand_seed: int | None = None,
 ) -> cogent3.PhyloNode:
     """Fit branch lengths to a tree.
 
@@ -188,8 +247,8 @@ def fit_tree(
     )
     tree = _process_tree_yaml(yaml_result, names)
 
-    # if edge parameters been extracted from IQ-TREE output,
-    # modify tree to mimic cogent3.PhyloNode
+    # for non-Lie models, populate parameters to each branch and
+    # rename them to mimic cogent3.PhyloNode
     if "edge_pars" in tree.params:
         _edge_pars_for_cogent3(tree, model)
     return tree
