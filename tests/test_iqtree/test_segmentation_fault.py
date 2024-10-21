@@ -2,6 +2,7 @@
 
 import pytest
 from cogent3 import make_aligned_seqs, make_tree
+
 from piqtree2 import TreeGenMode, build_tree, fit_tree, random_trees
 from piqtree2.exceptions import IqTreeError
 from piqtree2.model import DiscreteGammaModel, DnaModel, FreeRateModel, Model, RateModel

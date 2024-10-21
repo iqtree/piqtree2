@@ -1,5 +1,4 @@
 from collections.abc import Sequence
-from typing import Union
 
 import cogent3
 import cogent3.app.typing as c3_types
@@ -39,7 +38,7 @@ def _dists_to_distmatrix(
 
 
 def jc_distances(
-    aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
+    aln: cogent3.Alignment | cogent3.ArrayAlignment,
 ) -> c3_types.PairwiseDistanceType:
     """Compute pairwise JC distances for a given alignemnt.
 

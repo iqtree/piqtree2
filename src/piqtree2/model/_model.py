@@ -1,5 +1,3 @@
-from typing import Optional
-
 from piqtree2.model._freq_type import FreqType
 from piqtree2.model._rate_type import RateType
 from piqtree2.model._substitution_model import SubstitutionModel, get_model
@@ -14,8 +12,8 @@ class Model:
     def __init__(
         self,
         substitution_model: SubstitutionModel,
-        freq_type: Optional[FreqType] = None,
-        rate_type: Optional[RateType] = None,
+        freq_type: FreqType | None = None,
+        rate_type: RateType | None = None,
     ) -> None:
         """Constructor for the model.
 

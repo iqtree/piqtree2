@@ -1,7 +1,6 @@
 """Convenience functions for showing user facing options and their descriptions."""
 
 import functools
-from typing import Optional
 
 from cogent3 import _Table, make_table
 
@@ -32,7 +31,7 @@ def _make_models(model_type: type[SubstitutionModel]) -> dict[str, list[str]]:
     return data
 
 
-def available_models(model_type: Optional[str] = None) -> _Table:
+def available_models(model_type: str | None = None) -> _Table:
     """Return a table showing available substitution models.
 
     Parameters

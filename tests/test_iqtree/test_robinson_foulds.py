@@ -1,6 +1,7 @@
 import numpy as np
-import piqtree2
 from numpy.testing import assert_array_equal
+
+import piqtree2
 
 
 def test_robinson_foulds() -> None:

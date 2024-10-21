@@ -1,6 +1,7 @@
+import pytest
+
 import piqtree2
 import piqtree2.exceptions
-import pytest
 
 
 @pytest.mark.parametrize("num_taxa", [10, 50, 100])
