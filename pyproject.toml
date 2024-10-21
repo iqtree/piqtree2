@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "piqtree2"
 dependencies = ["cogent3", "pyyaml"]
-requires-python = ">=3.9, <3.13"
+requires-python = ">=3.10, <3.13"
 
 authors = [{name="Gavin Huttley"}, {name="Robert McArthur"}, {name="Bui Quang Minh "}, {name="Richard Morris"}, {name="Thomas Wong"}]
 description="Python bindings for IQTree"
@@ -28,7 +28,6 @@ classifiers = [
 
     "Programming Language :: C++",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -87,7 +86,7 @@ exclude = [
 line-length = 88
 indent-width = 4
 
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.

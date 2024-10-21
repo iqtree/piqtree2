@@ -1,7 +1,6 @@
 """Python wrappers to random tree generation in the IQ-TREE library."""
 
 from enum import Enum, auto
-from typing import Optional
 
 import cogent3
 from _piqtree2 import iq_random_tree
@@ -26,7 +25,7 @@ def random_trees(
     num_taxa: int,
     tree_mode: TreeGenMode,
     num_trees: int,
-    rand_seed: Optional[int] = None,
+    rand_seed: int | None = None,
 ) -> tuple[cogent3.PhyloNode]:
     """Generate a collection of random trees.
 

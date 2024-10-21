@@ -1,7 +1,6 @@
 """Python wrapper for model finder in the IQ-TREE library."""
 
 from collections.abc import Iterable
-from typing import Optional, Union
 
 import cogent3
 import yaml
@@ -13,11 +12,11 @@ iq_model_finder = iqtree_func(iq_model_finder, hide_files=True)
 
 
 def model_finder(
-    aln: Union[cogent3.Alignment, cogent3.ArrayAlignment],
-    model_set: Optional[Iterable[str]] = None,
-    freq_set: Optional[Iterable[str]] = None,
-    rate_set: Optional[Iterable[str]] = None,
-    rand_seed: Optional[int] = None,
+    aln: cogent3.Alignment | cogent3.ArrayAlignment,
+    model_set: Iterable[str] | None = None,
+    freq_set: Iterable[str] | None = None,
+    rate_set: Iterable[str] | None = None,
+    rand_seed: int | None = None,
 ) -> dict:
     # TODO(rob): discuss return type further
     # 68

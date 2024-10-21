@@ -3,6 +3,7 @@
 import pickle
 
 from cogent3 import get_app
+
 from piqtree2._app import _ALL_APP_NAMES
 
 

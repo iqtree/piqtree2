@@ -4,8 +4,9 @@ import os
 import pathlib
 import sys
 import tempfile
+from collections.abc import Callable
 from functools import wraps
-from typing import Callable, Optional, TypeVar
+from typing import TypeVar
 
 from typing_extensions import ParamSpec
 
@@ -18,7 +19,7 @@ RetType = TypeVar("RetType")
 def iqtree_func(
     func: Callable[Param, RetType],
     *,
-    hide_files: Optional[bool] = False,
+    hide_files: bool | None = False,
 ) -> Callable[Param, RetType]:
     """IQ-TREE function wrapper.
 
