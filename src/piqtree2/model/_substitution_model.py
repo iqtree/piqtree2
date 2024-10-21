@@ -1,3 +1,4 @@
+import contextlib
 import functools
 from abc import abstractmethod
 from enum import Enum, unique
@@ -272,3 +273,18 @@ class AaModel(SubstitutionModel):
 
 
 ALL_MODELS_CLASSES: list[type[SubstitutionModel]] = [DnaModel, AaModel]
+
+
+def get_model(name: str) -> SubstitutionModel:
+    """returns the substitution model enum for name."""
+    if isinstance(name, SubstitutionModel):
+        return name
+
+    with contextlib.suppress(KeyError):
+        return AaModel[name]
+
+    with contextlib.suppress(KeyError):
+        return DnaModel[name]
+
+    msg = f"Unknown model: {name!r}"
+    raise ValueError(msg)
