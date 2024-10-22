@@ -4,6 +4,7 @@ from cogent3 import ArrayAlignment, get_app, make_tree
 import piqtree2
 from piqtree2 import jc_distances
 
+
 def test_piqtree_phylo(four_otu: ArrayAlignment) -> None:
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
     app = get_app("piqtree_phylo", model="JC")
@@ -51,11 +52,3 @@ def test_piqtree_nj(five_otu: ArrayAlignment) -> None:
     actual = app(dists)
 
     assert expected.same_topology(actual)
-
-
-@pytest.mark.parametrize("element_type_val", ("model,dna", "rate,", "freq,"))
-def test_piqtree_list_available(element_type_val) -> None:
-    element_type, val = element_type_val.split(",")
-    display_available = get_app("piqtree_list_available", element_type=element_type)
-    got = display_available(val)
-    assert got.shape[0] > 0

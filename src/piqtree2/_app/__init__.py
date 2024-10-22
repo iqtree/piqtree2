@@ -6,13 +6,7 @@ from cogent3.app import composable
 from cogent3.util.misc import extend_docstring_from
 
 from piqtree2 import TreeGenMode, build_tree, fit_tree, nj_tree, random_trees
-from piqtree2.model import (
-    Model,
-    available_freq_type,
-    available_models,
-    available_rate_type,
-)
-
+from piqtree2.model import Model
 
 @composable.define_app
 class piqtree_phylo:
@@ -61,32 +55,9 @@ def piqtree_nj(dists: c3_types.PairwiseDistanceType) -> cogent3.PhyloNode:
     return nj_tree(dists)
 
 
-@composable.define_app(app_type=composable.NON_COMPOSABLE)
-def piqtree_list_available(select: str, element_type: str = "model") -> cogent3._Table:
-    """returns a table of listing the available options
-
-    Parameters
-    ----------
-    moltype
-        "dna" or "protein". If None, all models are returned.
-
-    Returns
-    -------
-    A cogent3 Table
-    """
-    func = {
-        "model": available_models,
-        "rate": available_rate_type,
-        "freq": available_freq_type,
-    }[element_type]
-
-    return func(select)
-
-
 _ALL_APP_NAMES = [
     "piqtree_phylo",
     "piqtree_fit",
     "piqtree_random_trees",
     "piqtree_nj",
-    "piqtree_list_available",
 ]
