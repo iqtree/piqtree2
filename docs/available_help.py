@@ -14,6 +14,11 @@ from cogent3 import app_help
 
 app_help("piqtree_phylo")
 
+# %%
+from cogent3 import app_help
+
+app_help("piqtree_fit")
+
 # %% [markdown]
 # ## What substitution models are available
 # You can list all the DNA substitution models `piqtree2` supports.

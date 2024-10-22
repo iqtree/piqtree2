@@ -53,7 +53,7 @@ def available_models(model_type: str | None = None) -> _Table:
         table = make_table(
             data=_make_models(SubstitutionModel), title=template.format("")
         )
-
+    table.set_repr_policy(head=table.shape[0])
     return table
 
 
