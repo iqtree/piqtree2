@@ -6,6 +6,7 @@ os.environ["COGENT3_ALIGNMENT_REPR_POLICY"] = "num_pos=30"
 _data_files = {
     "mammal-orths.zip": "https://github.com/user-attachments/files/17403119/mammal-orths.zip",
     "brca1.fasta.gz": "https://github.com/user-attachments/files/17404687/brca1.fasta.gz",
+    "example.phy.gz": "https://github.com/user-attachments/files/17551543/example.phy.gz"
 }
 
 
