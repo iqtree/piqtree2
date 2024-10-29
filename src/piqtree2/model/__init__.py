@@ -3,7 +3,7 @@
 from ._freq_type import FreqType
 from ._model import Model
 from ._options import available_freq_type, available_models, available_rate_type
-from ._rate_type import DiscreteGammaModel, FreeRateModel, RateModel, RateType
+from ._rate_type import DiscreteGammaModel, FreeRateModel, RateModel, RateType, InvariantSitesModel
 from ._substitution_model import (
     AaModel,
     DnaModel,
@@ -24,4 +24,5 @@ __all__ = [
     "RateModel",
     "RateType",
     "SubstitutionModel",
+    "InvariantSitesModel",
 ]

@@ -14,9 +14,15 @@ class piqtree_phylo:
     def __init__(
         self,
         model: str,
+        invariant_sites: bool=False,
+        rate_type: str | None=None,
+        freq_type: str | None=None,
         rand_seed: int | None = None,
     ) -> None:
-        self._model = Model(model)
+        self._model = Model(substitution_model=model,
+                            invariant_sites=invariant_sites,
+                            rate_type=rate_type,
+                            freq_type=freq_type)
         self._rand_seed = rand_seed
 
     def main(

@@ -24,8 +24,9 @@ def check_build_tree(
 
     model = Model(
         dna_model,
-        freq_type,
-        RateType(invariable_sites=invariable_sites, model=rate_model),
+        freq_type=freq_type.name if freq_type else None,
+        invariant_sites=invariable_sites,
+        rate_type=RateType(model=rate_model),
     )
 
     got1 = piqtree2.build_tree(four_otu, model, rand_seed=1)
