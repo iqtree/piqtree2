@@ -80,7 +80,7 @@ def _parse_nonlie_model(tree: cogent3.PhyloNode, tree_yaml: dict) -> None:
         state_freq_list = [
             float(value) for value in state_freq_str.replace(" ", "").split(",")
         ]
-        tree.params["edge_pars"] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list))}  # noqa: B905
+        tree.params["edge_pars"] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list, strict=False))}
     else:
         msg = "IQ-TREE output malformated, motif parameters not found"
         raise ParseIqTreeError(msg)
@@ -88,7 +88,7 @@ def _parse_nonlie_model(tree: cogent3.PhyloNode, tree_yaml: dict) -> None:
     # parse rate parameters, assign each to a name, and raise an error if not found
     if rate_str:
         rate_list = [float(value) for value in rate_str.replace(" ", "").split(",")]
-        tree.params["edge_pars"]["rates"] = dict(zip(RATE_PARS, rate_list))  # noqa: B905
+        tree.params["edge_pars"]["rates"] = dict(zip(RATE_PARS, rate_list, strict=False))
     else:
         msg = "IQ-TREE output malformated, rate parameters not found"
         raise ParseIqTreeError(msg)
@@ -108,7 +108,7 @@ def _parse_lie_model(
         state_freq_list = [
             float(value) for value in state_freq_str.replace(" ", "").split(",")
         ]
-        tree.params[lie_model_name] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list))}  # noqa: B905
+        tree.params[lie_model_name] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list, strict=False))}
     else:
         msg = "IQ-TREE output malformated, motif parameters not found"
         raise ParseIqTreeError(msg)
