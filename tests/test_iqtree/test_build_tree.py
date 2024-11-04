@@ -1,6 +1,6 @@
 import pytest
 from cogent3 import ArrayAlignment, make_tree
-
+from piqtree2.exceptions import IqTreeError
 import piqtree2
 from piqtree2.model import (
     DiscreteGammaModel,
@@ -82,3 +82,17 @@ def test_rate_model_build_tree(
         invariant_sites=invariant_sites,
         rate_model=rate_model,
     )
+
+
+def test_build_tree_inadequate_bootstrapping(four_otu: ArrayAlignment) -> None:
+    try:
+        piqtree2.build_tree(four_otu, Model(DnaModel.GTR), bootstrap_replicates=10)
+    except IqTreeError as e:
+        assert "#replicates must be >= 1000" in str(e)
+
+
+def test_build_tree_bootstrapping(four_otu: ArrayAlignment) -> None:
+    tree = piqtree2.build_tree(four_otu, Model(DnaModel.GTR), bootstrap_replicates=1000)
+    tree.name_unnamed_nodes()
+    supported_node = tree.get_node_matching_name("node1")
+    assert "support" in supported_node.params
