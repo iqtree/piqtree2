@@ -283,11 +283,19 @@ def get_substitution_model(name: str | SubstitutionModel) -> SubstitutionModel:
     if isinstance(name, SubstitutionModel):
         return name
 
-    with contextlib.suppress(KeyError):
-        return AaModel[name]
+    enum_name = name.replace(".", "_")
+    if len(enum_name) == 0:
+        msg = f"Unknown substitution model: {name!r}"
+        raise ValueError(msg)
+
+    if enum_name[0].isdigit():
+        enum_name = "LIE_" + enum_name
 
     with contextlib.suppress(KeyError):
-        return DnaModel[name]
+        return AaModel[enum_name]
 
-    msg = f"Unknown model: {name!r}"
+    with contextlib.suppress(KeyError):
+        return DnaModel[enum_name]
+
+    msg = f"Unknown substitution model: {name!r}"
     raise ValueError(msg)
