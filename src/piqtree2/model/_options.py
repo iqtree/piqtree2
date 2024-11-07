@@ -25,7 +25,7 @@ def _make_models(model_type: type[SubstitutionModel]) -> dict[str, list[str]]:
     for model_class in model_classes:
         for model in model_class:
             data["Model Type"].append(model.model_type())
-            data["Abbreviation"].append(model.name)
+            data["Abbreviation"].append(model.value)
             data["Description"].append(model.description)
 
     return data
@@ -62,7 +62,7 @@ def available_freq_type() -> _Table:
     data = {"Freq Type": [], "Description": []}
 
     for freq_type in FreqType:
-        data["Freq Type"].append(freq_type.name)
+        data["Freq Type"].append(freq_type.value)
         data["Description"].append(freq_type.description)
 
     return make_table(data=data, title="Available frequency types")

@@ -24,7 +24,7 @@ def check_build_tree(
 
     model = Model(
         dna_model,
-        freq_type=freq_type.name if freq_type else None,
+        freq_type=freq_type.value if freq_type else None,
         invariant_sites=invariant_sites,
         rate_type=RateType(model=rate_model),
     )

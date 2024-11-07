@@ -44,7 +44,7 @@ class Model:
             The IQ-TREE representation of the mode.
         """
         model = self.substitution_model.value
-        freq_type = f"+{self.freq_type.name}" if self.freq_type else self.freq_type
+        freq_type = f"+{self.freq_type.value}" if self.freq_type else self.freq_type
         return "".join(
             str(m)
             for m in (model, self.invariant_sites, self.rate_type, freq_type)
