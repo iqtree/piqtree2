@@ -47,7 +47,7 @@ def test_two_invalid_models(rate_model_class: type[RateModel], categories: int) 
     aln = make_aligned_seqs({"a": "GGG", "b": "GGC", "c": "AAC", "d": "AAA"})
 
     with pytest.raises(IqTreeError):
-        _ = build_tree(aln, Model(DnaModel.JC, rate_type=rate_model_class(categories)))
+        _ = build_tree(aln, Model(DnaModel.JC, rate_model=rate_model_class(categories)))
 
     with pytest.raises(IqTreeError):
-        _ = build_tree(aln, Model(DnaModel.JC, rate_type=rate_model_class(categories)))
+        _ = build_tree(aln, Model(DnaModel.JC, rate_model=rate_model_class(categories)))
