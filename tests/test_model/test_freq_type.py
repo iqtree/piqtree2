@@ -36,7 +36,7 @@ def test_get_freq_type(freq_type: FreqType | str, iqtree_str: str) -> None:
     "freq_type",
     ["F0", "+F0", "+G", "+R9"],
 )
-def test_get_freq_type_name(freq_type: str) -> None:
+def test_invalid_freq_type_name(freq_type: str) -> None:
     with pytest.raises(
         ValueError,
         match=f"Unknown state frequency type: {freq_type!r}",
