@@ -34,6 +34,9 @@ class FreqType(Enum):
         """
         return self._descriptions()[self]
 
+    def iqtree_str(self) -> str:
+        return self.value
+
 
 def get_freq_type(name: str | FreqType) -> FreqType:
     """returns the substitution model enum for name."""

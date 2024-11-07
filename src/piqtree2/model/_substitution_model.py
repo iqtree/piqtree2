@@ -45,6 +45,9 @@ class SubstitutionModel(Enum):
         """
         return self._descriptions()[self]
 
+    def iqtree_str(self) -> str:
+        return self.value
+
 
 @unique
 class DnaModel(SubstitutionModel):

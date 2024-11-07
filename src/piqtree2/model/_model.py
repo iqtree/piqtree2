@@ -33,8 +33,12 @@ class Model:
         self.substitution_model = get_model(substitution_model)
 
         self.freq_type = get_freq_type(freq_type) if freq_type else None
-        self.rate_type = get_rate_type(rate_type) if rate_type else None
-        self.invariant_sites = get_rate_type("I") if invariant_sites else None
+        # self.rate_type = get_rate_type(rate_type) if rate_type else None
+        # self.invariant_sites = (
+        #     get_rate_type(rate_type, invariant_sites)
+        #     if invariant_sites or rate_type is not None
+        #     else None
+        # )
 
     def __str__(self) -> str:
         """Convert the model into the IQ-TREE representation.
@@ -44,10 +48,10 @@ class Model:
         str
             The IQ-TREE representation of the mode.
         """
-        model = self.substitution_model.value
-        freq_type = f"+{self.freq_type.value}" if self.freq_type else self.freq_type
-        return "".join(
-            str(m)
-            for m in (model, self.invariant_sites, self.rate_type, freq_type)
-            if m
+        iqtree_extra_args = filter(
+            lambda x: x is not None,
+            (self.freq_type,),  # self.rate_type, self.invariant_sites),
+        )
+        return "+".join(
+            x.iqtree_str() for x in [self.substitution_model, *iqtree_extra_args]
         )

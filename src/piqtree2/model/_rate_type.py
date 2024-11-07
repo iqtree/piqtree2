@@ -46,9 +46,10 @@ class RateType:
             return rate_type_str
         return rate_type_str + self.model.iqtree_str()
 
+
 class InvariantSitesModel(RateModel):
     def iqtree_str(self) -> str:
-        return "+I"
+        return "I"
 
 
 class DiscreteGammaModel(RateModel):
@@ -70,8 +71,8 @@ class DiscreteGammaModel(RateModel):
 
     def iqtree_str(self) -> str:
         if self.rate_categories == 4:
-            return "+G"
-        return f"+G{self.rate_categories}"
+            return "G"
+        return f"G{self.rate_categories}"
 
 
 class FreeRateModel(RateModel):
@@ -95,8 +96,8 @@ class FreeRateModel(RateModel):
 
     def iqtree_str(self) -> str:
         if self.rate_categories == 4:
-            return "+R"
-        return f"+R{self.rate_categories}"
+            return "R"
+        return f"R{self.rate_categories}"
 
 
 ALL_BASE_RATE_TYPES = [
@@ -124,7 +125,11 @@ def get_description(rate_type: RateType) -> str:
     rate_type_str = "".join(c for c in rate_type.iqtree_str() if not c.isdigit())
     return _BASE_RATE_TYPE_DESCRIPTIONS[rate_type_str]
 
-def get_rate_type(cat: str) -> RateType:
+
+def get_rate_type(
+    rate_type: str | DiscreteGammaModel | FreeRateModel,
+    invariant_sites: str | bool | InvariantSitesModel,
+) -> RateType:
     cat = cat or ""
     if isinstance(cat, (RateModel, RateType)):
         return cat
