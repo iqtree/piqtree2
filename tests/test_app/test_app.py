@@ -18,7 +18,6 @@ def test_piqtree_fit(three_otu: ArrayAlignment) -> None:
     expected = app(three_otu)
     piphylo = get_app("piqtree_fit", tree=tree, substitution_model="JC")
     got = piphylo(three_otu)
-    print(got)
     assert got.params["lnL"] == pytest.approx(expected.lnL)
 
 
