@@ -17,7 +17,7 @@ def check_build_tree(
     four_otu: ArrayAlignment,
     dna_model: DnaModel,
     freq_type: FreqType | None = None,
-    invariable_sites: bool | None = None,
+    invariant_sites: bool | None = None,
     rate_model: RateModel | None = None,
 ) -> None:
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
@@ -25,7 +25,7 @@ def check_build_tree(
     model = Model(
         dna_model,
         freq_type=freq_type.name if freq_type else None,
-        invariant_sites=invariable_sites,
+        invariant_sites=invariant_sites,
         rate_type=RateType(model=rate_model),
     )
 
@@ -59,7 +59,7 @@ def test_lie_build_tree(four_otu: ArrayAlignment, dna_model: DnaModel) -> None:
 
 
 @pytest.mark.parametrize("dna_model", list(DnaModel)[:5])
-@pytest.mark.parametrize("invariable_sites", [False, True])
+@pytest.mark.parametrize("invariant_sites", [False, True])
 @pytest.mark.parametrize(
     "rate_model",
     [
@@ -73,12 +73,12 @@ def test_lie_build_tree(four_otu: ArrayAlignment, dna_model: DnaModel) -> None:
 def test_rate_model_build_tree(
     four_otu: ArrayAlignment,
     dna_model: DnaModel,
-    invariable_sites: bool | None,
+    invariant_sites: bool | None,
     rate_model: RateModel,
 ) -> None:
     check_build_tree(
         four_otu,
         dna_model,
-        invariable_sites=invariable_sites,
+        invariant_sites=invariant_sites,
         rate_model=rate_model,
     )

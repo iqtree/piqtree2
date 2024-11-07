@@ -1,15 +1,22 @@
 import pytest
 
-from piqtree2.model import DiscreteGammaModel, FreeRateModel, RateModel, RateType, InvariantSitesModel
+from piqtree2.model import (
+    DiscreteGammaModel,
+    FreeRateModel,
+    RateModel,
+    RateType,
+    InvariantSitesModel,
+)
 
 
 def test_rate_model_uninstantiable() -> None:
     with pytest.raises(TypeError):
         _ = RateModel()
 
+
 @pytest.mark.xfail(reason="need to rewrite for purpose of building full model string")
 @pytest.mark.parametrize(
-    ("invariable_sites", "rate_model", "iqtree_str"),
+    ("invariant_sites", "rate_model", "iqtree_str"),
     [
         (False, None, ""),
         (True, None, "+I"),
@@ -27,20 +34,20 @@ def test_rate_model_uninstantiable() -> None:
         (True, FreeRateModel(42), "+I+R42"),
     ],
 )
-def test_invariable_sites(
-    invariable_sites: bool,
+def test_invariant_sites(
+    invariant_sites: bool,
     rate_model: RateModel | None,
     iqtree_str: str,
 ) -> None:
     model = RateType(model=rate_model)
-    invariant = InvariantSitesModel().iqtree_str() if invariable_sites else ""
+    invariant = InvariantSitesModel().iqtree_str() if invariant_sites else ""
     got = invariant + model.iqtree_str()
     assert got == iqtree_str
 
     if rate_model is None:
-        model = RateType(invariable_sites=invariable_sites)
+        model = RateType(invariant_sites=invariant_sites)
         assert model.iqtree_str() == iqtree_str
 
-    if not invariable_sites:
+    if not invariant_sites:
         model = RateType(model=rate_model)
         assert model.iqtree_str() == iqtree_str
