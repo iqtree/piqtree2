@@ -1,6 +1,6 @@
-from piqtree2.model._freq_type import FreqType
-from piqtree2.model._rate_type import RateType, get_rate_type
-from piqtree2.model._substitution_model import SubstitutionModel, get_model
+from piqtree2.model._freq_type import get_freq_type
+from piqtree2.model._rate_type import get_rate_type
+from piqtree2.model._substitution_model import get_model
 
 
 class Model:
@@ -32,9 +32,9 @@ class Model:
         """
         self.substitution_model = get_model(substitution_model)
 
-        self.freq_type = FreqType[freq_type] if freq_type else ""
-        self.rate_type = get_rate_type(rate_type) if rate_type else ""
-        self.invariant_sites = get_rate_type("I") if invariant_sites else ""
+        self.freq_type = get_freq_type(freq_type) if freq_type else None
+        self.rate_type = get_rate_type(rate_type) if rate_type else None
+        self.invariant_sites = get_rate_type("I") if invariant_sites else None
 
     def __str__(self) -> str:
         """Convert the model into the IQ-TREE representation.

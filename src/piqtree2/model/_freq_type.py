@@ -1,3 +1,4 @@
+import contextlib
 import functools
 from enum import Enum, unique
 
@@ -32,3 +33,17 @@ class FreqType(Enum):
 
         """
         return self._descriptions()[self]
+
+
+def get_freq_type(name: str | FreqType) -> FreqType:
+    """returns the substitution model enum for name."""
+    if isinstance(name, FreqType):
+        return name
+
+    name = name.lstrip("+")
+
+    with contextlib.suppress(KeyError):
+        return FreqType[name]
+
+    msg = f"Unknown state frequency type: {name!r}"
+    raise ValueError(msg)
