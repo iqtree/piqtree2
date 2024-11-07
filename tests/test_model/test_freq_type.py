@@ -1,4 +1,5 @@
 import pytest
+
 from piqtree2.model import FreqType, get_freq_type
 
 
@@ -17,7 +18,7 @@ def test_descriptions_exist() -> None:
     [
         (FreqType.F, "F"),
         (FreqType.FO, "FO"),
-        (FreqType.F, "FQ"),
+        (FreqType.FQ, "FQ"),
         ("F", "F"),
         ("FO", "FO"),
         ("FQ", "FQ"),
