@@ -278,7 +278,7 @@ class AaModel(SubstitutionModel):
 ALL_MODELS_CLASSES: list[type[SubstitutionModel]] = [DnaModel, AaModel]
 
 
-def get_model(name: str | SubstitutionModel) -> SubstitutionModel:
+def get_substitution_model(name: str | SubstitutionModel) -> SubstitutionModel:
     """returns the substitution model enum for name."""
     if isinstance(name, SubstitutionModel):
         return name

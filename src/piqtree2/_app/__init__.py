@@ -16,7 +16,7 @@ class piqtree_phylo:
         self,
         substitution_model: str,
         freq_type: str | None = None,
-        rate_type: str | None = None,
+        rate_model: str | None = None,
         *,
         invariant_sites: bool = False,
         rand_seed: int | None = None,
@@ -24,7 +24,7 @@ class piqtree_phylo:
         self._model = Model(
             substitution_model=substitution_model,
             invariant_sites=invariant_sites,
-            rate_type=rate_type,
+            rate_model=rate_model,
             freq_type=freq_type,
         )
         self._rand_seed = rand_seed
@@ -44,7 +44,7 @@ class piqtree_fit:
         tree: cogent3.PhyloNode,
         substitution_model: str,
         freq_type: str | None = None,
-        rate_type: str | None = None,
+        rate_model: str | None = None,
         *,
         rand_seed: int | None = None,
         invariant_sites: bool = False,
@@ -53,7 +53,7 @@ class piqtree_fit:
         self._model = Model(
             substitution_model=substitution_model,
             invariant_sites=invariant_sites,
-            rate_type=rate_type,
+            rate_model=rate_model,
             freq_type=freq_type,
         )
         self._rand_seed = rand_seed
