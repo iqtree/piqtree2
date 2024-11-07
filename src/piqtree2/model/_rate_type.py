@@ -151,19 +151,25 @@ def get_rate_type(
         raise TypeError(msg)
 
     stripped_rate_model = rate_model.lstrip("+")
-    rate_categories = (
-        None if len(stripped_rate_model) == 1 else int(stripped_rate_model[1:])
-    )
+    if len(stripped_rate_model) == 1:
+        rate_categories = None
+    else:
+        integer_part = stripped_rate_model[1:]
+        if not integer_part.isdigit():
+            msg = f"Unexpected value for rate_model {rate_model!r}"
+            raise ValueError(msg)
+
+        rate_categories = int(integer_part)
 
     if stripped_rate_model[0] == "G":
         return RateType(
-            model=DiscreteGammaModel(rate_categories=rate_categories),
+            rate_model=DiscreteGammaModel(rate_categories=rate_categories),
             invariant_sites=invariant_sites,
         )
 
     if stripped_rate_model[0] == "R":
         return RateType(
-            model=FreeRateModel(rate_categories=rate_categories),
+            rate_model=FreeRateModel(rate_categories=rate_categories),
             invariant_sites=invariant_sites,
         )
 
