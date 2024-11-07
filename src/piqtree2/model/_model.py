@@ -12,9 +12,10 @@ class Model:
     def __init__(
         self,
         substitution_model: str,
-        invariant_sites: bool = False,
         freq_type: str | None = None,
         rate_type: str | None = None,
+        *,
+        invariant_sites: bool = False,
     ) -> None:
         """Constructor for the model.
 

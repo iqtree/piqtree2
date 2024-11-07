@@ -15,9 +15,9 @@ class piqtree_phylo:
     def __init__(
         self,
         substitution_model: str,
-        *,
         freq_type: str | None = None,
         rate_type: str | None = None,
+        *,
         invariant_sites: bool = False,
         rand_seed: int | None = None,
     ) -> None:
@@ -43,11 +43,11 @@ class piqtree_fit:
         self,
         tree: cogent3.PhyloNode,
         substitution_model: str,
-        *,
         freq_type: str | None = None,
         rate_type: str | None = None,
-        invariant_sites: bool = False,
+        *,
         rand_seed: int | None = None,
+        invariant_sites: bool = False,
     ) -> None:
         self._tree = tree
         self._model = Model(
