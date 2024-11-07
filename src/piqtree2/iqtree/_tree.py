@@ -246,6 +246,7 @@ def fit_tree(
         iq_fit_tree(names, seqs, str(model), newick, rand_seed),
     )
     tree = _process_tree_yaml(yaml_result, names)
+    print(tree)
 
     # for non-Lie models, populate parameters to each branch and
     # rename them to mimic cogent3.PhyloNode

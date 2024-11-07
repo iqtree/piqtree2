@@ -8,21 +8,25 @@ from cogent3.util.misc import extend_docstring_from
 from piqtree2 import TreeGenMode, build_tree, fit_tree, nj_tree, random_trees
 from piqtree2.model import Model
 
+
 @composable.define_app
 class piqtree_phylo:
     @extend_docstring_from(build_tree)
     def __init__(
         self,
-        model: str,
-        invariant_sites: bool=False,
-        rate_type: str | None=None,
-        freq_type: str | None=None,
+        substitution_model: str,
+        *,
+        freq_type: str | None = None,
+        rate_type: str | None = None,
+        invariant_sites: bool = False,
         rand_seed: int | None = None,
     ) -> None:
-        self._model = Model(substitution_model=model,
-                            invariant_sites=invariant_sites,
-                            rate_type=rate_type,
-                            freq_type=freq_type)
+        self._model = Model(
+            substitution_model=substitution_model,
+            invariant_sites=invariant_sites,
+            rate_type=rate_type,
+            freq_type=freq_type,
+        )
         self._rand_seed = rand_seed
 
     def main(
@@ -33,15 +37,32 @@ class piqtree_phylo:
 
 
 @composable.define_app
-@extend_docstring_from(fit_tree)
-def piqtree_fit(
-    aln: cogent3.Alignment | cogent3.ArrayAlignment,
-    tree: cogent3.PhyloNode,
-    model: Model,
-    rand_seed: int | None = None
-) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
-    model = Model(model)
-    return fit_tree(aln, tree, model, rand_seed)
+class piqtree_fit:
+    @extend_docstring_from(build_tree)
+    def __init__(
+        self,
+        tree: cogent3.PhyloNode,
+        substitution_model: str,
+        *,
+        freq_type: str | None = None,
+        rate_type: str | None = None,
+        invariant_sites: bool = False,
+        rand_seed: int | None = None,
+    ) -> None:
+        self._tree = tree
+        self._model = Model(
+            substitution_model=substitution_model,
+            invariant_sites=invariant_sites,
+            rate_type=rate_type,
+            freq_type=freq_type,
+        )
+        self._rand_seed = rand_seed
+
+    def main(
+        self,
+        aln: cogent3.Alignment | cogent3.ArrayAlignment,
+    ) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
+        return fit_tree(aln, self._tree, self._model, self._rand_seed)
 
 
 @composable.define_app
