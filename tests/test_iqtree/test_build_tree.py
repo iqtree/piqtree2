@@ -1,4 +1,5 @@
 import re
+
 import pytest
 from cogent3 import ArrayAlignment, make_tree
 
@@ -12,7 +13,6 @@ from piqtree2.model import (
     Model,
     RateModel,
 )
-
 
 
 def check_build_tree(
