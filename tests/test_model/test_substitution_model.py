@@ -45,7 +45,7 @@ def test_model_type(
     ],
 )
 def test_get_substitution_model(
-    substitution_model: SubstitutionModel | str, iqtree_str: str
+    substitution_model: SubstitutionModel | str, iqtree_str: str,
 ) -> None:
     out = get_substitution_model(substitution_model)
     assert isinstance(out, SubstitutionModel)

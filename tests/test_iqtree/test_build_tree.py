@@ -10,7 +10,6 @@ from piqtree2.model import (
     FreqType,
     Model,
     RateModel,
-    RateType,
 )
 
 
