@@ -4,11 +4,10 @@ from collections.abc import Sequence
 
 import cogent3
 import cogent3.app.typing as c3_types
-from cogent3 import PhyloNode
 import numpy as np
 import yaml
 from _piqtree2 import iq_build_tree, iq_fit_tree, iq_nj_tree
-from cogent3 import make_tree
+from cogent3 import PhyloNode, make_tree
 
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._decorator import iqtree_func
@@ -135,23 +134,22 @@ def _parse_lie_model(
 
 
 def _tree_equal(node1:PhyloNode, node2:PhyloNode)->bool:
-    children_group1 = node1.children 
+    children_group1 = node1.children
     children_group2 = node2.children
- 
+
     if len(children_group1) != len(children_group2):
         return False
-    
+
     # recursively check if two PhyloNode have the same name and branch length, so for their children.
     for child1, child2 in zip(children_group1, children_group2, strict=True):
         if not _tree_equal(child1, child2):
             return False
 
-    # handle empty/different internal node names     
+    # handle empty/different internal node names
     if children_group1 == []:
         return node1.name == node2.name and node1.length == node2.length
-    else:
-        return node1.length == node2.length
-    
+    return node1.length == node2.length
+
 
 def _process_tree_yaml(
     tree_yaml: dict,
@@ -214,7 +212,7 @@ def build_tree(
         The random seed - 0 or None means no seed, by default None.
     bootstrap_replicates : int, optional
         The number of bootstrap replicates to perform, by default 0.
-        If 0 is provided, then no bootstrapping is performed. 
+        If 0 is provided, then no bootstrapping is performed.
         At least 1000 is required to perform bootstrapping.
 
     Returns
