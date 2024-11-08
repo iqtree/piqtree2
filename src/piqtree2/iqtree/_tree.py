@@ -135,18 +135,23 @@ def _parse_lie_model(
 
 
 def _tree_equal(node1:PhyloNode, node2:PhyloNode)->bool:
-    # recursively check if two PhyloNode have the same name and branch length, so for their children.
     children_group1 = node1.children 
     children_group2 = node2.children
-
+ 
     if len(children_group1) != len(children_group2):
         return False
+    
+    # recursively check if two PhyloNode have the same name and branch length, so for their children.
+    for child1, child2 in zip(children_group1, children_group2, strict=True):
+        if not _tree_equal(child1, child2):
+            return False
+
+    # handle empty/different internal node names     
+    if children_group1 == []:
+        return node1.name == node2.name and node1.length == node2.length
     else:
-        for i in range(len(children_group1)):
-            if not _tree_equal(children_group1[i], children_group2[i]):
-                return False
-        
-    return node1.name == node2.name and node1.length == node2.length
+        return node1.length == node2.length
+    
 
 def _process_tree_yaml(
     tree_yaml: dict,
