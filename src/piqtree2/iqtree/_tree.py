@@ -196,7 +196,8 @@ def build_tree(
         The random seed - 0 or None means no seed, by default None.
     bootstrap_replicates : int, optional
         The number of bootstrap replicates to perform, by default 0.
-        At least 1000 is recommended.
+        If 0 is provided, then no bootstrapping is performed. 
+        At least 1000 is required to perform bootstrapping.
 
     Returns
     -------
