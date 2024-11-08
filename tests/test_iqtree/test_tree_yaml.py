@@ -186,7 +186,10 @@ def test_non_lie_dna_model_motif_absent(
     non_lie_dna_with_rate_model: dict[str, Any],
 ) -> None:
     non_lie_dna_with_rate_model["ModelDNA"].pop("state_freq")
-    with pytest.raises(ParseIqTreeError, match=re.escape("IQ-TREE output malformated, motif parameters not found.")):
+    with pytest.raises(
+        ParseIqTreeError,
+        match=re.escape("IQ-TREE output malformated, motif parameters not found."),
+    ):
         _ = _process_tree_yaml(non_lie_dna_with_rate_model, ["a", "b", "c", "d"])
 
 
@@ -194,9 +197,11 @@ def test_non_lie_dna_model_rate_absent(
     non_lie_dna_with_rate_model: dict[str, Any],
 ) -> None:
     non_lie_dna_with_rate_model["ModelDNA"].pop("rates")
-    with pytest.raises(ParseIqTreeError,match=re.escape("IQ-TREE output malformated, rate parameters not found.")):
+    with pytest.raises(
+        ParseIqTreeError,
+        match=re.escape("IQ-TREE output malformated, rate parameters not found."),
+    ):
         _ = _process_tree_yaml(non_lie_dna_with_rate_model, ["a", "b", "c", "d"])
-
 
 
 def test_lie_dna_model(
@@ -215,14 +220,22 @@ def test_lie_dna_model_motif_absent(
     lie_dna_model: dict[str, Any],
 ) -> None:
     lie_dna_model["ModelLieMarkovRY2.2b"].pop("state_freq")
-    with pytest.raises(ParseIqTreeError, match=re.escape("IQ-TREE output malformated, motif parameters not found.")):
+    with pytest.raises(
+        ParseIqTreeError,
+        match=re.escape("IQ-TREE output malformated, motif parameters not found."),
+    ):
         _ = _process_tree_yaml(lie_dna_model, ["a", "b", "c", "d"])
 
 
-@pytest.mark.parametrize(("candidate", "expected"), [("((a:1.0,b:0.9),c:0.8);", True),
-                                                 ("((a:0.9,b:0.9),c:0.8);", False),
-                                                 ("((a:1.0,c:0.8),b:0.9);", False)])
-def test_tree_equal(candidate:str, expected:bool) -> None:
+@pytest.mark.parametrize(
+    ("candidate", "expected"),
+    [
+        ("((a:1.0,b:0.9),c:0.8);", True),
+        ("((a:0.9,b:0.9),c:0.8);", False),
+        ("((a:1.0,c:0.8),b:0.9);", False),
+    ],
+)
+def test_tree_equal(candidate: str, expected: bool) -> None:
     tree = make_tree("((a:1.0,b:0.9),c:0.8);")
     candidate = make_tree(candidate)
     assert _tree_equal(tree, candidate) == expected
