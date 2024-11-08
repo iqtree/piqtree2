@@ -186,7 +186,7 @@ def test_non_lie_dna_model_motif_absent(
     non_lie_dna_with_rate_model: dict[str, Any],
 ) -> None:
     non_lie_dna_with_rate_model["ModelDNA"].pop("state_freq")
-    with pytest.raises(ParseIqTreeError):
+    with pytest.raises(ParseIqTreeError, match=re.escape("IQ-TREE output malformated, motif parameters not found.")):
         _ = _process_tree_yaml(non_lie_dna_with_rate_model, ["a", "b", "c", "d"])
 
 
@@ -194,8 +194,9 @@ def test_non_lie_dna_model_rate_absent(
     non_lie_dna_with_rate_model: dict[str, Any],
 ) -> None:
     non_lie_dna_with_rate_model["ModelDNA"].pop("rates")
-    with pytest.raises(ParseIqTreeError):
+    with pytest.raises(ParseIqTreeError,match=re.escape("IQ-TREE output malformated, rate parameters not found.")):
         _ = _process_tree_yaml(non_lie_dna_with_rate_model, ["a", "b", "c", "d"])
+
 
 
 def test_lie_dna_model(
@@ -214,7 +215,7 @@ def test_lie_dna_model_motif_absent(
     lie_dna_model: dict[str, Any],
 ) -> None:
     lie_dna_model["ModelLieMarkovRY2.2b"].pop("state_freq")
-    with pytest.raises(ParseIqTreeError):
+    with pytest.raises(ParseIqTreeError, match=re.escape("IQ-TREE output malformated, motif parameters not found.")):
         _ = _process_tree_yaml(lie_dna_model, ["a", "b", "c", "d"])
 
 
