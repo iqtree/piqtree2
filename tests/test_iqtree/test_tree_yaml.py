@@ -3,8 +3,9 @@ from typing import Any
 
 import pytest
 
+from cogent3 import make_tree
 from piqtree2.exceptions import ParseIqTreeError
-from piqtree2.iqtree._tree import _process_tree_yaml
+from piqtree2.iqtree._tree import _process_tree_yaml, _tree_equal
 
 
 @pytest.fixture
@@ -215,3 +216,12 @@ def test_lie_dna_model_motif_absent(
     lie_dna_model["ModelLieMarkovRY2.2b"].pop("state_freq")
     with pytest.raises(ParseIqTreeError):
         _ = _process_tree_yaml(lie_dna_model, ["a", "b", "c", "d"])
+
+
+@pytest.mark.parametrize("candidate, expected", [("((a:1.0,b:0.9),c:0.8);", True),
+                                                 ("((a:0.9,b:0.9),c:0.8);", False),
+                                                 ("((a:1.0,c:0.8),b:0.9);", False),])
+def test_tree_equal(candidate, expected) -> None:
+    tree = make_tree("((a:1.0,b:0.9),c:0.8);")
+    candidate = make_tree(candidate)
+    assert _tree_equal(tree, candidate) == expected
