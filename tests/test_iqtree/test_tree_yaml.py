@@ -1,3 +1,4 @@
+import re
 from typing import Any
 
 import pytest
@@ -7,36 +8,71 @@ from piqtree2.iqtree._tree import _process_tree_yaml
 
 
 @pytest.fixture
-def newick_not_in_candidates() -> dict[str, Any]:
-    # The newick string does not appear in the CandidateSet
-    return {
-        "CandidateSet": {
-            0: "-6740.63608299 (0:0.0058556288,1:0.0026699620,(2:0.0213509070,3:0.2948603704):0.01524055279);",
-            1: "-6771.38674814 (0:0.0058881129,(1:0.0021755411,3:0.3099373687):0.0002171837668,2:0.0365212662);",
-            2: "-6771.4094654 (0:0.0058966179,(1:0.0027044780,2:0.0365855065):2.43434433e-06,3:0.3102579188);",
+def newick_not_in_candidates() -> list[dict[str, Any]]:
+    return [
+        {  # Newick string not in candidate set (different branch length)
+            "CandidateSet": {
+                0: "-6519.33018689 (0:0.0058955371,1:0.0026486308,(2:0.0230933557,3:0.3069062230):0.01387802789);",
+                1: "-6540.1924365 (0:0.0059276645,(1:0.0026255655,2:0.0369876991):2.43436209e-06,3:0.3205542282);",
+                2: "-6540.32542968 (0:0.0059468612,(1:0.0021841363,3:0.3203544844):2.076530752e-06,2:0.0369270512);",
+            },
+            "ModelDNA": {
+                "rates": "1, 3.815110072, 1, 1, 3.815110072, 1",
+                "state_freq": "0.3640205807, 0.1862366777, 0.217291437, 0.2324513047",
+            },
+            "PhyloTree": {
+                "newick": "(0:0.0068955371,1:0.0026486308,(2:0.0230933557,3:0.3069062230):0.01387802789);"
+            },
+            "StopRule": {
+                "curIteration": 101,
+                "start_real_time": 1731027583,
+                "time_vec": None,
+            },
+            "boot_consense_logl": 0,
+            "contree_rfdist": -1,
+            "finished": True,
+            "finishedCandidateSet": True,
+            "finishedModelFinal": True,
+            "finishedModelInit": True,
+            "initTree": "(0:0.0063001853,1:0.0022115739,(2:0.0203850510,3:0.3497395366):0.01883712169);",
+            "iqtree": {
+                "seed": 598834595,
+                "start_time": 1731027582,
+                "version": "2.3.6.lib",
+            },
         },
-        "ModelDNA": {"rates": "1, 1, 1, 1, 1, 1"},
-        "PhyloTree": {
-            "newick": "(0:0.0068556288,1:0.0026699620,(2:0.0213509070,3:0.2948603704):0.01524055279);",
+        {  # Newick string not in candidate set (different names)
+            "CandidateSet": {
+                0: "-6519.33018689 (0:0.0058955371,2:0.0026486308,(1:0.0230933557,3:0.3069062230):0.01387802789);",
+                1: "-6540.1924365 (0:0.0059276645,(1:0.0026255655,2:0.0369876991):2.43436209e-06,3:0.3205542282);",
+                2: "-6540.32542968 (0:0.0059468612,(1:0.0021841363,3:0.3203544844):2.076530752e-06,2:0.0369270512);",
+            },
+            "ModelDNA": {
+                "rates": "1, 3.815110072, 1, 1, 3.815110072, 1",
+                "state_freq": "0.3640205807, 0.1862366777, 0.217291437, 0.2324513047",
+            },
+            "PhyloTree": {
+                "newick": "(0:0.0058955371,1:0.0026486308,(2:0.0230933557,3:0.3069062230):0.01387802789);"
+            },
+            "StopRule": {
+                "curIteration": 101,
+                "start_real_time": 1731027583,
+                "time_vec": None,
+            },
+            "boot_consense_logl": 0,
+            "contree_rfdist": -1,
+            "finished": True,
+            "finishedCandidateSet": True,
+            "finishedModelFinal": True,
+            "finishedModelInit": True,
+            "initTree": "(0:0.0063001853,1:0.0022115739,(2:0.0203850510,3:0.3497395366):0.01883712169);",
+            "iqtree": {
+                "seed": 598834595,
+                "start_time": 1731027582,
+                "version": "2.3.6.lib",
+            },
         },
-        "StopRule": {
-            "curIteration": 101,
-            "start_real_time": 1722475286,
-            "time_vec": None,
-        },
-        "boot_consense_logl": 0,
-        "contree_rfdist": -1,
-        "finished": True,
-        "finishedCandidateSet": True,
-        "finishedModelFinal": True,
-        "finishedModelInit": True,
-        "initTree": "(0:0.0063001853,1:0.0022115739,(2:0.0203850510,3:0.3497395366):0.01883712169);",
-        "iqtree": {
-            "seed": 1954151673,
-            "start_time": 1722475285,
-            "version": "2.3.5.lib",
-        },
-    }
+    ]
 
 
 @pytest.fixture
@@ -105,12 +141,18 @@ def lie_dna_model() -> dict[str, Any]:
     }
 
 
-def test_newick_not_in_candidates(newick_not_in_candidates: dict[str, Any]) -> None:
-    with pytest.raises(ParseIqTreeError):
-        _ = _process_tree_yaml(
-            newick_not_in_candidates,
-            ["a", "b", "c"],
-        )
+def test_newick_not_in_candidates(
+    newick_not_in_candidates: list[dict[str, Any]],
+) -> None:
+    for yaml in newick_not_in_candidates:
+        with pytest.raises(
+            ParseIqTreeError,
+            match=re.escape("IQ-TREE output malformated, likelihood not found."),
+        ):
+            _ = _process_tree_yaml(
+                yaml,
+                ["a", "b", "c", "d"],
+            )
 
 
 def test_non_lie_dna_with_rate_model(
