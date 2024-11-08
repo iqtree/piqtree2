@@ -4,6 +4,7 @@ from collections.abc import Sequence
 
 import cogent3
 import cogent3.app.typing as c3_types
+from cogent3 import PhyloNode
 import numpy as np
 import yaml
 from _piqtree2 import iq_build_tree, iq_fit_tree, iq_nj_tree
@@ -133,6 +134,20 @@ def _parse_lie_model(
             tree.params[lie_model_name]["model_parameters"] = model_parameters
 
 
+def _tree_equal(node1:PhyloNode, node2:PhyloNode)->bool:
+    # recursively check if two PhyloNode have the same name and branch length, so for their children.
+    children_group1 = node1.children 
+    children_group2 = node2.children
+
+    if len(children_group1) != len(children_group2):
+        return False
+    else:
+        for i in range(len(children_group1)):
+            if not _tree_equal(children_group1[i], children_group2[i]):
+                return False
+        
+    return node1.name == node2.name and node1.length == node2.length
+
 def _process_tree_yaml(
     tree_yaml: dict,
     names: Sequence[str],
@@ -140,14 +155,12 @@ def _process_tree_yaml(
     newick = tree_yaml["PhyloTree"]["newick"]
 
     tree = cogent3.make_tree(newick)
-    t2t_matrix = tree.tip_to_tip_distances()[0]
     candidates = tree_yaml["CandidateSet"]
     likelihood = None
     for candidate in candidates.values():
         candidate_likelihood, candidate_newick = candidate.split(" ")
         candidate_tree = cogent3.make_tree(candidate_newick)
-        candidate_t2t_matrix = candidate_tree.tip_to_tip_distances()[0]
-        if np.allclose(t2t_matrix, candidate_t2t_matrix):
+        if _tree_equal(candidate_tree, tree):
             likelihood = float(candidate_likelihood)
             break
     if likelihood is None:
