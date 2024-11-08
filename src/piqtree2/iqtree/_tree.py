@@ -133,7 +133,7 @@ def _parse_lie_model(
             tree.params[lie_model_name]["model_parameters"] = model_parameters
 
 
-def _tree_equal(node1:PhyloNode, node2:PhyloNode)->bool:
+def _tree_equal(node1: PhyloNode, node2: PhyloNode) -> bool:
     children_group1 = node1.children
     children_group2 = node2.children
 

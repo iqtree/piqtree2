@@ -43,15 +43,18 @@ def available_models(model_type: str | None = None) -> _Table:
     template = "Available {}substitution models"
     if model_type == "dna":
         table = make_table(
-            data=_make_models(DnaModel), title=template.format("nucleotide "),
+            data=_make_models(DnaModel),
+            title=template.format("nucleotide "),
         )
     elif model_type == "protein":
         table = make_table(
-            data=_make_models(AaModel), title=template.format("protein "),
+            data=_make_models(AaModel),
+            title=template.format("protein "),
         )
     else:
         table = make_table(
-            data=_make_models(SubstitutionModel), title=template.format(""),
+            data=_make_models(SubstitutionModel),
+            title=template.format(""),
         )
 
     return table
