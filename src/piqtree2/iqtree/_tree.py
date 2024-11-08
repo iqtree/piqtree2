@@ -81,7 +81,7 @@ def _parse_nonlie_model(tree: cogent3.PhyloNode, tree_yaml: dict) -> None:
             float(value) for value in state_freq_str.replace(" ", "").split(",")
         ]
         tree.params["edge_pars"] = {
-            "mprobs": dict(zip(MOTIF_PARS, state_freq_list, strict=False)),
+            "mprobs": dict(zip(MOTIF_PARS, state_freq_list, strict=True)),
         }
     else:
         msg = "IQ-TREE output malformated, motif parameters not found."
@@ -91,7 +91,7 @@ def _parse_nonlie_model(tree: cogent3.PhyloNode, tree_yaml: dict) -> None:
     if rate_str:
         rate_list = [float(value) for value in rate_str.replace(" ", "").split(",")]
         tree.params["edge_pars"]["rates"] = dict(
-            zip(RATE_PARS, rate_list, strict=False),
+            zip(RATE_PARS, rate_list, strict=True),
         )
     else:
         msg = "IQ-TREE output malformated, rate parameters not found."
@@ -113,7 +113,7 @@ def _parse_lie_model(
             float(value) for value in state_freq_str.replace(" ", "").split(",")
         ]
         tree.params[lie_model_name] = {
-            "mprobs": dict(zip(MOTIF_PARS, state_freq_list, strict=False)),
+            "mprobs": dict(zip(MOTIF_PARS, state_freq_list, strict=True)),
         }
     else:
         msg = "IQ-TREE output malformated, motif parameters not found."
