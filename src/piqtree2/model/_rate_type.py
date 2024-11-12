@@ -19,20 +19,20 @@ class RateType:
     def __init__(
         self,
         *,
-        invariable_sites: bool = False,
-        model: RateModel | None = None,
+        invariant_sites: bool = False,
+        rate_model: RateModel | None = None,
     ) -> None:
         """Rate heterogeneity across sites model.
 
         Parameters
         ----------
-        model : Optional[RateModel]
-            Discrete Gamma Model or FreeRate Model.
-        invariable_sites : bool, optional
+        invariant_sites : bool, optional
             Invariable Sites Model.
+        rate_model : Optional[RateModel]
+            Discrete Gamma Model or FreeRate Model.
         """
-        self.invariable_sites = invariable_sites
-        self.model = model
+        self.invariant_sites = invariant_sites
+        self.rate_model = rate_model
 
     def iqtree_str(self) -> str:
         """Convert to an iqtree settings string.
@@ -42,14 +42,17 @@ class RateType:
         str
             String parsable by IQ-TREE for the rate heterogeneity model.
         """
-        rate_type_str = "+I" if self.invariable_sites else ""
-        if self.model is None:
+        rate_type_str = "I" if self.invariant_sites else ""
+        if self.rate_model is None:
             return rate_type_str
-        return rate_type_str + self.model.iqtree_str()
+        # Invariant sites and model need to be joined by a '+'
+        if self.invariant_sites:
+            rate_type_str += "+"
+        return rate_type_str + self.rate_model.iqtree_str()
 
 
 class DiscreteGammaModel(RateModel):
-    def __init__(self, rate_categories: int = 4) -> None:
+    def __init__(self, rate_categories: int | None = None) -> None:
         """Discrete Gamma Model.
 
         Parameters
@@ -66,13 +69,13 @@ class DiscreteGammaModel(RateModel):
         self.rate_categories = rate_categories
 
     def iqtree_str(self) -> str:
-        if self.rate_categories == 4:
-            return "+G"
-        return f"+G{self.rate_categories}"
+        if self.rate_categories is None:
+            return "G"
+        return f"G{self.rate_categories}"
 
 
 class FreeRateModel(RateModel):
-    def __init__(self, rate_categories: int = 4) -> None:
+    def __init__(self, rate_categories: int | None = None) -> None:
         """FreeRate Model.
 
         Parameters
@@ -91,38 +94,38 @@ class FreeRateModel(RateModel):
         self.rate_categories = rate_categories
 
     def iqtree_str(self) -> str:
-        if self.rate_categories == 4:
-            return "+R"
-        return f"+R{self.rate_categories}"
+        if self.rate_categories is None:
+            return "R"
+        return f"R{self.rate_categories}"
 
 
 ALL_BASE_RATE_TYPES = [
     RateType(),
-    RateType(invariable_sites=True),
-    RateType(model=DiscreteGammaModel()),
-    RateType(invariable_sites=True, model=DiscreteGammaModel()),
-    RateType(model=FreeRateModel()),
-    RateType(invariable_sites=True, model=FreeRateModel()),
+    RateType(invariant_sites=True),
+    RateType(rate_model=DiscreteGammaModel()),
+    RateType(invariant_sites=True, rate_model=DiscreteGammaModel()),
+    RateType(rate_model=FreeRateModel()),
+    RateType(invariant_sites=True, rate_model=FreeRateModel()),
 ]
 
 _BASE_RATE_TYPE_DESCRIPTIONS = {
     RateType().iqtree_str(): "no invariable sites, no rate heterogeneity model.",
     RateType(
-        invariable_sites=True,
+        invariant_sites=True,
     ).iqtree_str(): "allowing for a proportion of invariable sites.",
     RateType(
-        model=DiscreteGammaModel(),
+        rate_model=DiscreteGammaModel(),
     ).iqtree_str(): "discrete Gamma model (Yang, 1994) with default 4 rate categories. The number of categories can be changed with e.g. +G8.",
     RateType(
-        invariable_sites=True,
-        model=DiscreteGammaModel(),
+        invariant_sites=True,
+        rate_model=DiscreteGammaModel(),
     ).iqtree_str(): "invariable site plus discrete Gamma model (Gu et al., 1995).",
     RateType(
-        model=FreeRateModel(),
+        rate_model=FreeRateModel(),
     ).iqtree_str(): "FreeRate model (Yang, 1995; Soubrier et al., 2012) that generalizes the +G model by relaxing the assumption of Gamma-distributed rates. The number of categories can be specified with e.g. +R6 (default 4 categories if not specified). The FreeRate model typically fits data better than the +G model and is recommended for analysis of large data sets.",
     RateType(
-        invariable_sites=True,
-        model=FreeRateModel(),
+        invariant_sites=True,
+        rate_model=FreeRateModel(),
     ).iqtree_str(): "invariable site plus FreeRate model.",
 }
 
@@ -130,3 +133,45 @@ _BASE_RATE_TYPE_DESCRIPTIONS = {
 def get_description(rate_type: RateType) -> str:
     rate_type_str = "".join(c for c in rate_type.iqtree_str() if not c.isdigit())
     return _BASE_RATE_TYPE_DESCRIPTIONS[rate_type_str]
+
+
+def get_rate_type(
+    rate_model: str | RateModel | None = None,
+    *,
+    invariant_sites: bool = False,
+) -> RateType:
+    if isinstance(rate_model, RateModel):
+        return RateType(rate_model=rate_model, invariant_sites=invariant_sites)
+
+    if rate_model is None:
+        return RateType(invariant_sites=invariant_sites)
+
+    if not isinstance(rate_model, str):
+        msg = f"Unexpected type for rate_model: {type(rate_model)}"
+        raise TypeError(msg)
+
+    stripped_rate_model = rate_model.lstrip("+")
+    if len(stripped_rate_model) == 1:
+        rate_categories = None
+    else:
+        integer_part = stripped_rate_model[1:]
+        if not integer_part.isdigit():
+            msg = f"Unexpected value for rate_model {rate_model!r}"
+            raise ValueError(msg)
+
+        rate_categories = int(integer_part)
+
+    if stripped_rate_model[0] == "G":
+        return RateType(
+            rate_model=DiscreteGammaModel(rate_categories=rate_categories),
+            invariant_sites=invariant_sites,
+        )
+
+    if stripped_rate_model[0] == "R":
+        return RateType(
+            rate_model=FreeRateModel(rate_categories=rate_categories),
+            invariant_sites=invariant_sites,
+        )
+
+    msg = f"Unexpected value for rate_model {rate_model!r}"
+    raise ValueError(msg)

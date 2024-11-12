@@ -111,7 +111,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "INP001", # __init__.py files are not required...
     "N802", # allow non snake_case function names for fixtures
     "N803", # allow use of fixture constants
-    "SLF001", # private member access is useufl for testing
+    "SLF001", # private member access is useful for testing
     "FBT001", # allow bool pos args for parameterisation
     "D", # don't require docstrings
 ]
@@ -122,6 +122,9 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "N802",
     "N803",
     "D"
+]
+"src/piqtree2/_app/__init__.py" = [
+    "N801", # apps follow function naming convention
 ]
 "src/piqtree2/model/_substitution_model.py" = ["N815"] # use IQ-TREE naming scheme
 

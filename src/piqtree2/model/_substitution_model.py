@@ -45,6 +45,9 @@ class SubstitutionModel(Enum):
         """
         return self._descriptions()[self]
 
+    def iqtree_str(self) -> str:
+        return self.value
+
 
 @unique
 class DnaModel(SubstitutionModel):
@@ -275,16 +278,24 @@ class AaModel(SubstitutionModel):
 ALL_MODELS_CLASSES: list[type[SubstitutionModel]] = [DnaModel, AaModel]
 
 
-def get_model(name: str) -> SubstitutionModel:
+def get_substitution_model(name: str | SubstitutionModel) -> SubstitutionModel:
     """returns the substitution model enum for name."""
     if isinstance(name, SubstitutionModel):
         return name
 
-    with contextlib.suppress(KeyError):
-        return AaModel[name]
+    enum_name = name.replace(".", "_")
+    if len(enum_name) == 0:
+        msg = f"Unknown substitution model: {name!r}"
+        raise ValueError(msg)
+
+    if enum_name[0].isdigit():
+        enum_name = "LIE_" + enum_name
 
     with contextlib.suppress(KeyError):
-        return DnaModel[name]
+        return AaModel[enum_name]
 
-    msg = f"Unknown model: {name!r}"
+    with contextlib.suppress(KeyError):
+        return DnaModel[enum_name]
+
+    msg = f"Unknown substitution model: {name!r}"
     raise ValueError(msg)

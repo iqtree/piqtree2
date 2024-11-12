@@ -25,7 +25,7 @@ def _make_models(model_type: type[SubstitutionModel]) -> dict[str, list[str]]:
     for model_class in model_classes:
         for model in model_class:
             data["Model Type"].append(model.model_type())
-            data["Abbreviation"].append(model.name)
+            data["Abbreviation"].append(model.value)
             data["Description"].append(model.description)
 
     return data
@@ -43,17 +43,20 @@ def available_models(model_type: str | None = None) -> _Table:
     template = "Available {}substitution models"
     if model_type == "dna":
         table = make_table(
-            data=_make_models(DnaModel), title=template.format("nucleotide ")
+            data=_make_models(DnaModel),
+            title=template.format("nucleotide "),
         )
     elif model_type == "protein":
         table = make_table(
-            data=_make_models(AaModel), title=template.format("protein ")
+            data=_make_models(AaModel),
+            title=template.format("protein "),
         )
     else:
         table = make_table(
-            data=_make_models(SubstitutionModel), title=template.format("")
+            data=_make_models(SubstitutionModel),
+            title=template.format(""),
         )
-    table.set_repr_policy(head=table.shape[0])
+
     return table
 
 
@@ -62,7 +65,7 @@ def available_freq_type(*args) -> _Table:
     data = {"Freq Type": [], "Description": []}
 
     for freq_type in FreqType:
-        data["Freq Type"].append(freq_type.name)
+        data["Freq Type"].append(freq_type.value)
         data["Description"].append(freq_type.description)
 
     return make_table(data=data, title="Available frequency types")

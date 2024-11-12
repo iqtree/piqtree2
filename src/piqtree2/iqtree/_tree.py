@@ -7,7 +7,7 @@ import cogent3.app.typing as c3_types
 import numpy as np
 import yaml
 from _piqtree2 import iq_build_tree, iq_fit_tree, iq_nj_tree
-from cogent3 import make_tree
+from cogent3 import PhyloNode, make_tree
 
 from piqtree2.exceptions import ParseIqTreeError
 from piqtree2.iqtree._decorator import iqtree_func
@@ -80,17 +80,21 @@ def _parse_nonlie_model(tree: cogent3.PhyloNode, tree_yaml: dict) -> None:
         state_freq_list = [
             float(value) for value in state_freq_str.replace(" ", "").split(",")
         ]
-        tree.params["edge_pars"] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list))}
+        tree.params["edge_pars"] = {
+            "mprobs": dict(zip(MOTIF_PARS, state_freq_list, strict=True)),
+        }
     else:
-        msg = "IQ-TREE output malformated, motif parameters not found"
+        msg = "IQ-TREE output malformated, motif parameters not found."
         raise ParseIqTreeError(msg)
 
     # parse rate parameters, assign each to a name, and raise an error if not found
     if rate_str:
         rate_list = [float(value) for value in rate_str.replace(" ", "").split(",")]
-        tree.params["edge_pars"]["rates"] = dict(zip(RATE_PARS, rate_list))
+        tree.params["edge_pars"]["rates"] = dict(
+            zip(RATE_PARS, rate_list, strict=True),
+        )
     else:
-        msg = "IQ-TREE output malformated, rate parameters not found"
+        msg = "IQ-TREE output malformated, rate parameters not found."
         raise ParseIqTreeError(msg)
 
 
@@ -108,9 +112,11 @@ def _parse_lie_model(
         state_freq_list = [
             float(value) for value in state_freq_str.replace(" ", "").split(",")
         ]
-        tree.params[lie_model_name] = {"mprobs": dict(zip(MOTIF_PARS, state_freq_list))}
+        tree.params[lie_model_name] = {
+            "mprobs": dict(zip(MOTIF_PARS, state_freq_list, strict=True)),
+        }
     else:
-        msg = "IQ-TREE output malformated, motif parameters not found"
+        msg = "IQ-TREE output malformated, motif parameters not found."
         raise ParseIqTreeError(msg)
 
     # parse rate parameters, skipping LIE_1_1 (aka JC69) since its rate parameter is constant thus absent
@@ -127,6 +133,24 @@ def _parse_lie_model(
             tree.params[lie_model_name]["model_parameters"] = model_parameters
 
 
+def _tree_equal(node1: PhyloNode, node2: PhyloNode) -> bool:
+    children_group1 = node1.children
+    children_group2 = node2.children
+
+    if len(children_group1) != len(children_group2):
+        return False
+
+    # recursively check if two PhyloNode have the same name and branch length, so for their children.
+    for child1, child2 in zip(children_group1, children_group2, strict=True):
+        if not _tree_equal(child1, child2):
+            return False
+
+    # handle empty/different internal node names
+    if children_group1 == []:
+        return node1.name == node2.name and node1.length == node2.length
+    return node1.length == node2.length
+
+
 def _process_tree_yaml(
     tree_yaml: dict,
     names: Sequence[str],
@@ -134,15 +158,16 @@ def _process_tree_yaml(
     newick = tree_yaml["PhyloTree"]["newick"]
 
     tree = cogent3.make_tree(newick)
-
     candidates = tree_yaml["CandidateSet"]
     likelihood = None
     for candidate in candidates.values():
-        if newick in candidate:
-            likelihood = float(candidate.split(" ")[0])
+        candidate_likelihood, candidate_newick = candidate.split(" ")
+        candidate_tree = cogent3.make_tree(candidate_newick)
+        if _tree_equal(candidate_tree, tree):
+            likelihood = float(candidate_likelihood)
             break
     if likelihood is None:
-        msg = "IQ-TREE output malformated, likelihood not found"
+        msg = "IQ-TREE output malformated, likelihood not found."
         raise ParseIqTreeError(msg)
 
     tree.params["lnL"] = likelihood
@@ -171,6 +196,7 @@ def build_tree(
     aln: cogent3.Alignment | cogent3.ArrayAlignment,
     model: Model,
     rand_seed: int | None = None,
+    bootstrap_replicates: int = 0,
 ) -> cogent3.PhyloNode:
     """Reconstruct a phylogenetic tree.
 
@@ -184,6 +210,10 @@ def build_tree(
         The substitution model with base frequencies and rate heterogeneity.
     rand_seed : Optional[int], optional
         The random seed - 0 or None means no seed, by default None.
+    bootstrap_replicates : int, optional
+        The number of bootstrap replicates to perform, by default 0.
+        If 0 is provided, then no bootstrapping is performed.
+        At least 1000 is required to perform bootstrapping.
 
     Returns
     -------
@@ -197,7 +227,9 @@ def build_tree(
     names = aln.names
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
-    yaml_result = yaml.safe_load(iq_build_tree(names, seqs, str(model), rand_seed, 0))
+    yaml_result = yaml.safe_load(
+        iq_build_tree(names, seqs, str(model), rand_seed, bootstrap_replicates),
+    )
     tree = _process_tree_yaml(yaml_result, names)
 
     # for non-Lie models, populate parameters to each branch and
