@@ -60,7 +60,7 @@ def available_models(model_type: str | None = None) -> _Table:
     return table
 
 
-def available_freq_type() -> _Table:
+def available_freq_type(*args) -> _Table:
     """Return a table showing available freq type options."""
     data = {"Freq Type": [], "Description": []}
 
@@ -71,7 +71,7 @@ def available_freq_type() -> _Table:
     return make_table(data=data, title="Available frequency types")
 
 
-def available_rate_type() -> _Table:
+def available_rate_type(*args) -> _Table:
     """Return a table showing available rate type options."""
     data = {"Rate Type": [], "Description": []}
 
