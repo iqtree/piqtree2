@@ -10,7 +10,7 @@ from piqtree2.model import (
 
 def test_rate_model_uninstantiable() -> None:
     with pytest.raises(TypeError):
-        _ = RateModel()
+        _ = RateModel()  # type: ignore[abstract]
 
 
 @pytest.mark.parametrize(
@@ -90,4 +90,7 @@ def test_invalid_rate_model_type(
         TypeError,
         match=f"Unexpected type for rate_model: {type(bad_rate_model)}",
     ):
-        _ = get_rate_type(invariant_sites=invariant_sites, rate_model=bad_rate_model)
+        _ = get_rate_type(
+            invariant_sites=invariant_sites,
+            rate_model=bad_rate_model,  # type: ignore[arg-type]
+        )
