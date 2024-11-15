@@ -19,8 +19,9 @@ def check_build_tree(
     four_otu: ArrayAlignment,
     dna_model: DnaModel,
     freq_type: FreqType | None = None,
-    invariant_sites: bool | None = None,
     rate_model: RateModel | None = None,
+    *,
+    invariant_sites: bool = False,
 ) -> None:
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
 
@@ -75,14 +76,14 @@ def test_lie_build_tree(four_otu: ArrayAlignment, dna_model: DnaModel) -> None:
 def test_rate_model_build_tree(
     four_otu: ArrayAlignment,
     dna_model: DnaModel,
-    invariant_sites: bool | None,
+    invariant_sites: bool,
     rate_model: RateModel,
 ) -> None:
     check_build_tree(
         four_otu,
         dna_model,
-        invariant_sites=invariant_sites,
         rate_model=rate_model,
+        invariant_sites=invariant_sites,
     )
 
 
