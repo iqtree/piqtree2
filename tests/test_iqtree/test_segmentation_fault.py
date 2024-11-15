@@ -39,7 +39,10 @@ def test_two_fit_random_trees() -> None:
 
 @pytest.mark.parametrize("rate_model_class", [DiscreteGammaModel, FreeRateModel])
 @pytest.mark.parametrize("categories", [0, -4])
-def test_two_invalid_models(rate_model_class: type[RateModel], categories: int) -> None:
+def test_two_invalid_models(
+    rate_model_class: type[DiscreteGammaModel] | type[FreeRateModel],
+    categories: int,
+) -> None:
     """
     Calling build_tree multiple times with an invalid
     model has resulted in a Segmentation Fault.
