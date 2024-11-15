@@ -46,6 +46,7 @@ test = ["pytest", "pytest-cov", "nox"]
 piqtree_phylo = "piqtree2._app:piqtree_phylo"
 piqtree_fit = "piqtree2._app:piqtree_fit"
 piqtree_random_trees = "piqtree2._app:piqtree_random_trees"
+piqtree_jc_distances = "piqtree2._app:piqtree_jc_distances"
 piqtree_nj = "piqtree2._app:piqtree_nj"
 
 [tool.setuptools.dynamic]
