@@ -12,7 +12,7 @@ from piqtree2.model._rate_type import ALL_BASE_RATE_TYPES
     [(None, None), (DnaModel, "dna"), (AaModel, "protein")],
 )
 def test_num_available_models(
-    model_class: SubstitutionModel | None,
+    model_class: type[SubstitutionModel] | None,
     model_type: str | None,
 ) -> None:
     table = available_models(model_type)
