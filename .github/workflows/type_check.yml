@@ -1,0 +1,26 @@
+name: Type Check
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    name: "Python ${{ matrix.python-version }}"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+
+      - uses: "actions/setup-python@v5"
+        with:
+            python-version: "${{ matrix.python-version }}"          
+
+      - name: "Run Type Checking for ${{ matrix.python-version }}" 
+        run: |
+            pip install nox
+            nox -s type_check-${{ matrix.python-version }}
