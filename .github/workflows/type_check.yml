@@ -3,7 +3,42 @@ name: Type Check
 on: [push, pull_request]
 
 jobs:
-  tests:
+  build-iqtree:
+    name: Fetch or Build IQ-TREE 2 Static Library on ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-13, macos-14] # Intel linux, Intel Mac, ARM Mac
+
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Get IQ-TREE 2 SHA
+        run: |
+          cd iqtree2
+          IQ_TREE_2_SHA=$(git rev-parse HEAD)
+          echo "IQ_TREE_2_SHA=${IQ_TREE_2_SHA}" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        id: cache
+        with:
+          key: libiqtree-${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
+          path: src/piqtree2/_libiqtree/libiqtree2.a
+          lookup-only: true
+      
+      - name: Build IQ-TREE
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+            sudo ./build_tools/before_all_linux.sh
+          else
+            ./build_tools/before_all_mac.sh
+          fi
+
+  type_check:
     name: "Python ${{ matrix.python-version }}"
     runs-on: ubuntu-latest
 
@@ -20,6 +55,12 @@ jobs:
         with:
             python-version: "${{ matrix.python-version }}"          
 
+      - uses: actions/cache/restore@v4
+        with:
+            key: libiqtree-${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
+            path: src/piqtree2/_libiqtree/libiqtree2.a
+            fail-on-cache-miss: true
+      
       - name: "Run Type Checking for ${{ matrix.python-version }}" 
         run: |
             pip install nox
