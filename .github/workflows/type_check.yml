@@ -39,12 +39,14 @@ jobs:
           fi
 
   type_check:
-    name: "Python ${{ matrix.python-version }}"
-    runs-on: ubuntu-latest
+    name: "Type Check"
+    needs: build-iqtree
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.12"]
+        os: [ubuntu-latest]
 
     steps:
       - uses: "actions/checkout@v4"
