@@ -42,7 +42,6 @@ class piqtree_phylo:
     ) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
         return build_tree(aln, self._model, self._rand_seed)
 
-
 @composable.define_app
 class piqtree_fit:
     @extend_docstring_from(build_tree)

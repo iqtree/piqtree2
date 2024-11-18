@@ -1,0 +1,28 @@
+site_name: piqtree2
+site_url: "https://github.com/iqtree/piqtree2"
+site_author: "Gavin Huttley"
+repo_url: "https://github.com/iqtree/piqtree2"
+repo_name: 'GitHub'
+theme:
+    name: material
+    highlightjs: true
+    hljs_languages:
+        - yaml
+        - python
+        - text
+plugins:
+    - mkdocs-jupyter:
+        include_requirejs: true
+        execute: true
+        remove_tag_config:
+            remove_input_tags:
+                - hide_code
+
+nav:
+    - HOME:
+      - Introduction: index.md
+      - Available Apps: available_help.py
+      - Phylogenetic estimation: phylo.py
+      - Fit a single tree: fit_tree.py
+      - Phylogenetic model options: options.py
+      - Citation: citation.md
