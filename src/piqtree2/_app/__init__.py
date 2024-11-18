@@ -5,13 +5,15 @@ import cogent3.app.typing as c3_types
 from cogent3.app import composable
 from cogent3.util.misc import extend_docstring_from
 
-from piqtree2 import TreeGenMode, build_tree, fit_tree, nj_tree, random_trees
-from piqtree2.model import (
-    Model,
-    available_freq_type,
-    available_models,
-    available_rate_type,
+from piqtree2 import (
+    TreeGenMode,
+    build_tree,
+    fit_tree,
+    jc_distances,
+    nj_tree,
+    random_trees,
 )
+from piqtree2.model import Model
 
 
 @composable.define_app
@@ -82,6 +84,14 @@ def piqtree_random_trees(
 
 @composable.define_app
 @extend_docstring_from(nj_tree)
+def piqtree_jc_distances(
+    aln: cogent3.Alignment | cogent3.ArrayAlignment,
+) -> c3_types.PairwiseDistanceType:
+    return jc_distances(aln)
+
+
+@composable.define_app
+@extend_docstring_from(nj_tree)
 def piqtree_nj(dists: c3_types.PairwiseDistanceType) -> cogent3.PhyloNode:
     return nj_tree(dists)
 
@@ -90,5 +100,6 @@ _ALL_APP_NAMES = [
     "piqtree_phylo",
     "piqtree_fit",
     "piqtree_random_trees",
+    "piqtree_jc_distances",
     "piqtree_nj",
 ]

@@ -3,8 +3,6 @@ import functools
 from abc import abstractmethod
 from enum import Enum, unique
 
-from typing_extensions import Self
-
 
 class SubstitutionModel(Enum):
     """Base class for substitution models."""
@@ -23,7 +21,7 @@ class SubstitutionModel(Enum):
 
     @staticmethod
     @abstractmethod
-    def _descriptions() -> dict[Self, str]:
+    def _descriptions() -> dict["SubstitutionModel", str]:
         """Get the description of each model.
 
         Returns
@@ -119,7 +117,7 @@ class DnaModel(SubstitutionModel):
 
     @staticmethod
     @functools.cache
-    def _descriptions() -> dict[Self, str]:
+    def _descriptions() -> dict[SubstitutionModel, str]:
         return {
             DnaModel.JC: "Equal substitution rates and equal base frequencies (Jukes and Cantor, 1969).",
             DnaModel.F81: "Equal rates but unequal base freq. (Felsenstein, 1981).",
@@ -232,7 +230,7 @@ class AaModel(SubstitutionModel):
 
     @staticmethod
     @functools.cache
-    def _descriptions() -> dict[Self, str]:
+    def _descriptions() -> dict[SubstitutionModel, str]:
         return {
             AaModel.Blosum62: "BLOcks SUbstitution Matrix (Henikoff and Henikoff, 1992). Note that BLOSUM62 is not recommended for phylogenetic analysis as it was designed mainly for sequence alignments.",
             AaModel.cpREV: "chloroplast matrix (Adachi et al., 2000).",

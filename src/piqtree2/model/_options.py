@@ -16,7 +16,11 @@ from piqtree2.model._substitution_model import (
 
 @functools.cache
 def _make_models(model_type: type[SubstitutionModel]) -> dict[str, list[str]]:
-    data = {"Model Type": [], "Abbreviation": [], "Description": []}
+    data: dict[str, list[str]] = {
+        "Model Type": [],
+        "Abbreviation": [],
+        "Description": [],
+    }
 
     model_classes = (
         ALL_MODELS_CLASSES if model_type == SubstitutionModel else [model_type]
@@ -62,7 +66,7 @@ def available_models(model_type: str | None = None) -> _Table:
 
 def available_freq_type(*args) -> _Table:
     """Return a table showing available freq type options."""
-    data = {"Freq Type": [], "Description": []}
+    data: dict[str, list[str]] = {"Freq Type": [], "Description": []}
 
     for freq_type in FreqType:
         data["Freq Type"].append(freq_type.value)
@@ -73,7 +77,7 @@ def available_freq_type(*args) -> _Table:
 
 def available_rate_type(*args) -> _Table:
     """Return a table showing available rate type options."""
-    data = {"Rate Type": [], "Description": []}
+    data: dict[str, list[str]] = {"Rate Type": [], "Description": []}
 
     for rate_type in ALL_BASE_RATE_TYPES:
         data["Rate Type"].append(rate_type.iqtree_str())

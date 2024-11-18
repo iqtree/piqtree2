@@ -2,8 +2,6 @@ import contextlib
 import functools
 from enum import Enum, unique
 
-from typing_extensions import Self
-
 
 @unique
 class FreqType(Enum):
@@ -15,7 +13,7 @@ class FreqType(Enum):
 
     @staticmethod
     @functools.cache
-    def _descriptions() -> dict[Self, str]:
+    def _descriptions() -> dict["FreqType", str]:
         return {
             FreqType.F: "Empirical state frequency observed from the data.",
             FreqType.FO: "State frequency optimized by maximum-likelihood from the data. Note that this is with letter-O and not digit-0.",

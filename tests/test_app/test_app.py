@@ -42,6 +42,32 @@ def test_piqtree_random_trees(
         assert len(tree.tips()) == num_taxa
 
 
+def test_piqtree_jc_distances(five_otu: ArrayAlignment) -> None:
+    app = get_app("piqtree_jc_distances")
+    dists = app(five_otu)
+
+    assert (
+        dists["Human", "Chimpanzee"] < dists["Human", "Dugong"]
+    )  # chimpanzee closer than rhesus
+    assert (
+        dists["Human", "Rhesus"] < dists["Human", "Manatee"]
+    )  # rhesus closer than manatee
+    assert (
+        dists["Human", "Rhesus"] < dists["Human", "Dugong"]
+    )  # rhesus closer than dugong
+
+    assert (
+        dists["Chimpanzee", "Rhesus"] < dists["Chimpanzee", "Manatee"]
+    )  # rhesus closer than manatee
+    assert (
+        dists["Chimpanzee", "Rhesus"] < dists["Chimpanzee", "Dugong"]
+    )  # rhesus closer than dugong
+
+    assert (
+        dists["Manatee", "Dugong"] < dists["Manatee", "Rhesus"]
+    )  # dugong closer than rhesus
+
+
 def test_piqtree_nj(five_otu: ArrayAlignment) -> None:
     dists = jc_distances(five_otu)
 
