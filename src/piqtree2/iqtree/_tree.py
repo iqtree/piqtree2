@@ -188,7 +188,7 @@ def _process_tree_yaml(
         tree.params[key] = tree_yaml[key]
 
     _rename_iq_tree(tree, names)
-
+    tree.name_unnamed_nodes()
     return tree
 
 
