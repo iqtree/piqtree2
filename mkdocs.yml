@@ -23,5 +23,6 @@ nav:
       - Introduction: index.md
       - Available Apps: available_help.py
       - Phylogenetic estimation: phylo.py
+      - Fit a single tree: fit_tree.py
       - Phylogenetic model options: options.py
       - Citation: citation.md
