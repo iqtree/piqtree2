@@ -48,9 +48,8 @@ class Model:
         str
             The IQ-TREE representation of the mode.
         """
-        iqtree_extra_args = filter(
-            lambda x: x is not None,
-            (self.freq_type, self.rate_type),
+        iqtree_extra_args = (
+            x for x in (self.freq_type, self.rate_type) if x is not None
         )
         return "+".join(
             x.iqtree_str() for x in [self.substitution_model, *iqtree_extra_args]

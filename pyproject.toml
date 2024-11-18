@@ -39,8 +39,10 @@ classifiers = [
 Repository = "https://github.com/cogent3/piqtree2"
 
 [project.optional-dependencies]
-dev = ["cibuildwheel", "pybind11", "ruff", "scriv", "piqtree2[test]"]
+dev = ["cibuildwheel", "pybind11", "ruff", "scriv", "piqtree2[test]", "piqtree2[typing]"]
 test = ["pytest", "pytest-cov", "nox"]
+typing = ["mypy==1.13.0", "piqtree2[stubs]", "piqtree2[test]"]
+stubs = ["types-PyYAML"]
 
 [project.entry-points."cogent3.app"]
 piqtree_phylo = "piqtree2._app:piqtree_phylo"
@@ -161,3 +163,7 @@ version = "literal: src/piqtree2/__init__.py: __version__"
 skip_fragments="README.*"
 new_fragment_template="file: changelog.d/templates/new.md.j2"
 entry_title_template="file: changelog.d/templates/title.md.j2"
+
+[[tool.mypy.overrides]]
+module = ['cogent3.*', "_piqtree2"]
+ignore_missing_imports = true
