@@ -25,6 +25,7 @@ class piqtree_phylo:
         *,
         invariant_sites: bool = False,
         rand_seed: int | None = None,
+        bootstrap_replicates: int | None = None,
     ) -> None:
         self._model = Model(
             substitution_model=substitution_model,
@@ -33,12 +34,19 @@ class piqtree_phylo:
             freq_type=freq_type,
         )
         self._rand_seed = rand_seed
+        self._bootstrap_replicates = bootstrap_replicates
 
     def main(
         self,
         aln: cogent3.Alignment | cogent3.ArrayAlignment,
     ) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
-        return build_tree(aln, self._model, self._rand_seed)
+        return build_tree(
+            aln,
+            self._model,
+            self._rand_seed,
+            bootstrap_replicates=self._bootstrap_replicates,
+        )
+
 
 @composable.define_app
 class piqtree_fit:
