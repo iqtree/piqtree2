@@ -25,7 +25,6 @@ aln = aln.take_seqs(primates)
 aln = aln.omit_gap_pos(allowed_gap_frac=1 / len(primates))
 aln
 
-
 # %% [markdown]
 # We now take a look at the help for the `piqtree_phylo` app.
 
