@@ -29,7 +29,7 @@ class Model:
         rate_model : str | RateModel | None, optional
             Rate heterogeneity across sites model, by default
             no Gamma, and no FreeRate.
-        rate_type : bool, optional
+        invariant_sites : bool, optional
             Invariable sites.
         """
         self.submod_type = get_substitution_model(submod_type)
