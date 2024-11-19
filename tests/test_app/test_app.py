@@ -12,6 +12,17 @@ def test_piqtree_phylo(four_otu: ArrayAlignment) -> None:
     assert expected.same_topology(got)
 
 
+def test_piqtree_phylo_support(four_otu: ArrayAlignment) -> None:
+    app = get_app("piqtree_phylo", substitution_model="JC", bootstrap_reps=1000)
+    got = app(four_otu)
+    supports = [
+        node.params.get("support", None)
+        for node in got.postorder()
+        if not node.is_tip() and node.name != "root"
+    ]
+    assert all(supports)
+
+
 def test_piqtree_fit(three_otu: ArrayAlignment) -> None:
     tree = make_tree(tip_names=three_otu.names)
     app = get_app("model", "JC69", tree=tree)

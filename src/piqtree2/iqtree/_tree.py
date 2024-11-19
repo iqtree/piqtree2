@@ -224,6 +224,9 @@ def build_tree(
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
 
+    if bootstrap_replicates is None:
+        bootstrap_replicates = 0
+
     names = aln.names
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
