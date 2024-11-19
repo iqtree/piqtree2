@@ -7,13 +7,13 @@ from piqtree2 import jc_distances
 
 def test_piqtree_phylo(four_otu: ArrayAlignment) -> None:
     expected = make_tree("(Human,Chimpanzee,(Rhesus,Mouse));")
-    app = get_app("piqtree_phylo", substitution_model="JC")
+    app = get_app("piqtree_phylo", submod_type="JC")
     got = app(four_otu)
     assert expected.same_topology(got)
 
 
 def test_piqtree_phylo_support(four_otu: ArrayAlignment) -> None:
-    app = get_app("piqtree_phylo", substitution_model="JC", bootstrap_reps=1000)
+    app = get_app("piqtree_phylo", submod_type="JC", bootstrap_reps=1000)
     got = app(four_otu)
     supports = [
         node.params.get("support", None)
@@ -27,7 +27,7 @@ def test_piqtree_fit(three_otu: ArrayAlignment) -> None:
     tree = make_tree(tip_names=three_otu.names)
     app = get_app("model", "JC69", tree=tree)
     expected = app(three_otu)
-    piphylo = get_app("piqtree_fit", tree=tree, substitution_model="JC")
+    piphylo = get_app("piqtree_fit", tree=tree, submod_type="JC")
     got = piphylo(three_otu)
     assert got.params["lnL"] == pytest.approx(expected.lnL)
 

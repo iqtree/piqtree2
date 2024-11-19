@@ -11,7 +11,7 @@ class Model:
 
     def __init__(
         self,
-        substitution_model: str | SubstitutionModel,
+        submod_type: str | SubstitutionModel,
         freq_type: str | FreqType | None = None,
         rate_model: str | RateModel | None = None,
         *,
@@ -21,7 +21,7 @@ class Model:
 
         Parameters
         ----------
-        substitution_model : str |SubstitutionModel
+        submod_type : str |SubstitutionModel
             The substitution model to use
         freq_type : str | FreqType | None, optional
             State frequency specification, by default None. (defaults
@@ -32,7 +32,7 @@ class Model:
         rate_type : bool, optional
             Invariable sites.
         """
-        self.substitution_model = get_substitution_model(substitution_model)
+        self.submod_type = get_substitution_model(submod_type)
         self.freq_type = get_freq_type(freq_type) if freq_type else None
         self.rate_type = (
             get_rate_type(rate_model, invariant_sites=invariant_sites)
@@ -51,6 +51,12 @@ class Model:
         iqtree_extra_args = (
             x for x in (self.freq_type, self.rate_type) if x is not None
         )
-        return "+".join(
-            x.iqtree_str() for x in [self.substitution_model, *iqtree_extra_args]
-        )
+        return "+".join(x.iqtree_str() for x in [self.submod_type, *iqtree_extra_args])
+
+    @property
+    def rate_model(self) -> RateModel | None:
+        return self.rate_type.rate_model if self.rate_type else None
+
+    @property
+    def invariant_sites(self) -> bool:
+        return self.rate_type.invariant_sites if self.rate_type else False
