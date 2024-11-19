@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "piqtree2"
-dependencies = ["cogent3", "pyyaml"]
+dependencies = ["cogent3", "pyyaml", "requests"]
 requires-python = ">=3.10, <3.13"
 
 authors = [{name="Gavin Huttley"}, {name="Robert McArthur"}, {name="Bui Quang Minh "}, {name="Richard Morris"}, {name="Thomas Wong"}]
@@ -43,13 +43,16 @@ dev = ["cibuildwheel", "pybind11", "ruff", "scriv", "piqtree2[test]", "piqtree2[
 test = ["pytest", "pytest-cov", "nox"]
 typing = ["mypy==1.13.0", "piqtree2[stubs]", "piqtree2[test]"]
 stubs = ["types-PyYAML"]
+extra = ["cogent3[extra]"]
+doc = ["mkdocs-jupyter", "mkdocs", "jupytext", "piqtree2[test]", "cogent3[extra]", "diverse-seq"]
 
 [project.entry-points."cogent3.app"]
 piqtree_phylo = "piqtree2._app:piqtree_phylo"
 piqtree_fit = "piqtree2._app:piqtree_fit"
 piqtree_random_trees = "piqtree2._app:piqtree_random_trees"
-piqtree_jc_distances = "piqtree2._app:piqtree_jc_distances"
+piqtree_jc_dists = "piqtree2._app:piqtree_jc_dists"
 piqtree_nj = "piqtree2._app:piqtree_nj"
+piqtree_mfinder = "piqtree2._app:piqtree_mfinder"
 
 [tool.setuptools.dynamic]
 version = {attr = "piqtree2.__version__"}
