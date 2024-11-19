@@ -50,6 +50,10 @@ class RateType:
             rate_type_str += "+"
         return rate_type_str + self.rate_model.iqtree_str()
 
+    @property
+    def name(self) -> str:
+        return self.iqtree_str()
+
 
 class DiscreteGammaModel(RateModel):
     def __init__(self, rate_categories: int | None = None) -> None:
