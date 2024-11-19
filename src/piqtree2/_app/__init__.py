@@ -10,6 +10,7 @@ from piqtree2 import (
     build_tree,
     fit_tree,
     jc_distances,
+    model_finder,
     nj_tree,
     random_trees,
 )
@@ -101,10 +102,18 @@ def piqtree_nj(dists: c3_types.PairwiseDistanceType) -> cogent3.PhyloNode:
     return nj_tree(dists)
 
 
+@composable.define_app
+def piqtree_mfinder(
+    aln: c3_types.AlignedSeqsType,
+) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
+    return model_finder(aln)
+
+
 _ALL_APP_NAMES = [
     "piqtree_phylo",
     "piqtree_fit",
     "piqtree_random_trees",
     "piqtree_jc_dists",
     "piqtree_nj",
+    "piqtree_mfinder",
 ]
