@@ -12,7 +12,7 @@ iq_model_finder = iqtree_func(iq_model_finder, hide_files=True)
 
 
 def model_finder(
-    aln: cogent3.Alignment | cogent3.ArrayAlignment,
+    aln: c3_types.AlignedSeqsType,
     model_set: Iterable[str] | None = None,
     freq_set: Iterable[str] | None = None,
     rate_set: Iterable[str] | None = None,
