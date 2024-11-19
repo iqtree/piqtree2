@@ -49,7 +49,7 @@ class piqtree_phylo:
 
 @composable.define_app
 class piqtree_fit:
-    @extend_docstring_from(build_tree)
+    @extend_docstring_from(fit_tree)
     def __init__(
         self,
         tree: cogent3.PhyloNode,
