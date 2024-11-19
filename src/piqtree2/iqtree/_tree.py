@@ -198,7 +198,7 @@ def build_tree(
     aln: cogent3.Alignment | cogent3.ArrayAlignment,
     model: Model,
     rand_seed: int | None = None,
-    bootstrap_replicates: int = 0,
+    bootstrap_replicates: int | None = 0,
 ) -> cogent3.PhyloNode:
     """Reconstruct a phylogenetic tree.
 
