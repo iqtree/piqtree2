@@ -21,7 +21,7 @@ class piqtree_phylo:
     @extend_docstring_from(build_tree)
     def __init__(
         self,
-        substitution_model: str,
+        submod_type: str,
         freq_type: str | None = None,
         rate_model: str | None = None,
         *,
@@ -30,7 +30,7 @@ class piqtree_phylo:
         bootstrap_reps: int | None = None,
     ) -> None:
         self._model = Model(
-            substitution_model=substitution_model,
+            submod_type=submod_type,
             invariant_sites=invariant_sites,
             rate_model=rate_model,
             freq_type=freq_type,
@@ -53,7 +53,7 @@ class piqtree_fit:
     def __init__(
         self,
         tree: cogent3.PhyloNode,
-        substitution_model: str,
+        submod_type: str,
         freq_type: str | None = None,
         rate_model: str | None = None,
         *,
@@ -62,7 +62,7 @@ class piqtree_fit:
     ) -> None:
         self._tree = tree
         self._model = Model(
-            substitution_model=substitution_model,
+            submod_type=submod_type,
             invariant_sites=invariant_sites,
             rate_model=rate_model,
             freq_type=freq_type,
