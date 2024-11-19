@@ -21,6 +21,12 @@ def test_num_available_models(
     )
     assert total_models > 0
     assert table.shape[0] == total_models
+    assert table._repr_policy["head"] == table.shape[0]
+
+
+def test_num_available_models_not_show_all() -> None:
+    table = available_models(show_all=False)
+    assert table._repr_policy["head"] != table.shape[0]
 
 
 @pytest.mark.parametrize(

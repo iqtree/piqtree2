@@ -35,14 +35,15 @@ def _make_models(model_type: type[SubstitutionModel]) -> dict[str, list[str]]:
     return data
 
 
-def available_models(model_type: str | None = None) -> _Table:
+def available_models(model_type: str | None = None, show_all: bool = True) -> _Table:
     """Return a table showing available substitution models.
 
     Parameters
     ----------
     model_type
         either "nucleotide", "protein" or None. If None, all models are returned.
-
+    show_all
+        if True, the representation of the table shows all records
     """
     template = "Available {}substitution models"
     if model_type == "dna":
@@ -61,6 +62,8 @@ def available_models(model_type: str | None = None) -> _Table:
             title=template.format(""),
         )
 
+    if show_all:
+        table.set_repr_policy(head=table.shape[0])
     return table
 
 
