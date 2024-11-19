@@ -40,7 +40,7 @@ class piqtree_phylo:
 
     def main(
         self,
-        aln: cogent3.Alignment | cogent3.ArrayAlignment,
+        aln: c3_types.AlignedSeqsType,
     ) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
         return build_tree(
             aln, self._model, self._rand_seed, bootstrap_replicates=self._bootstrap_reps
@@ -71,7 +71,7 @@ class piqtree_fit:
 
     def main(
         self,
-        aln: cogent3.Alignment | cogent3.ArrayAlignment,
+        aln: c3_types.AlignedSeqsType,
     ) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
         return fit_tree(aln, self._tree, self._model, self._rand_seed)
 
