@@ -89,3 +89,11 @@ def test_piqtree_nj(five_otu: ArrayAlignment) -> None:
     actual = app(dists)
 
     assert expected.same_topology(actual)
+
+
+def test_mfinder(five_otu: ArrayAlignment) -> None:
+    from piqtree2.iqtree import ModelFinderResult
+
+    app = get_app("piqtree_mfinder")
+    got = app(five_otu)
+    assert isinstance(got, ModelFinderResult)
