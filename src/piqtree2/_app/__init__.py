@@ -89,8 +89,8 @@ def piqtree_random_trees(
 
 @composable.define_app
 @extend_docstring_from(nj_tree)
-def piqtree_jc_distances(
-    aln: cogent3.Alignment | cogent3.ArrayAlignment,
+def piqtree_jc_dists(
+    aln: c3_types.AlignedSeqsType,
 ) -> c3_types.PairwiseDistanceType:
     return jc_distances(aln)
 
@@ -105,6 +105,6 @@ _ALL_APP_NAMES = [
     "piqtree_phylo",
     "piqtree_fit",
     "piqtree_random_trees",
-    "piqtree_jc_distances",
+    "piqtree_jc_dists",
     "piqtree_nj",
 ]

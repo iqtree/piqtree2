@@ -54,7 +54,7 @@ def test_piqtree_random_trees(
 
 
 def test_piqtree_jc_distances(five_otu: ArrayAlignment) -> None:
-    app = get_app("piqtree_jc_distances")
+    app = get_app("piqtree_jc_dists")
     dists = app(five_otu)
 
     assert (
