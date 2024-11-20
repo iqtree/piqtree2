@@ -42,7 +42,7 @@ Repository = "https://github.com/cogent3/piqtree2"
 dev = ["cibuildwheel", "pybind11", "ruff", "scriv", "piqtree2[test]", "piqtree2[typing]"]
 test = ["pytest", "pytest-cov", "nox"]
 typing = ["mypy==1.13.0", "piqtree2[stubs]", "piqtree2[test]"]
-stubs = ["types-PyYAML"]
+stubs = ["types-PyYAML", "types-requests"]
 extra = ["cogent3[extra]"]
 doc = ["mkdocs-jupyter", "mkdocs", "jupytext", "piqtree2[test]", "cogent3[extra]", "diverse-seq"]
 

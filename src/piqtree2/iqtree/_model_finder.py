@@ -3,6 +3,7 @@
 import dataclasses
 import re
 from collections.abc import Iterable
+from typing import Any
 
 import yaml
 from _piqtree2 import iq_model_finder
@@ -12,8 +13,6 @@ from piqtree2 import model
 from piqtree2.iqtree._decorator import iqtree_func
 
 iq_model_finder = iqtree_func(iq_model_finder, hide_files=True)
-
-from typing import Any
 
 _rate_het = re.compile(r"[GR]\d*")
 _freq = re.compile("F[^+]")
@@ -28,10 +27,8 @@ def get_model(raw_data: dict[str, Any], key: str) -> model.Model:
     else:
         rates_het = None
 
-    if freq_type := _freq.search(components):
-        freq_type = freq_type.group()
-    else:
-        freq_type = "F"
+    freq_type_match = _freq.search(components)
+    freq_type = freq_type_match.group() if freq_type_match else "F"
 
     return model.Model(
         submod_type=model_class,
