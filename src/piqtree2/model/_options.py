@@ -1,6 +1,7 @@
 """Convenience functions for showing user facing options and their descriptions."""
 
 import functools
+from typing import Literal
 
 from cogent3 import _Table, make_table
 
@@ -35,15 +36,24 @@ def _make_models(model_type: type[SubstitutionModel]) -> dict[str, list[str]]:
     return data
 
 
-def available_models(model_type: str | None = None, *, show_all: bool = True) -> _Table:
+def available_models(
+    model_type: Literal["dna", "protein"] | None = None,
+    *,
+    show_all: bool = True,
+) -> _Table:
     """Return a table showing available substitution models.
 
     Parameters
     ----------
-    model_type
-        either "nucleotide", "protein" or None. If None, all models are returned.
-    show_all
-        if True, the representation of the table shows all records
+    model_type : Literal["dna", "protein"] | None, optional
+        The models to fetch, by default None (all models).
+    show_all : bool, optional
+        if True, the representation of the table shows all records, by default True.
+
+    Returns
+    -------
+    _Table
+        Table with all available models.
 
     """
     template = "Available {}substitution models"
