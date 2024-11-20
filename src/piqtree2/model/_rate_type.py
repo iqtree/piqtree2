@@ -28,9 +28,9 @@ class RateType:
         Parameters
         ----------
         invariant_sites : bool, optional
-            Invariable Sites Model.
+            Invariable Sites Model, by default False.
         rate_model : RateModel | None, optional
-            Discrete Gamma Model or FreeRate Model.
+            Discrete Gamma Model or FreeRate Model, by default None.
 
         """
         self.invariant_sites = invariant_sites
@@ -65,7 +65,7 @@ class DiscreteGammaModel(RateModel):
         Parameters
         ----------
         rate_categories : int, optional
-            The number of rate categories, by default 4
+            The number of rate categories, by default 4.
 
         References
         ----------
@@ -89,7 +89,7 @@ class FreeRateModel(RateModel):
         Parameters
         ----------
         rate_categories : int, optional
-            The number of rate categories, by default 4
+            The number of rate categories, by default 4.
 
         References
         ----------
@@ -149,6 +149,21 @@ def get_rate_type(
     *,
     invariant_sites: bool = False,
 ) -> RateType:
+    """Make a RateType from a chosen rate model and invariant sites.
+
+    Parameters
+    ----------
+    rate_model : str | RateModel | None, optional
+        The chosen rate model, by default None.
+    invariant_sites : bool, optional
+        Whether to use invariant sites, by default False.
+
+    Returns
+    -------
+    RateType
+        RateType generated from the rate model with invariant sites.
+
+    """
     if isinstance(rate_model, RateModel):
         return RateType(rate_model=rate_model, invariant_sites=invariant_sites)
 
