@@ -21,7 +21,7 @@ class Model:
 
         Parameters
         ----------
-        submod_type : str |SubstitutionModel
+        submod_type : str | SubstitutionModel
             The substitution model to use
         freq_type : str | FreqType | None, optional
             State frequency specification, by default None. (defaults
@@ -30,7 +30,7 @@ class Model:
             Rate heterogeneity across sites model, by default
             no Gamma, and no FreeRate.
         invariant_sites : bool, optional
-            Invariable sites.
+            Invariable sites, by default False.
 
         """
         self.submod_type = get_substitution_model(submod_type)
@@ -68,8 +68,24 @@ class Model:
 
     @property
     def rate_model(self) -> RateModel | None:
+        """The RateModel used, if one is chosen.
+
+        Returns
+        -------
+        RateModel | None
+            The RateModel used by the Model.
+
+        """
         return self.rate_type.rate_model if self.rate_type else None
 
     @property
     def invariant_sites(self) -> bool:
+        """Whether invariant sites are used.
+
+        Returns
+        -------
+        bool
+            True if invariant sites are used by the model, False otherwise.
+
+        """
         return self.rate_type.invariant_sites if self.rate_type else False
