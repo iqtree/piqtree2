@@ -1,6 +1,5 @@
 from collections.abc import Sequence
 
-import cogent3
 import cogent3.app.typing as c3_types
 import numpy as np
 from _piqtree2 import iq_jc_distances
@@ -38,13 +37,13 @@ def _dists_to_distmatrix(
 
 
 def jc_distances(
-    aln: cogent3.Alignment | cogent3.ArrayAlignment,
+    aln: c3_types.AlignedSeqsType,
 ) -> c3_types.PairwiseDistanceType:
     """Compute pairwise JC distances for a given alignemnt.
 
     Parameters
     ----------
-    aln : Union[cogent3.Alignment, cogent3.ArrayAlignment]
+    aln : c3_types.AlignedSeqsType
         alignment to compute pairwise JC distances for.
 
     Returns
