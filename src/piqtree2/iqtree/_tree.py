@@ -198,7 +198,7 @@ def build_tree(
     aln: c3_types.AlignedSeqsType,
     model: Model,
     rand_seed: int | None = None,
-    bootstrap_replicates: int | None = 0,
+    bootstrap_replicates: int | None = None,
 ) -> cogent3.PhyloNode:
     """Reconstruct a phylogenetic tree.
 
@@ -213,7 +213,7 @@ def build_tree(
     rand_seed : int | None, optional
         The random seed - 0 or None means no seed, by default None.
     bootstrap_replicates : int, optional
-        The number of bootstrap replicates to perform, by default 0.
+        The number of bootstrap replicates to perform, by default None.
         If 0 is provided, then no bootstrapping is performed.
         At least 1000 is required to perform bootstrapping.
 
