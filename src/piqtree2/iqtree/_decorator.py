@@ -29,7 +29,7 @@ def iqtree_func(
     ----------
     func : Callable[Param, RetType]
         The IQ-TREE library function.
-    hide_files : Optional[bool], optional
+    hide_files : bool | None, optional
         Whether hiding output files is necessary, by default False.
 
     Returns
