@@ -92,7 +92,7 @@ def piqtree_random_trees(
 
 
 @composable.define_app
-@extend_docstring_from(nj_tree)
+@extend_docstring_from(jc_distances)
 def piqtree_jc_dists(
     aln: c3_types.AlignedSeqsType,
 ) -> c3_types.PairwiseDistanceType:
@@ -106,6 +106,7 @@ def piqtree_nj(dists: c3_types.PairwiseDistanceType) -> cogent3.PhyloNode:
 
 
 @composable.define_app
+@extend_docstring_from(model_finder)
 def piqtree_mfinder(
     aln: c3_types.AlignedSeqsType,
 ) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
