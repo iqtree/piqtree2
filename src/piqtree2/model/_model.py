@@ -17,7 +17,7 @@ class Model:
         *,
         invariant_sites: bool = False,
     ) -> None:
-        """Constructor for the model.
+        """Construct Model class.
 
         Parameters
         ----------
@@ -31,6 +31,7 @@ class Model:
             no Gamma, and no FreeRate.
         invariant_sites : bool, optional
             Invariable sites.
+
         """
         self.submod_type = get_substitution_model(submod_type)
         self.freq_type = get_freq_type(freq_type) if freq_type else None
@@ -58,6 +59,7 @@ class Model:
         -------
         str
             The IQ-TREE representation of the mode.
+
         """
         iqtree_extra_args = (
             x for x in (self.freq_type, self.rate_type) if x is not None
