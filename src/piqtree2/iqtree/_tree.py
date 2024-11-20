@@ -195,7 +195,7 @@ def _process_tree_yaml(
 
 
 def build_tree(
-    aln: cogent3.Alignment | cogent3.ArrayAlignment,
+    aln: c3_types.AlignedSeqsType,
     model: Model,
     rand_seed: int | None = None,
     bootstrap_replicates: int | None = 0,
@@ -206,7 +206,7 @@ def build_tree(
 
     Parameters
     ----------
-    aln : Union[cogent3.Alignment, cogent3.ArrayAlignment]
+    aln : c3_types.AlignedSeqsType
         The sequence alignment.
     model : Model
         The substitution model with base frequencies and rate heterogeneity.
@@ -245,7 +245,7 @@ def build_tree(
 
 
 def fit_tree(
-    aln: cogent3.Alignment | cogent3.ArrayAlignment,
+    aln: c3_types.AlignedSeqsType,
     tree: cogent3.PhyloNode,
     model: Model,
     rand_seed: int | None = None,
@@ -257,7 +257,7 @@ def fit_tree(
 
     Parameters
     ----------
-    aln : Union[cogent3.Alignment, cogent3.ArrayAlignment]
+    aln : c3_types.AlignedSeqsType
         The sequence alignment.
     tree : cogent3.PhyloNode
         The topology to fit branch lengths to.
