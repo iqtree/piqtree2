@@ -35,7 +35,7 @@ def _make_models(model_type: type[SubstitutionModel]) -> dict[str, list[str]]:
     return data
 
 
-def available_models(model_type: str | None = None, show_all: bool = True) -> _Table:
+def available_models(model_type: str | None = None, *, show_all: bool = True) -> _Table:
     """Return a table showing available substitution models.
 
     Parameters
