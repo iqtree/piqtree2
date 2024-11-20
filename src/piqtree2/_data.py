@@ -21,7 +21,8 @@ def _inflate_zip(zip_path: pathlib.Path, output_dir: pathlib.Path) -> pathlib.Pa
 def _get_url(name: str) -> str:
     """URL for a data file"""
     if name not in _data_files:
-        raise ValueError(f"Unknown data file: {name}")
+        msg = f"Unknown data file: {name}"
+        raise ValueError(msg)
     return _data_files[name]
 
 
@@ -34,6 +35,7 @@ def download_dataset(
     name: str,
     dest_dir: str | pathlib.Path,
     dest_name: str | None = None,
+    *,
     inflate_zip: bool = True,
 ) -> pathlib.Path:
     """download a data files used in docs, requires an internet connection

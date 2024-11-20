@@ -44,7 +44,10 @@ class piqtree_phylo:
         aln: c3_types.AlignedSeqsType,
     ) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
         return build_tree(
-            aln, self._model, self._rand_seed, bootstrap_replicates=self._bootstrap_reps
+            aln,
+            self._model,
+            self._rand_seed,
+            bootstrap_replicates=self._bootstrap_reps,
         )
 
 

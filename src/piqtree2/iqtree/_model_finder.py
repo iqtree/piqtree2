@@ -46,7 +46,7 @@ class ModelFinderResult:
     best_bic: model.Model = dataclasses.field(init=False)
     model_stats: dict[model.Model, str] = dataclasses.field(init=False, repr=False)
 
-    def __post_init__(self, raw_data):
+    def __post_init__(self, raw_data: dict[str, Any]) -> None:
         model_stats = {}
         for key, val in raw_data.items():
             try:
@@ -70,8 +70,6 @@ def model_finder(
     rate_set: Iterable[str] | None = None,
     rand_seed: int | None = None,
 ) -> ModelFinderResult:
-    # TODO(rob): discuss return type further
-    # 68
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
 
