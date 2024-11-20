@@ -1,5 +1,7 @@
 # testing the display of functions
 
+from typing import Literal
+
 import pytest
 
 from piqtree2 import available_freq_type, available_models, available_rate_type
@@ -13,7 +15,7 @@ from piqtree2.model._rate_type import ALL_BASE_RATE_TYPES
 )
 def test_num_available_models(
     model_class: type[SubstitutionModel] | None,
-    model_type: str | None,
+    model_type: Literal["dna", "protein"] | None,
 ) -> None:
     table = available_models(model_type)
     total_models = (
@@ -34,7 +36,7 @@ def test_num_available_models_not_show_all() -> None:
     [(None, None), ("dna", "nucleotide"), ("protein", "protein")],
 )
 def test_available_models_types(
-    model_fetch: str | None,
+    model_fetch: Literal["dna", "protein"] | None,
     model_type: str | None,
 ) -> None:
     table = available_models(model_fetch)
