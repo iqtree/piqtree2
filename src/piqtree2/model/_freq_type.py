@@ -53,6 +53,7 @@ def get_freq_type(name: str | FreqType) -> FreqType:
     ------
     ValueError
         If the FreqType name cannot be resolved.
+
     """
     if isinstance(name, FreqType):
         return name
