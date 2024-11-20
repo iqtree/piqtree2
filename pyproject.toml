@@ -118,6 +118,12 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "FBT001", # allow bool pos args for parameterisation
     "D", # don't require docstrings
 ]
+"docs/**/*.py" = [
+    "B018",
+    "E402",
+    "ERA001",
+    "INP001"
+]
 "noxfile.py" = [
     "S101", # asserts allowed in tests...
     "INP001", # __init__.py files are not required...
