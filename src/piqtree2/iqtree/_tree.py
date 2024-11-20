@@ -210,7 +210,7 @@ def build_tree(
         The sequence alignment.
     model : Model
         The substitution model with base frequencies and rate heterogeneity.
-    rand_seed : Optional[int], optional
+    rand_seed : int | None, optional
         The random seed - 0 or None means no seed, by default None.
     bootstrap_replicates : int, optional
         The number of bootstrap replicates to perform, by default 0.
@@ -263,7 +263,7 @@ def fit_tree(
         The topology to fit branch lengths to.
     model : Model
         The substitution model with base frequencies and rate heterogeneity.
-    rand_seed : Optional[int], optional
+    rand_seed : int | None, optional
         The random seed - 0 or None means no seed, by default None.
 
     Returns

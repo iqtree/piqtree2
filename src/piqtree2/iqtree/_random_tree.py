@@ -39,7 +39,7 @@ def random_trees(
         How the trees are generated.
     num_trees : int
         The number of trees to generate.
-    rand_seed : Optional[int], optional
+    rand_seed : int | None, optional
         The random seed - 0 or None means no seed, by default None.
 
     Returns

@@ -29,7 +29,7 @@ class RateType:
         ----------
         invariant_sites : bool, optional
             Invariable Sites Model.
-        rate_model : Optional[RateModel]
+        rate_model : RateModel | None, optional
             Discrete Gamma Model or FreeRate Model.
 
         """
