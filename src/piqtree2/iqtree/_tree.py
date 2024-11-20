@@ -307,6 +307,7 @@ def nj_tree(pairwise_distances: c3_types.PairwiseDistanceType) -> cogent3.PhyloN
     See Also
     --------
     jc_distances : construction of pairwise JC distance matrix from alignment.
+
     """
     newick_tree = iq_nj_tree(
         pairwise_distances.keys(),

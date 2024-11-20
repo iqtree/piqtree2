@@ -12,14 +12,14 @@ _data_files = {
 
 
 def _inflate_zip(zip_path: pathlib.Path, output_dir: pathlib.Path) -> pathlib.Path:
-    """decompress the contents of a zip file to a named directory"""
+    """Decompress the contents of a zip file to a named directory."""
     with zipfile.ZipFile(zip_path, "r") as zip_ref:
         zip_ref.extractall(output_dir)
     return output_dir
 
 
 def _get_url(name: str) -> str:
-    """URL for a data file"""
+    """URL for a data file."""
     if name not in _data_files:
         msg = f"Unknown data file: {name}"
         raise ValueError(msg)
@@ -27,7 +27,7 @@ def _get_url(name: str) -> str:
 
 
 def dataset_names() -> list[str]:
-    """return the names of available datasets"""
+    """Return the names of available datasets."""
     return list(_data_files.keys())
 
 
@@ -38,7 +38,7 @@ def download_dataset(
     *,
     inflate_zip: bool = True,
 ) -> pathlib.Path:
-    """download a data files used in docs, requires an internet connection
+    """Download a data files used in docs, requires an internet connection.
 
     Parameters
     ----------
@@ -58,6 +58,7 @@ def download_dataset(
     Notes
     -----
     Only downloads if dest_dir / dest_name does not exist.
+
     """
     dest_dir = pathlib.Path(dest_dir)
 

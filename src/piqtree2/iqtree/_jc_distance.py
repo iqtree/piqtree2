@@ -15,8 +15,7 @@ def _dists_to_distmatrix(
     distances: np.ndarray,
     names: Sequence[str],
 ) -> c3_types.PairwiseDistanceType:
-    """Convert numpy representation of distance matrix
-    into cogent3 pairwise distance matrix.
+    """Convert numpy representation of distance matrix into cogent3 pairwise distance matrix.
 
     Parameters
     ----------
@@ -29,6 +28,7 @@ def _dists_to_distmatrix(
     -------
     c3_types.PairwiseDistanceType
         Pairwise distance matrix.
+
     """
     dist_dict = {}
     for i in range(1, len(distances)):
@@ -51,6 +51,7 @@ def jc_distances(
     -------
     c3_types.PairwiseDistanceType
         Pairwise JC distance matrix.
+
     """
     names = aln.names
     seqs = [str(seq) for seq in aln.iter_seqs(names)]

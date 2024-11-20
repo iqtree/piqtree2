@@ -37,7 +37,7 @@ class FreqType(Enum):
 
 
 def get_freq_type(name: str | FreqType) -> FreqType:
-    """returns the substitution model enum for name."""
+    """Return the substitution model enum for name."""
     if isinstance(name, FreqType):
         return name
 

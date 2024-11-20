@@ -12,6 +12,7 @@ class RateModel(ABC):
         -------
         str
             String parsable by IQ-TREE for the rate heterogeneity model.
+
         """
 
 
@@ -30,6 +31,7 @@ class RateType:
             Invariable Sites Model.
         rate_model : Optional[RateModel]
             Discrete Gamma Model or FreeRate Model.
+
         """
         self.invariant_sites = invariant_sites
         self.rate_model = rate_model
@@ -41,6 +43,7 @@ class RateType:
         -------
         str
             String parsable by IQ-TREE for the rate heterogeneity model.
+
         """
         rate_type_str = "I" if self.invariant_sites else ""
         if self.rate_model is None:
@@ -69,6 +72,7 @@ class DiscreteGammaModel(RateModel):
         .. [1] Yang, Ziheng. "Maximum likelihood phylogenetic estimation from
            DNA sequences with variable rates over sites: approximate methods."
            Journal of Molecular evolution 39 (1994): 306-314.
+
         """
         self.rate_categories = rate_categories
 
@@ -94,6 +98,7 @@ class FreeRateModel(RateModel):
         .. [2] Soubrier, Julien, et al. "The influence of rate heterogeneity
            among sites on the time dependence of molecular rates." Molecular
            biology and evolution 29.11 (2012): 3345-3358.
+
         """
         self.rate_categories = rate_categories
 
