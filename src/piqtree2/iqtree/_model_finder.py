@@ -18,7 +18,7 @@ _rate_het = re.compile(r"[GR]\d*")
 _freq = re.compile("F[^+]")
 
 
-def get_model(raw_data: dict[str, Any], key: str) -> model.Model:
+def _get_model(raw_data: dict[str, Any], key: str) -> model.Model:
     model_class, components = raw_data[key].split("+", maxsplit=1)
     model_class = model.get_substitution_model(model_class)
     invariant_sites = "I" in components
@@ -50,14 +50,14 @@ class ModelFinderResult:
         model_stats = {}
         for key, val in raw_data.items():
             try:
-                new_model = get_model(raw_data, key)
+                new_model = _get_model(raw_data, key)
             except (ValueError, AttributeError):
                 continue
             model_stats[new_model] = val
         self.model_stats = model_stats
-        self.best_aic = get_model(raw_data, "best_model_AIC")
-        self.best_aicc = get_model(raw_data, "best_model_AICc")
-        self.best_bic = get_model(raw_data, "best_model_BIC")
+        self.best_aic = _get_model(raw_data, "best_model_AIC")
+        self.best_aicc = _get_model(raw_data, "best_model_AICc")
+        self.best_bic = _get_model(raw_data, "best_model_BIC")
         model_stats[self.best_aic] = raw_data[str(self.best_aic)]
         model_stats[self.best_aicc] = raw_data[str(self.best_aicc)]
         model_stats[self.best_bic] = raw_data[str(self.best_bic)]
