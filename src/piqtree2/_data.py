@@ -42,18 +42,19 @@ def download_dataset(
 
     Parameters
     ----------
-    name
-        data set name, see `dataset_names()`
-    dest_dir
-        where to write a local copy
-    dest_name
-        name of the file to write, if None uses name
-    inflate_zip
-        unzip archives
+    name : str
+        data set name, see `dataset_names()`.
+    dest_dir : str | pathlib.Path
+        where to write a local copy.
+    dest_name : str | None, optional
+        name of the file to write, if None (default) uses name.
+    inflate_zip : bool = True
+        whether to unzip archives, by default True.
 
     Returns
     -------
-    path to the downloaded file
+    pathlib.Path
+        path to the downloaded file
 
     Notes
     -----
