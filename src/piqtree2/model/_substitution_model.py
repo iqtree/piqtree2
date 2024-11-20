@@ -277,7 +277,19 @@ ALL_MODELS_CLASSES: list[type[SubstitutionModel]] = [DnaModel, AaModel]
 
 
 def get_substitution_model(name: str | SubstitutionModel) -> SubstitutionModel:
-    """Return the substitution model enum for name."""
+    """Return the substitution model enum for a given name.
+
+    Parameters
+    ----------
+    name : str | SubstitutionModel
+        The name of the chosen substitution model.
+
+    Returns
+    -------
+    SubstitutionModel
+        The corresponding substitution model enum.
+
+    """
     if isinstance(name, SubstitutionModel):
         return name
 
