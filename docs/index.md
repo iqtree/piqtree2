@@ -29,8 +29,4 @@ pip install "piqtree2[extra]"
 
 ## Supported platforms
 
-<<<<<<< HEAD
-At present we do not provide native binaries for Windows. Windows users can run `piqtree2` using the Windows Susbsystem for Linux (WSL) which can installed via the Windows Store.
-=======
 At present we do not provide native binaries for Windows. Windows users can run `piqtree2` using the Windows Subsystem for Linux (WSL) which can installed via the Windows Store.
->>>>>>> 2a36772745f90c958f407e251e623de22a523ea2
