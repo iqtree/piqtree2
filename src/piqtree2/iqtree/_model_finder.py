@@ -8,6 +8,7 @@ from typing import Any
 import yaml
 from _piqtree2 import iq_model_finder
 from cogent3.app import typing as c3_types
+from cogent3.util.misc import get_object_provenance
 
 from piqtree2 import model
 from piqtree2.iqtree._decorator import iqtree_func
@@ -40,6 +41,7 @@ def _get_model(raw_data: dict[str, Any], key: str) -> model.Model:
 
 @dataclasses.dataclass(slots=True)
 class ModelFinderResult:
+    source: str
     raw_data: dataclasses.InitVar[dict[str, Any]]
     best_aic: model.Model = dataclasses.field(init=False)
     best_aicc: model.Model = dataclasses.field(init=False)
@@ -62,6 +64,23 @@ class ModelFinderResult:
         model_stats[self.best_aicc] = raw_data[str(self.best_aicc)]
         model_stats[self.best_bic] = raw_data[str(self.best_bic)]
 
+    def to_rich_dict(self) -> dict[str, Any]:
+        import piqtree2
+
+        result = {"version": piqtree2.__version__, "type": get_object_provenance(self)}
+
+        raw_data = {
+            str(model_): model_stats for model_, model_stats in self.model_stats.items()
+        }
+        for attr in ("best_model_AIC", "best_model_AICc", "best_model_BIC"):
+            raw_data[attr] = str(getattr(self, attr.replace("_model", "").lower()))
+        result["init_kwargs"] = {"raw_data": raw_data, "source": self.source}
+        return result
+
+    @classmethod
+    def from_rich_dict(cls, data: dict[str, Any]) -> "ModelFinderResult":
+        return cls(**data["init_kwargs"])
+
 
 def model_finder(
     aln: c3_types.AlignedSeqsType,
@@ -69,7 +88,8 @@ def model_finder(
     freq_set: Iterable[str] | None = None,
     rate_set: Iterable[str] | None = None,
     rand_seed: int | None = None,
-) -> ModelFinderResult:
+) -> ModelFinderResult | c3_types.SerialisableType:
+    source = aln.info.source
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
 
@@ -93,4 +113,4 @@ def model_finder(
             ",".join(rate_set),
         ),
     )
-    return ModelFinderResult(raw_data=raw)
+    return ModelFinderResult(raw_data=raw, source=source)
