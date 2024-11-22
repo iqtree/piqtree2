@@ -109,7 +109,7 @@ def piqtree_nj(dists: c3_types.PairwiseDistanceType) -> cogent3.PhyloNode:
 @extend_docstring_from(model_finder)
 def piqtree_mfinder(
     aln: c3_types.AlignedSeqsType,
-) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
+) -> cogent3.ModelFinderResult | c3_types.SerialisableType:
     return model_finder(aln)
 
 

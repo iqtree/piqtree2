@@ -97,3 +97,14 @@ def test_mfinder(five_otu: ArrayAlignment) -> None:
     app = get_app("piqtree_mfinder")
     got = app(five_otu)
     assert isinstance(got, ModelFinderResult)
+
+
+def test_mfinder_result_roundtrip(five_otu: ArrayAlignment) -> None:
+    from piqtree2.iqtree import ModelFinderResult
+
+    app = get_app("piqtree_mfinder")
+    got = app(five_otu)
+    rd = got.to_rich_dict()
+    inflated = ModelFinderResult.from_rich_dict(rd)
+    assert isinstance(inflated, ModelFinderResult)
+    assert str(got.best_aicc) == str(inflated.best_aicc)
