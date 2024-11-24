@@ -18,7 +18,7 @@ from piqtree2.model import (
     available_rate_type,
 )
 
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 __all__ = [
     "available_freq_type",
