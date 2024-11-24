@@ -25,3 +25,14 @@ jobs:
           git submodule update --init --recursive
           bash ./build_tools/before_all_linux.sh
           pip install ".[doc]"
+
+      - name: Build documentation
+        run: |
+          cd docs  # Adjust to your documentation directory
+          mkdocs build
+
+      - name: Upload documentation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: piqtree-docs-html
+          path: site
