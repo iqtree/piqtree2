@@ -16,5 +16,6 @@ jobs:
 
       - name: Build and install dependencies
         run: |
+          git submodule update --init --recursive
           bash ./build_tools/before_all_linux.sh
           pip install ".[doc]" --system
