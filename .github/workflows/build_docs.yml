@@ -2,7 +2,8 @@ name: Build docs
 
 on: [workflow_dispatch]
 
-build-docs:
+jobs:
+  build-docs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
