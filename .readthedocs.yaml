@@ -12,8 +12,10 @@ build:
     python: "3.12"
 jobs:
     post_checkout:
-      - git submodule update --init --recursive
       - bash build_tools/before_all_linux.sh
+
+pre_build:
+  - git submodule update --init --recursive
 
 mkdocs:
   configuration: mkdocs.yml
