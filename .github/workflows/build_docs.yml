@@ -28,8 +28,9 @@ jobs:
 
       - name: Build documentation
         run: |
-          cd docs  # Adjust to your documentation directory
+          echo `pwd`
           mkdocs build
+        working-directory: ${{ github.workspace }}
 
       - name: Upload documentation artifact
         uses: actions/upload-artifact@v4
