@@ -7,13 +7,13 @@ from ._robinson_foulds import robinson_foulds
 from ._tree import build_tree, fit_tree, nj_tree
 
 __all__ = [
+    "ModelFinderResult",
+    "TreeGenMode",
     "build_tree",
     "fit_tree",
     "jc_distances",
     "model_finder",
-    "ModelFinderResult",
     "nj_tree",
     "random_trees",
     "robinson_foulds",
-    "TreeGenMode",
 ]

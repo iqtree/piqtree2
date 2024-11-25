@@ -18,19 +18,19 @@ from ._substitution_model import (
 )
 
 __all__ = [
-    "available_freq_type",
-    "available_models",
-    "available_rate_type",
     "AaModel",
     "DiscreteGammaModel",
     "DnaModel",
     "FreeRateModel",
     "FreqType",
-    "get_freq_type",
-    "get_rate_type",
-    "get_substitution_model",
     "Model",
     "RateModel",
     "RateType",
     "SubstitutionModel",
+    "available_freq_type",
+    "available_models",
+    "available_rate_type",
+    "get_freq_type",
+    "get_rate_type",
+    "get_substitution_model",
 ]
