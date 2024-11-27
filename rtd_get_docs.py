@@ -1,3 +1,8 @@
+# this file
+# is directly used by .readthedocs.yaml
+# it extracts the built docs from the github artefact
+# created by the build_docs.yml github action
+
 import os
 import requests
 import zipfile
