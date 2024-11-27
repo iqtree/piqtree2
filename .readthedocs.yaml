@@ -11,30 +11,10 @@ build:
   tools:
     python: "3.12"
   commands:
-    # Download the pre-built docs from GitHub Actions
+    # Install the required dependencies
     - pip install requests
-    - |
-      python -c "
-      import os
-      import requests
-      import json
-      import zipfile
-
-      token = os.environ.get('GITHUB_TOKEN')
-      headers = {'Authorization': f'token {token}'}
-      api_url = 'https://api.github.com/repos/gavin/piqtree2/actions/runs'
-      response = requests.get(api_url, headers=headers)
-      runs = response.json()['workflow_runs']
-      latest_run = next(run for run in runs if run['name'] == 'Build docs' and run['conclusion'] == 'success')
-      artifacts_url = latest_run['artifacts_url']
-      response = requests.get(artifacts_url, headers=headers)
-      artifacts = response.json()['artifacts']
-      docs_artifact = next(artifact for artifact in artifacts if artifact['name'] == 'piqtree-docs-html')
-      download_url = docs_artifact['archive_download_url']
-      response = requests.get(download_url, headers=headers)
-      open('piqtree-docs-html.zip', 'wb').write(response.content)
-      zipfile.ZipFile('piqtree-docs-html.zip', 'r').extractall('_readthedocs/html/')
-      "
+    # Run the script to download and extract the pre-built docs
+    - python rtd_get_docs.py
     - echo "Documentation downloaded and extracted"
 
 # Disable the default build processes since we're using pre-built docs
