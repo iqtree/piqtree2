@@ -8,7 +8,7 @@ def download_and_extract_docs():
     api_url = 'https://api.github.com/repos/gavin/piqtree2/actions/runs'
     response = requests.get(api_url, headers=headers)
     got = response.json()
-    print(got.keys())
+    print(got)
     runs = got['workflow_runs']
     latest_run = next(run for run in runs if run['name'] == 'Build docs' and run['conclusion'] == 'success')
     artifacts_url = latest_run['artifacts_url']
