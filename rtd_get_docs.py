@@ -5,10 +5,9 @@ import zipfile
 def download_and_extract_docs():
     token = os.environ.get('GITHUB_TOKEN')
     headers = {'Authorization': f'token {token}'}
-    api_url = 'https://api.github.com/repos/gavin/piqtree2/actions/runs'
+    api_url = 'https://api.github.com/repos/GavinHuttley/piqtree2/actions/runs'
     response = requests.get(api_url, headers=headers)
     got = response.json()
-    print(got)
     runs = got['workflow_runs']
     latest_run = next(run for run in runs if run['name'] == 'Build docs' and run['conclusion'] == 'success')
     artifacts_url = latest_run['artifacts_url']
