@@ -41,7 +41,7 @@ Repository = "https://github.com/cogent3/piqtree2"
 [project.optional-dependencies]
 dev = ["cibuildwheel", "pybind11", "scriv", "piqtree2[test]", "piqtree2[lint]", "piqtree2[typing]"]
 test = ["pytest", "pytest-cov", "nox"]
-lint = ["ruff"]
+lint = ["ruff==0.8.0"]
 typing = ["mypy==1.13.0", "piqtree2[stubs]", "piqtree2[test]"]
 stubs = ["types-PyYAML", "types-requests"]
 extra = ["cogent3[extra]"]
@@ -100,7 +100,7 @@ target-version = "py310"
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
 select = ["ALL"]
-ignore = ["EXE002", "FA100", "E501", "PLR0913", "PLR2004", "D", "RUF022"]
+ignore = ["EXE002", "FA100", "E501", "PLR0913", "PLR2004", "D"]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
