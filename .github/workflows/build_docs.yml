@@ -1,0 +1,68 @@
+name: Build docs
+
+on: [workflow_dispatch]
+
+jobs:
+  build-iqtree:
+    name: Fetch or Build IQ-TREE 2 Static Library
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Get IQ-TREE 2 SHA
+        run: |
+          cd iqtree2
+          IQ_TREE_2_SHA=$(git rev-parse HEAD)
+          echo "IQ_TREE_2_SHA=${IQ_TREE_2_SHA}" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        id: cache
+        with:
+          key: libiqtree-${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
+          path: src/piqtree2/_libiqtree/libiqtree2.a
+          lookup-only: true
+      
+      - name: Build IQ-TREE
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          sudo ./build_tools/before_all_linux.sh
+          
+  build-docs:
+    runs-on: ubuntu-latest
+    needs: build-iqtree
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - uses: actions/cache/restore@v4
+        with:
+          key: libiqtree-ubuntu-latest-${{ env.IQ_TREE_2_SHA }}
+          path: src/piqtree2/_libiqtree/libiqtree2.a
+          fail-on-cache-miss: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      
+      - name: Install Docs Dependencies
+        run: |
+          pip install .[doc]
+
+      - name: Build documentation
+        run: |
+          echo `pwd`
+          mkdocs build
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload documentation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: piqtree-docs-html
+          path: site
