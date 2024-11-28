@@ -13,7 +13,7 @@ jobs:
           submodules: recursive
 
       - id: build
-        uses: ./.github/actions/build-iqtree.yml
+        uses: ./.github/actions/build-iqtree
         with:
           os: ubuntu-latest
     
