@@ -1,4 +1,4 @@
-name: Fetch or Build IQ-TREE 2 Static Library on ${{ inputs.os }}
+name: Fetch or Build IQ-TREE 2 Static Library
 description: "Checks if the IQ-TREE 2 static library exists, if not then building it."
 inputs:
   os:
@@ -13,6 +13,7 @@ runs:
   steps:
     - id: iqtree2-sha
       name: Get IQ-TREE 2 SHA
+      shell: bash
       run: |
         cd iqtree2
         IQ_TREE_2_SHA=$(git rev-parse HEAD)
@@ -26,6 +27,7 @@ runs:
         lookup-only: true
 
     - name: Build IQ-TREE
+      shell: bash
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         if [[ "${{ inputs.os }}" == "ubuntu-latest" ]]; then
