@@ -43,15 +43,10 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - uses: "actions/setup-python@v5"
+      - uses: ./.github/actions/setup-piqtree
         with:
-            python-version: "${{ matrix.python-version }}"
-      
-      - uses: actions/cache/restore@v4
-        with:
-          key: libiqtree-${{ matrix.os }}-${{ needs.build-iqtree.outputs.iqtree2-sha }}
-          path: src/piqtree2/_libiqtree/libiqtree2.a
-          fail-on-cache-miss: true
+          python-version: ${{ matrix.python-version }}
+          cache-key: libiqtree-${{ matrix.os }}-${{ needs.build-iqtree.outputs.iqtree2-sha }}
 
       - name: Run Nox Testing
         run: |
@@ -93,20 +88,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: "actions/setup-python@v5"
+      - uses: ./.github/actions/setup-piqtree
         with:
-            python-version: "${{ matrix.python-version }}"          
-
-      - uses: actions/cache/restore@v4
-        with:
-          key: libiqtree-${{ matrix.os }}-${{ needs.build-iqtree.outputs.iqtree2-sha }}
-          path: src/piqtree2/_libiqtree/libiqtree2.a
-          fail-on-cache-miss: true
+          python-version: ${{ matrix.python-version }}
+          cache-key: libiqtree-${{ matrix.os }}-${{ needs.build-iqtree.outputs.iqtree2-sha }}
       
       - name: "Run Type Checking for ${{ matrix.python-version }}" 
         run: |
-            pip install nox
-            nox -s type_check-${{ matrix.python-version }}
+          pip install nox
+          nox -s type_check-${{ matrix.python-version }}
 
   lint:
     name: "Linting"
@@ -123,17 +113,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: "actions/setup-python@v5"
+      - uses: ./.github/actions/setup-piqtree
         with:
-            python-version: "${{ matrix.python-version }}"          
-
-      - uses: actions/cache/restore@v4
-        with:
-          key: libiqtree-${{ matrix.os }}-${{ needs.build-iqtree.outputs.iqtree2-sha }}
-          path: src/piqtree2/_libiqtree/libiqtree2.a
-          fail-on-cache-miss: true
+          python-version: ${{ matrix.python-version }}
+          cache-key: libiqtree-${{ matrix.os }}-${{ needs.build-iqtree.outputs.iqtree2-sha }}
       
       - name: "Run Type Checking for ${{ matrix.python-version }}" 
         run: |
-            pip install nox
-            nox -s ruff-${{ matrix.python-version }}
+          pip install nox
+          nox -s ruff-${{ matrix.python-version }}

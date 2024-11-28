@@ -1,4 +1,4 @@
-name: Build docs
+name: Build Docs
 
 on: [workflow_dispatch]
 
@@ -30,16 +30,10 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: ./.github/actions/setup-piqtree
         with:
           python-version: "3.12"
-
-      - uses: actions/cache/restore@v4
-        with:
-          key: libiqtree-ubuntu-latest-${{ needs.build-iqtree.outputs.iqtree2-sha }}
-          path: src/piqtree2/_libiqtree/libiqtree2.a
-          fail-on-cache-miss: true
+          cache-key: libiqtree-ubuntu-latest-${{ needs.build-iqtree.outputs.iqtree2-sha }}
       
       - name: Install Docs Dependencies
         run: |
