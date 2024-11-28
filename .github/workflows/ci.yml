@@ -21,27 +21,13 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Get IQ-TREE 2 SHA
-        run: |
-          cd iqtree2
-          IQ_TREE_2_SHA=$(git rev-parse HEAD)
-          echo "IQ_TREE_2_SHA=${IQ_TREE_2_SHA}" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        id: cache
+      - id: build
+        uses: ./.github/actions/build-iqtree.yml
         with:
-          key: libiqtree-${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
-          path: src/piqtree2/_libiqtree/libiqtree2.a
-          lookup-only: true
-      
-      - name: Build IQ-TREE
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            sudo ./build_tools/before_all_linux.sh
-          else
-            ./build_tools/before_all_mac.sh
-          fi
+          os: ${{ matrix.os }}
+    
+    outputs:
+      iqtree2-sha: ${{steps.build.outputs.iqtree2-sha}}
 
   tests:
     name: Run Tests with Python ${{matrix.python-version}} on ${{matrix.os}}
@@ -63,7 +49,7 @@ jobs:
       
       - uses: actions/cache/restore@v4
         with:
-          key: libiqtree-${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
+          key: libiqtree-${{ matrix.os }}-${{ needs.build-iqtree.outputs.iqtree2-sha }}
           path: src/piqtree2/_libiqtree/libiqtree2.a
           fail-on-cache-miss: true
 
@@ -113,9 +99,9 @@ jobs:
 
       - uses: actions/cache/restore@v4
         with:
-            key: libiqtree-${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
-            path: src/piqtree2/_libiqtree/libiqtree2.a
-            fail-on-cache-miss: true
+          key: libiqtree-${{ matrix.os }}-${{ needs.build-iqtree.outputs.iqtree2-sha }}
+          path: src/piqtree2/_libiqtree/libiqtree2.a
+          fail-on-cache-miss: true
       
       - name: "Run Type Checking for ${{ matrix.python-version }}" 
         run: |
@@ -143,9 +129,9 @@ jobs:
 
       - uses: actions/cache/restore@v4
         with:
-            key: libiqtree-${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
-            path: src/piqtree2/_libiqtree/libiqtree2.a
-            fail-on-cache-miss: true
+          key: libiqtree-${{ matrix.os }}-${{ needs.build-iqtree.outputs.iqtree2-sha }}
+          path: src/piqtree2/_libiqtree/libiqtree2.a
+          fail-on-cache-miss: true
       
       - name: "Run Type Checking for ${{ matrix.python-version }}" 
         run: |
