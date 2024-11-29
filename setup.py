@@ -41,7 +41,7 @@ if platform.system() == "Darwin":
 
     # Define OpenMP flags and libraries for macOS
     openmp_flags = ["-Xpreprocessor", "-fopenmp"]
-    openmp_libs = ["-lomp"]
+    openmp_libs = ["omp"]
 
     # Use the paths from Homebrew for libomp
     openmp_include = os.path.join(brew_prefix_libomp, "include")
@@ -52,7 +52,7 @@ if platform.system() == "Darwin":
 else:
     # On Linux, use the standard OpenMP flags
     openmp_flags = ["-fopenmp"]
-    openmp_libs = ["-lgomp"]
+    openmp_libs = ["gomp"]
     openmp_include = None
     library_dirs = []
 
@@ -66,7 +66,7 @@ ext_modules = [
         ],  # Ensure other dirs like LIBRARY_DIR are still included
         libraries=["iqtree2", "z", *openmp_libs],  # Add OpenMP libraries if needed
         extra_compile_args=openmp_flags,  # Add OpenMP compile flags
-        extra_link_args=openmp_libs,  # Link OpenMP library
+        # extra_link_args=openmp_libs,  # Link OpenMP library
         include_dirs=[openmp_include]
         if openmp_include
         else [],  # Include OpenMP headers
