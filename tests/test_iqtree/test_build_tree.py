@@ -94,6 +94,6 @@ def test_build_tree_inadequate_bootstrapping(four_otu: ArrayAlignment) -> None:
 
 def test_build_tree_bootstrapping(four_otu: ArrayAlignment) -> None:
     tree = piqtree2.build_tree(four_otu, Model(DnaModel.GTR), bootstrap_replicates=1000)
-    # internal nodes are now named by default
-    supported_node = tree.get_node_matching_name("node1")
+
+    supported_node = max(tree.children, key=lambda x: len(x.children))
     assert "support" in supported_node.params
