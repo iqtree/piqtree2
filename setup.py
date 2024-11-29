@@ -11,6 +11,8 @@ ext_modules = [
         ["src/piqtree2/_libiqtree/_piqtree2.cpp"],
         library_dirs=[LIBRARY_DIR],
         libraries=["iqtree2", "z"],
+        extra_compile_args=["-fopenmp"],
+        extra_link_args=["-lgomp"],
     ),
 ]
 
