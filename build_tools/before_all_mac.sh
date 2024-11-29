@@ -3,6 +3,10 @@ if [ "$GITHUB_ACTIONS" = "true" ]; then
     brew update
 fi
 
-brew install eigen boost
+brew install eigen boost libomp make
+
+export LDFLAGS="-L$(brew --prefix libomp)/lib"
+export CPPFLAGS="-I$(brew --prefix libomp)/include"
+export CXXFLAGS="-I$(brew --prefix libomp)/include"
 
 bash build_tools/build_iqtree.sh
