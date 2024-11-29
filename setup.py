@@ -23,18 +23,18 @@ if platform.system() == "Darwin":
     brew_prefix_libomp = get_brew_prefix("libomp")
 
     # Use Homebrew's clang/clang++
-    os.environ["CC"] = brew_prefix_llvm / "bin" / "clang"
-    os.environ["CXX"] = brew_prefix_llvm / "bin" / "clang++"
+    os.environ["CC"] = str(brew_prefix_llvm / "bin" / "clang")
+    os.environ["CXX"] = str(brew_prefix_llvm / "bin" / "clang++")
 
     # Define OpenMP flags and libraries for macOS
     openmp_flags = ["-Xpreprocessor", "-fopenmp"]
     openmp_libs = ["omp"]
 
     # Use the paths from Homebrew for libomp
-    openmp_include = brew_prefix_libomp / "include"
+    openmp_include = str(brew_prefix_libomp / "include")
     library_dirs = [
-        brew_prefix_libomp / "lib",
-        brew_prefix_llvm / "lib",
+        str(brew_prefix_libomp / "lib"),
+        str(brew_prefix_llvm / "lib"),
     ]
 else:
     openmp_flags = ["-fopenmp"]
