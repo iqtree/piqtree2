@@ -88,10 +88,14 @@ def model_finder(
     freq_set: Iterable[str] | None = None,
     rate_set: Iterable[str] | None = None,
     rand_seed: int | None = None,
+    num_threads: int | None = None,
 ) -> ModelFinderResult | c3_types.SerialisableType:
     source = aln.info.source
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
+
+    if num_threads is None:
+        num_threads = 1
 
     if model_set is None:
         model_set = set()
@@ -111,6 +115,7 @@ def model_finder(
             ",".join(model_set),
             ",".join(freq_set),
             ",".join(rate_set),
+            num_threads,
         ),
     )
     return ModelFinderResult(raw_data=raw, source=source)

@@ -30,6 +30,7 @@ class piqtree_phylo:
         invariant_sites: bool = False,
         rand_seed: int | None = None,
         bootstrap_reps: int | None = None,
+        num_threads: int | None = None,
     ) -> None:
         self._model = Model(
             submod_type=submod_type,
@@ -39,6 +40,7 @@ class piqtree_phylo:
         )
         self._rand_seed = rand_seed
         self._bootstrap_reps = bootstrap_reps
+        self._num_threads = num_threads
 
     def main(
         self,
@@ -49,6 +51,7 @@ class piqtree_phylo:
             self._model,
             self._rand_seed,
             bootstrap_replicates=self._bootstrap_reps,
+            num_threads=self._num_threads,
         )
 
 
@@ -63,6 +66,7 @@ class piqtree_fit:
         rate_model: str | None = None,
         *,
         rand_seed: int | None = None,
+        num_threads: int | None = None,
         invariant_sites: bool = False,
     ) -> None:
         self._tree = tree
@@ -73,12 +77,19 @@ class piqtree_fit:
             freq_type=freq_type,
         )
         self._rand_seed = rand_seed
+        self._num_threads = num_threads
 
     def main(
         self,
         aln: c3_types.AlignedSeqsType,
     ) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
-        return fit_tree(aln, self._tree, self._model, self._rand_seed)
+        return fit_tree(
+            aln,
+            self._tree,
+            self._model,
+            self._rand_seed,
+            self._num_threads,
+        )
 
 
 @composable.define_app

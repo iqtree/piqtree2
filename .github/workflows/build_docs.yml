@@ -1,4 +1,4 @@
-name: Build docs
+name: Build Docs
 
 on: [workflow_dispatch]
 
@@ -12,23 +12,13 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Get IQ-TREE 2 SHA
-        run: |
-          cd iqtree2
-          IQ_TREE_2_SHA=$(git rev-parse HEAD)
-          echo "IQ_TREE_2_SHA=${IQ_TREE_2_SHA}" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        id: cache
+      - id: build
+        uses: ./.github/actions/build-iqtree
         with:
-          key: libiqtree-${{ matrix.os }}-${{ env.IQ_TREE_2_SHA }}
-          path: src/piqtree2/_libiqtree/libiqtree2.a
-          lookup-only: true
-      
-      - name: Build IQ-TREE
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          sudo ./build_tools/before_all_linux.sh
+          os: ubuntu-latest
+    
+    outputs:
+      iqtree2-sha: ${{steps.build.outputs.iqtree2-sha}}
           
   build-docs:
     runs-on: ubuntu-latest
@@ -40,16 +30,10 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - uses: actions/cache/restore@v4
-        with:
-          key: libiqtree-ubuntu-latest-${{ env.IQ_TREE_2_SHA }}
-          path: src/piqtree2/_libiqtree/libiqtree2.a
-          fail-on-cache-miss: true
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: ./.github/actions/setup-piqtree
         with:
           python-version: "3.12"
+          cache-key: libiqtree-ubuntu-latest-${{ needs.build-iqtree.outputs.iqtree2-sha }}
       
       - name: Install Docs Dependencies
         run: |

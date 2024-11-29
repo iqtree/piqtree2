@@ -32,7 +32,8 @@ extern string build_tree(vector<string>& names,
                          vector<string>& seqs,
                          string model,
                          int rand_seed = 0,
-                         int bootstrap_rep = 0);
+                         int bootstrap_rep = 0,
+                         int num_thres = 1);
 
 /*
  * Perform phylogenetic analysis on the input alignment
@@ -43,7 +44,8 @@ extern string fit_tree(vector<string>& names,
                        vector<string>& seqs,
                        string model,
                        string intree,
-                       int rand_seed = 0);
+                       int rand_seed = 0,
+                       int num_thres = 1);
 
 /*
  * Perform phylogenetic analysis with ModelFinder
@@ -59,7 +61,8 @@ extern string modelfinder(vector<string>& names,
                           int rand_seed = 0,
                           string model_set = "",
                           string freq_set = "",
-                          string rate_set = "");
+                          string rate_set = "",
+                          int num_thres = 1);
 
 /*
  * Build pairwise JC distance matrix

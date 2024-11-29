@@ -1,7 +1,19 @@
 cd iqtree2
 rm -rf build
 mkdir build && cd build
-cmake -DIQTREE_FLAGS="single" -DBUILD_LIB=ON ..
-make -j
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Building for macOS."
+    echo $LDFLAGS    
+    echo $CPPFLAGS
+    echo $CXXFLAGS    
+    cmake -DBUILD_LIB=ON -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ..
+    gmake -j
+else
+    echo "Building for linux."
+    cmake -DBUILD_LIB=ON ..
+    make -j
+fi
+
 cd ../..
 mv iqtree2/build/libiqtree2.a src/piqtree2/_libiqtree/

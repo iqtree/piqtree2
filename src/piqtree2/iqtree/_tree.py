@@ -199,6 +199,7 @@ def build_tree(
     model: Model,
     rand_seed: int | None = None,
     bootstrap_replicates: int | None = None,
+    num_threads: int | None = None,
 ) -> cogent3.PhyloNode:
     """Reconstruct a phylogenetic tree.
 
@@ -216,6 +217,8 @@ def build_tree(
         The number of bootstrap replicates to perform, by default None.
         If 0 is provided, then no bootstrapping is performed.
         At least 1000 is required to perform bootstrapping.
+    num_threads: int | None, optional
+        Number of threads for IQ-TREE 2 to use, by default None (single-threaded).
 
     Returns
     -------
@@ -229,11 +232,21 @@ def build_tree(
     if bootstrap_replicates is None:
         bootstrap_replicates = 0
 
+    if num_threads is None:
+        num_threads = 1
+
     names = aln.names
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
     yaml_result = yaml.safe_load(
-        iq_build_tree(names, seqs, str(model), rand_seed, bootstrap_replicates),
+        iq_build_tree(
+            names,
+            seqs,
+            str(model),
+            rand_seed,
+            bootstrap_replicates,
+            num_threads,
+        ),
     )
     tree = _process_tree_yaml(yaml_result, names)
 
@@ -249,6 +262,7 @@ def fit_tree(
     tree: cogent3.PhyloNode,
     model: Model,
     rand_seed: int | None = None,
+    num_threads: int | None = None,
 ) -> cogent3.PhyloNode:
     """Fit branch lengths to a tree.
 
@@ -265,6 +279,8 @@ def fit_tree(
         The substitution model with base frequencies and rate heterogeneity.
     rand_seed : int | None, optional
         The random seed - 0 or None means no seed, by default None.
+    num_threads: int | None, optional
+        Number of threads for IQ-TREE 2 to use, by default None (single-threaded).
 
     Returns
     -------
@@ -275,12 +291,15 @@ def fit_tree(
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
 
+    if num_threads is None:
+        num_threads = 1
+
     names = aln.names
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
     newick = str(tree)
 
     yaml_result = yaml.safe_load(
-        iq_fit_tree(names, seqs, str(model), newick, rand_seed),
+        iq_fit_tree(names, seqs, str(model), newick, rand_seed, num_threads),
     )
     tree = _process_tree_yaml(yaml_result, names)
 
