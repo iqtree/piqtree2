@@ -1,5 +1,7 @@
 """setup for piqtree2."""
 
+import platform
+
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup
 
@@ -11,7 +13,8 @@ ext_modules = [
         ["src/piqtree2/_libiqtree/_piqtree2.cpp"],
         library_dirs=[LIBRARY_DIR],
         libraries=["iqtree2", "z"],
-        extra_compile_args=["-fopenmp"],
+        extra_compile_args=(["-Xpreprocessor"] if platform.system() == "Darwin" else [])
+        + ["-fopenmp"],
         extra_link_args=["-lgomp"],
     ),
 ]
