@@ -6,8 +6,7 @@
 
 [![CI](https://github.com/iqtree/piqtree2/workflows/CI/badge.svg)](https://github.com/iqtree/piqtree2/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/iqtree/piqtree2/badge.svg?branch=main)](https://coveralls.io/github/iqtree/piqtree2?branch=main)
-
-<!-- [![Coverage Status](https://coveralls.io/repos/github/iqtree/piqtree2/badge.svg?branch=main)](https://coveralls.io/github/iqtree/piqtree2?branch=main) -->
+[![Documentation Status](https://readthedocs.org/projects/piqtree2/badge/?version=latest)](https://piqtree2.readthedocs.io/en/latest/?badge=latest)
 
 `piqtree2` is a library which allows you use IQ-TREE directly from Python! The interface with python is through [cogent3](https://cogent3.org) objects, as shown below.
 
