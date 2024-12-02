@@ -71,7 +71,8 @@ extern string modelfinder(vector<string>& names,
  * j-th sequence, where n is the number of sequences
  */
 extern vector<double> build_distmatrix(vector<string>& names,
-                                       vector<string>& seqs);
+                                       vector<string>& seqs,
+                                       int num_thres);
 
 /*
  * Using Rapid-NJ to build tree from a distance matrix
