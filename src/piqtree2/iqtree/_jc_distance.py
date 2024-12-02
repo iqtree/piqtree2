@@ -38,6 +38,7 @@ def _dists_to_distmatrix(
 
 def jc_distances(
     aln: c3_types.AlignedSeqsType,
+    num_threads: int | None = None,
 ) -> c3_types.PairwiseDistanceType:
     """Compute pairwise JC distances for a given alignemnt.
 
@@ -45,6 +46,8 @@ def jc_distances(
     ----------
     aln : c3_types.AlignedSeqsType
         alignment to compute pairwise JC distances for.
+    num_threads: int | None, optional
+        Number of threads for IQ-TREE 2 to use, by default None (all available threads).
 
     Returns
     -------
@@ -52,8 +55,13 @@ def jc_distances(
         Pairwise JC distance matrix.
 
     """
+    if num_threads is None:
+        num_threads = 0
+
     names = aln.names
     seqs = [str(seq) for seq in aln.iter_seqs(names)]
 
-    distances = np.array(iq_jc_distances(names, seqs)).reshape((len(names), len(names)))
+    distances = np.array(iq_jc_distances(names, seqs, num_threads)).reshape(
+        (len(names), len(names)),
+    )
     return _dists_to_distmatrix(distances, names)
