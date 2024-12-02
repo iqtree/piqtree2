@@ -19,7 +19,7 @@ def download_and_extract_docs() -> None:
     latest_run = next(
         run
         for run in runs
-        if run["name"] == "Build docs" and run["conclusion"] == "success"
+        if run["name"] == "Build Docs" and run["conclusion"] == "success"
     )
     artifacts_url = latest_run["artifacts_url"]
     response = requests.get(artifacts_url, headers=headers, timeout=10)
