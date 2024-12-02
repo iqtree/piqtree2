@@ -37,6 +37,8 @@ classifiers = [
 
 [project.urls]
 Repository = "https://github.com/cogent3/piqtree2"
+Documentation = "https://piqtree2.readthedocs.io"
+
 
 [project.optional-dependencies]
 dev = ["cibuildwheel", "pybind11", "scriv", "piqtree2[test]", "piqtree2[lint]", "piqtree2[typing]"]
@@ -45,7 +47,16 @@ lint = ["ruff==0.8.0"]
 typing = ["mypy==1.13.0", "piqtree2[stubs]", "piqtree2[test]"]
 stubs = ["types-PyYAML", "types-requests"]
 extra = ["cogent3[extra]"]
-doc = ["mkdocs-jupyter", "mkdocs", "jupytext", "piqtree2[test]", "cogent3[extra]", "diverse-seq"]
+doc = [
+    "mkdocs-jupyter",
+    "mkdocs",
+    "jupytext",
+    "piqtree2[test]",
+    "cogent3[extra]",
+    "diverse-seq",
+    "jupyter",
+    "ipywidgets"
+    ]
 
 [project.entry-points."cogent3.app"]
 piqtree_phylo = "piqtree2._app:piqtree_phylo"
