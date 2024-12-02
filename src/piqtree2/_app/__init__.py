@@ -104,11 +104,22 @@ def piqtree_random_trees(
 
 
 @composable.define_app
-@extend_docstring_from(jc_distances)
-def piqtree_jc_dists(
-    aln: c3_types.AlignedSeqsType,
-) -> c3_types.PairwiseDistanceType:
-    return jc_distances(aln)
+class piqtree_jc_dists:
+    @extend_docstring_from(jc_distances)
+    def __init__(
+        self,
+        num_threads: int | None = None,
+    ) -> None:
+        self._num_threads = num_threads
+
+    def main(
+        self,
+        aln: c3_types.AlignedSeqsType,
+    ) -> cogent3.PhyloNode | cogent3.app.typing.SerialisableType:
+        return jc_distances(
+            aln,
+            num_threads=self._num_threads,
+        )
 
 
 @composable.define_app
