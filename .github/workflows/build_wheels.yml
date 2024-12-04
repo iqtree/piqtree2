@@ -35,7 +35,13 @@ jobs:
           platforms: arm64
       
       - name: Set macOS Deployment Target
-        run: echo "MACOSX_DEPLOYMENT_TARGET=13.0" >> $GITHUB_ENV
+        if: ${{startsWith(matrix.os, 'macos'))}}
+        run: |
+          if [[ "${{ matrix.os }}" == "macos-13" ]]; then
+            export MACOSX_DEPLOYMENT_TARGET=13.0
+          elif [[ "${{ matrix.os }}" == "macos-14" ]]; then
+            export MACOSX_DEPLOYMENT_TARGET=14.0
+          fi
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.22.0
