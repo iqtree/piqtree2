@@ -22,12 +22,6 @@ jobs:
         - os: macos-14
           platform_id: macosx_arm64
 
-        # MacOS universal2 (not necessary, but matching
-        # those available to download on iqtree.org)
-        - os: macos-14
-          platform_id: macosx_universal2
-
-
     steps:
       - uses: "actions/checkout@v4"
         with:
@@ -39,6 +33,15 @@ jobs:
         uses: docker/setup-qemu-action@v3
         with:
           platforms: arm64
+      
+      - name: Set macOS Deployment Target
+        if: ${{startsWith(matrix.os, 'macos')}}
+        run: |
+          if [[ "${{ matrix.os }}" == "macos-13" ]]; then
+            echo "MACOSX_DEPLOYMENT_TARGET=13.0" >> $GITHUB_ENV
+          elif [[ "${{ matrix.os }}" == "macos-14" ]]; then
+            echo "MACOSX_DEPLOYMENT_TARGET=14.0" >> $GITHUB_ENV
+          fi
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.22.0
