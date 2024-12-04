@@ -33,6 +33,9 @@ jobs:
         uses: docker/setup-qemu-action@v3
         with:
           platforms: arm64
+      
+      - name: Set macOS Deployment Target
+        run: echo "MACOSX_DEPLOYMENT_TARGET=13.0" >> $GITHUB_ENV
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.22.0
