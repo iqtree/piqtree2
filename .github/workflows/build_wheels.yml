@@ -22,12 +22,6 @@ jobs:
         - os: macos-14
           platform_id: macosx_arm64
 
-        # MacOS universal2 (not necessary, but matching
-        # those available to download on iqtree.org)
-        - os: macos-14
-          platform_id: macosx_universal2
-
-
     steps:
       - uses: "actions/checkout@v4"
         with:
