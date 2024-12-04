@@ -3,8 +3,6 @@ if [ "$GITHUB_ACTIONS" = "true" ]; then
     brew update
 fi
 
-export MACOSX_DEPLOYMENT_TARGET="13.0"
-
 brew install llvm eigen boost libomp make
 
 export LDFLAGS="-L$(brew --prefix libomp)/lib"
