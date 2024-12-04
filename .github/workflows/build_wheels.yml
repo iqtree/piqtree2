@@ -35,7 +35,7 @@ jobs:
           platforms: arm64
       
       - name: Set macOS Deployment Target
-        if: ${{startsWith(matrix.os, 'macos'))}}
+        if: ${{startsWith(matrix.os, 'macos')}}
         run: |
           if [[ "${{ matrix.os }}" == "macos-13" ]]; then
             export MACOSX_DEPLOYMENT_TARGET=13.0
