@@ -1,4 +1,4 @@
-# Index
+# API Reference Index
 
 ## Trees
 
@@ -13,8 +13,11 @@
 
 | Name | Summary |
 |------|---------|
-| [Model](model/Model.md) |  Class for substitution models. |
 | [model_finder](model/model_finder.md) | Determine the best-fit model for your data. |
+| [Model](model/Model.md) |  Class for substitution models. |
+| [SubstitutionModel](model/SubstitutionModel.md) | Enums for substitution models. |
+| [FreqType](model/FreqType.md) | Enum for base frequencies. |
+| [RateModel](model/RateModel.md) | Classes for rate heterogeneity. |
 
 ## Genetic Distances
 

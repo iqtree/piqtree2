@@ -44,6 +44,9 @@ nav:
     - Substitution Models:
       - api/model/model_finder.md
       - api/model/Model.md
+      - api/model/SubstitutionModel.md
+      - api/model/FreqType.md
+      - api/model/RateModel.md
     - Genetic Distances:
       - api/genetic_distance/jc_distances.md
     - Tree Distances:
