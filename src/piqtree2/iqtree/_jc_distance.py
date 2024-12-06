@@ -40,7 +40,7 @@ def jc_distances(
     aln: c3_types.AlignedSeqsType,
     num_threads: int | None = None,
 ) -> c3_types.PairwiseDistanceType:
-    """Compute pairwise JC distances for a given alignemnt.
+    """Compute pairwise JC distances for a given alignment.
 
     Parameters
     ----------
