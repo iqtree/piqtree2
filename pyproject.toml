@@ -50,6 +50,7 @@ extra = ["cogent3[extra]"]
 doc = [
     "mkdocs-jupyter",
     "mkdocs",
+    "mkdocstrings[python]",
     "jupytext",
     "piqtree2[test]",
     "cogent3[extra]",

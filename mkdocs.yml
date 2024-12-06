@@ -11,22 +11,43 @@ theme:
         - python
         - text
 plugins:
-    - mkdocs-jupyter:
-        include_requirejs: true
-        execute: true
-        remove_tag_config:
-            remove_input_tags:
-                - hide_code
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_root_heading: true
+            docstring_style: numpy
+            docstring_section_style: spacy
+            docstring_options:
+              ignore_init_summary: true
+            merge_init_into_class: true
+  - mkdocs-jupyter:
+      include_requirejs: true
+      execute: true
+      remove_tag_config:
+          remove_input_tags:
+              - hide_code
 
 nav:
-    - HOME:
-      - Introduction: index.md
-      - Available Apps: available_help.py
-      - Selecting models for phylogenetic analysis: model_finder.py
-      - Estimate a phylogenetic tree: phylo.py
-      - Fit a model to one tree: fit_tree.py
-      - Phylogenetic model options: options.py
-      - Pairwise JC distances: pairwise_dist.py
-      - NJ tree: nj.py
-      - Parallel processing across alignments: app_pipeline.py
-      - Citation: citation.md
+  - Introduction: index.md
+  - API reference:
+    - api/build_tree.md
+    - api/fit_tree.md
+    - api/model.md
+    - api/model_finder.md
+    - api/jc_distances.md
+    - api/nj_tree.md
+    - api/random_trees.md
+    - api/robinson_foulds.md
+  - Apps:
+    - Available Apps: apps/available_help.py
+    - Selecting models for phylogenetic analysis: apps/model_finder.py
+    - Estimate a phylogenetic tree: apps/phylo.py
+    - Fit a model to one tree: apps/fit_tree.py
+    - Phylogenetic model options: apps/options.py
+    - Pairwise JC distances: apps/pairwise_dist.py
+    - NJ tree: apps/nj.py
+    - Parallel processing across alignments: apps/app_pipeline.py
+  - Citation: citation.md

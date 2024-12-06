@@ -13,8 +13,8 @@
 # piqtree2 specific ignores
 src/piqtree2/_libiqtree/**/*.a
 
-/working/fPIC/*.a
-/working/fPIC/*.o 
+# docs
+data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
