@@ -48,9 +48,9 @@ typing = ["mypy==1.13.0", "piqtree2[stubs]", "piqtree2[test]"]
 stubs = ["types-PyYAML", "types-requests"]
 extra = ["cogent3[extra]"]
 doc = [
-    "mkdocs-jupyter",
     "mkdocs",
     "mkdocstrings[python]",
+    "mkdocs-jupyter",
     "jupytext",
     "piqtree2[test]",
     "cogent3[extra]",
