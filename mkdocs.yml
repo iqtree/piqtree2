@@ -5,6 +5,8 @@ repo_url: "https://github.com/iqtree/piqtree2"
 repo_name: 'GitHub'
 theme:
     name: material
+    features:
+      - navigation.indexes
     highlightjs: true
     hljs_languages:
         - yaml
@@ -25,7 +27,7 @@ plugins:
             merge_init_into_class: true
   - mkdocs-jupyter:
       include_requirejs: true
-      execute: true
+      execute: false
       remove_tag_config:
           remove_input_tags:
               - hide_code
@@ -33,14 +35,19 @@ plugins:
 nav:
   - Introduction: index.md
   - API reference:
-    - api/build_tree.md
-    - api/fit_tree.md
-    - api/model.md
-    - api/model_finder.md
-    - api/jc_distances.md
-    - api/nj_tree.md
-    - api/random_trees.md
-    - api/robinson_foulds.md
+    - api/index.md
+    - Trees:
+      - api/tree/build_tree.md
+      - api/tree/fit_tree.md
+      - api/tree/nj_tree.md
+      - api/tree/random_trees.md
+    - Substitution Models:
+      - api/model/model_finder.md
+      - api/model/Model.md
+    - Genetic Distances:
+      - api/genetic_distance/jc_distances.md
+    - Tree Distances:
+      - api/tree_distance/robinson_foulds.md
   - Apps:
     - Available Apps: apps/available_help.py
     - Selecting models for phylogenetic analysis: apps/model_finder.py
