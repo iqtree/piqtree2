@@ -85,7 +85,7 @@ int mine() {
 }
 
 PYBIND11_MODULE(_piqtree2, m) {
-  m.doc() = "piqtree2 - Unlock the Power of IQ-TREE2 with Python!";
+  m.doc() = "piqtree2 - Unlock the Power of IQ-TREE 2 with Python!";
 
   m.def("iq_robinson_fould", &robinson_fould,
         "Calculates the robinson fould distance between two trees");
