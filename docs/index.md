@@ -5,8 +5,8 @@
 `piqtree2` is implemented with the goals of:
 
 - make the individual high-performance components of IQ-TREE 2 available within Python, enabling the community to take advantage of these routines.
-- facilitate exploratory analyses by leveraging cogent3's capabilities to provide a rich user experience in interactive Jupyter notebooks, e.g. trivial parallelisation across collections of alignments
-- code using piqtree2 apps should be easy to understand
+- facilitate exploratory analyses by leveraging cogent3's capabilities to provide a rich user experience in interactive Jupyter notebooks, e.g. trivial parallelisation across collections of alignments.
+- code using piqtree2 apps should be easy to understand.
 
 `piqtree2` provides mini-applications in the form of [cogent3 apps](https://cogent3.org/doc/app/index.html). These can interplay with other such apps, e.g. the [cogent3-ete3](https://pypi.org/project/cogent3-ete3/) tree conversion plugin, the [diverse-seqs](https://pypi.org/project/diverse-seq/) sequence subsampling plugin.
 
@@ -17,13 +17,13 @@
 
 You get the vanilla version of `piqtree2` by running the following command.
 
-```
+```bash
 pip install piqtree2
 ```
 
 To get visualisation support with plotly, use the `[extra]` option.
 
-```
+```bash
 pip install "piqtree2[extra]"
 ```
 
