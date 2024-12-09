@@ -31,6 +31,9 @@ def test_model_finder_result(model):
         "best_model_AIC": model,
         "best_model_AICc": model,
         "best_model_BIC": model,
+        "best_tree_AIC": "((a,b),(c,d));",  # ignored
+        "initTree": "((a,b),(c,d));",  # ignored
+        "partition_type": 0,  # ignored
     }
 
     result = ModelFinderResult("test", raw_data)
