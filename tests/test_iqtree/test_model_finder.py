@@ -3,7 +3,7 @@ import pytest
 from piqtree2.iqtree._model_finder import ModelFinderResult, ModelResultValue
 
 
-def test_model_result_value_from_string():
+def test_model_result_value_from_string() -> None:
     val = "123.45 10 0.678"
     result = ModelResultValue.from_string(val)
     assert result.lnL == 123.45
@@ -19,13 +19,13 @@ def test_model_result_value_from_string():
         "123.45 10",  # too few values
     ],
 )
-def test_model_result_value_from_bad_string(bad_val):
-    with pytest.raises(ValueError):
+def test_model_result_value_from_bad_string(bad_val: str) -> None:
+    with pytest.raises(ValueError, match="Error parsing string"):
         _ = ModelResultValue.from_string(bad_val)
 
 
 @pytest.mark.parametrize("model", ["GTR+F", "GTR+F+G"])
-def test_model_finder_result(model):
+def test_model_finder_result(model: str) -> None:
     raw_data = {
         model: "123.45 10 0.678",
         "best_model_AIC": model,

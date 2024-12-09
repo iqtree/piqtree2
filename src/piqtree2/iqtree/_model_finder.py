@@ -53,7 +53,7 @@ class ModelResultValue:
         Length of the tree (sum of branch lengths).
     """
 
-    lnL: float
+    lnL: float # noqa: N815
     nfp: int
     tree_length: float
 
@@ -61,10 +61,11 @@ class ModelResultValue:
     def from_string(cls, val: str) -> "ModelResultValue":
         """Parse the string produced by IQ-TREE model_finder for a given model."""
         try:
-            lnL, nfp, tree_length = val.split()
+            lnL, nfp, tree_length = val.split() # noqa: N806
             return cls(lnL=float(lnL), nfp=int(nfp), tree_length=float(tree_length))
         except ValueError as e:
-            raise ValueError(f"Error parsing string '{val}'") from e
+            msg = f"Error parsing string '{val}'"
+            raise ValueError(msg) from e
 
 
 @dataclasses.dataclass(slots=True)
@@ -74,8 +75,8 @@ class ModelFinderResult:
     best_aic: model.Model = dataclasses.field(init=False)
     best_aicc: model.Model = dataclasses.field(init=False)
     best_bic: model.Model = dataclasses.field(init=False)
-    model_stats: dict[model.Model, ModelResultValue] = dataclasses.field(
-        init=False, repr=False, default_factory=dict
+    model_stats: dict[model.Model | str, ModelResultValue] = dataclasses.field(
+        init=False, repr=False, default_factory=dict,
     )
 
     def __post_init__(self, raw_data: dict[str, Any]) -> None:
@@ -89,13 +90,13 @@ class ModelFinderResult:
         self.best_bic = _get_model(raw_data, "best_model_BIC")
 
         self.model_stats[self.best_aic] = ModelResultValue.from_string(
-            raw_data[str(self.best_aic)]
+            raw_data[str(self.best_aic)],
         )
         self.model_stats[self.best_aicc] = ModelResultValue.from_string(
-            raw_data[str(self.best_aicc)]
+            raw_data[str(self.best_aicc)],
         )
         self.model_stats[self.best_bic] = ModelResultValue.from_string(
-            raw_data[str(self.best_bic)]
+            raw_data[str(self.best_bic)],
         )
 
     def to_rich_dict(self) -> dict[str, Any]:
