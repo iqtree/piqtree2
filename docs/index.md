@@ -1,4 +1,6 @@
-## Welcome
+# piqtree2 documentation
+
+## Overview
 
 `piqtree2` is a Python package that exposes selected [IQ-TREE 2](http://www.iqtree.org) capabilities within Python, using the [cogent3](https://cogent3.org) library as the interface.
 
@@ -30,5 +32,3 @@ pip install "piqtree2[extra]"
 ## Supported platforms
 
 At present we do not provide native binaries for Windows. Windows users can run `piqtree2` using the Windows Subsystem for Linux (WSL) which can installed via the Windows Store.
-
-<!-- ::: piqtree2 -->
