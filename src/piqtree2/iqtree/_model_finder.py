@@ -39,6 +39,34 @@ def _get_model(raw_data: dict[str, Any], key: str) -> model.Model:
     )
 
 
+@dataclasses.dataclass(slots=True, frozen=True)
+class ModelResultValue:
+    """Model statistics from IQ-TREE model_finder.
+
+    Parameters
+    ----------
+    lnL
+        Log likelihood of the model.
+    nfp
+        Number of free parameters in the model.
+    tree_length
+        Length of the tree (sum of branch lengths).
+    """
+
+    lnL: float
+    nfp: int
+    tree_length: float
+
+    @classmethod
+    def from_string(cls, val: str) -> "ModelResultValue":
+        """Parse the string produced by IQ-TREE model_finder for a given model."""
+        try:
+            lnL, nfp, tree_length = val.split()
+            return cls(lnL=float(lnL), nfp=int(nfp), tree_length=float(tree_length))
+        except ValueError as e:
+            raise ValueError(f"Error parsing string '{val}'") from e
+
+
 @dataclasses.dataclass(slots=True)
 class ModelFinderResult:
     source: str
@@ -46,23 +74,29 @@ class ModelFinderResult:
     best_aic: model.Model = dataclasses.field(init=False)
     best_aicc: model.Model = dataclasses.field(init=False)
     best_bic: model.Model = dataclasses.field(init=False)
-    model_stats: dict[model.Model, str] = dataclasses.field(init=False, repr=False)
+    model_stats: dict[model.Model, ModelResultValue] = dataclasses.field(
+        init=False, repr=False, default_factory=dict
+    )
 
     def __post_init__(self, raw_data: dict[str, Any]) -> None:
-        model_stats = {}
-        for key, val in raw_data.items():
-            try:
-                new_model = _get_model(raw_data, key)
-            except (ValueError, AttributeError):
-                continue
-            model_stats[new_model] = val
-        self.model_stats = model_stats
+        self.model_stats = {
+            key: ModelResultValue.from_string(val)
+            for key, val in raw_data.items()
+            if not key.startswith(("best_", "initTree")) and isinstance(val, str)
+        }
         self.best_aic = _get_model(raw_data, "best_model_AIC")
         self.best_aicc = _get_model(raw_data, "best_model_AICc")
         self.best_bic = _get_model(raw_data, "best_model_BIC")
-        model_stats[self.best_aic] = raw_data[str(self.best_aic)]
-        model_stats[self.best_aicc] = raw_data[str(self.best_aicc)]
-        model_stats[self.best_bic] = raw_data[str(self.best_bic)]
+
+        self.model_stats[self.best_aic] = ModelResultValue.from_string(
+            raw_data[str(self.best_aic)]
+        )
+        self.model_stats[self.best_aicc] = ModelResultValue.from_string(
+            raw_data[str(self.best_aicc)]
+        )
+        self.model_stats[self.best_bic] = ModelResultValue.from_string(
+            raw_data[str(self.best_bic)]
+        )
 
     def to_rich_dict(self) -> dict[str, Any]:
         import piqtree2
@@ -70,7 +104,8 @@ class ModelFinderResult:
         result = {"version": piqtree2.__version__, "type": get_object_provenance(self)}
 
         raw_data = {
-            str(model_): model_stats for model_, model_stats in self.model_stats.items()
+            str(model_): f"{stats.lnL} {stats.nfp} {stats.tree_length}"
+            for model_, stats in self.model_stats.items()
         }
         for attr in ("best_model_AIC", "best_model_AICc", "best_model_BIC"):
             raw_data[attr] = str(getattr(self, attr.replace("_model", "").lower()))
