@@ -51,6 +51,7 @@ doc = [
     "mkdocs",
     "mkdocstrings[python]",
     "mkdocs-jupyter",
+    "pymdown-extensions",
     "jupytext",
     "piqtree2[test]",
     "cogent3[extra]",
