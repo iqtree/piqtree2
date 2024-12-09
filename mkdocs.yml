@@ -36,6 +36,14 @@ nav:
   - Introduction: index.md
   - Quickstart:
     - quickstart/index.md
+    - quickstart/construct_ml_tree.md
+    - quickstart/fit_tree_topology.md
+    - quickstart/using_substitution_models.md
+    - quickstart/using_model_finder.md
+    - quickstart/calculate_jc_distances.md
+    - quickstart/construct_nj_tree.md
+    - quickstart/make_random_trees.md
+    - quickstart/calculate_rf_distances.md
   - API reference:
     - api/index.md
     - Trees:
