@@ -1,6 +1,6 @@
 # Calculate pairwise Jukes-Cantor distances
 
-A pairwise Jukes-Cantor distance matrix can be constructed from a cogent3 alignment object using [`jc_distances`](../api/genetic_distance/jc_distances.md). 
+A pairwise Jukes-Cantor distance matrix can be constructed from a cogent3 alignment object using [`jc_distances`](../api/genetic_distance/jc_distances.md).
 The resulting distance matrix can be indexed by integer index, or by name.
 
 ## Usage
