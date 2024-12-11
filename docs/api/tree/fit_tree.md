@@ -4,4 +4,4 @@
 
 ## Usage
 
-For usage, see ["Fit branch lengths to a tree topology from an alignment"](../../quickstart/construct_ml_tree.md).
+For usage, see ["Fit branch lengths to a tree topology from an alignment"](../../quickstart/fit_tree_topology.md).
