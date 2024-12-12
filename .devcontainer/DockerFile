@@ -45,16 +45,10 @@ RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.zshrc && \
     echo 'alias sac="conda activate"' >> ~/.zshrc && \
     echo 'alias sde="conda deactivate"' >> ~/.zshrc
 
-# Setup submodule
-RUN git submodule update --init --recursive
-
-# Build piqtree
-RUN ./build_tools/build_iqtree.sh
-
 # Set up conda environments
 RUN . /opt/conda/etc/profile.d/conda.sh && \
     conda activate piqtree && \
-    pip install -e ".[dev]"
+    pip install pybind11
 
 # Set up zsh as the default shell
 SHELL ["/bin/zsh", "-c"]
