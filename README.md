@@ -87,7 +87,7 @@ tree2 = make_tree("(e,b,(c,(d,a)));")
 tree3 = make_tree("(a,b,(d,(c,e)));")
 
 # Calculate pairwise distances
-pairwise_distances = robinson_foulds(tree1, tree2, tree3) # Supports any number of trees (for a sequence of trees use *seq_of_trees)
+pairwise_distances = robinson_foulds([tree1, tree2, tree3]) # Supports any number of trees (for a sequence of trees use *seq_of_trees)
 
 print(pairwise_distances) # A numpy array containing pairwaise Robinson-Foulds distances between trees
 ```
