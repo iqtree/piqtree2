@@ -41,7 +41,7 @@ Documentation = "https://piqtree2.readthedocs.io"
 
 
 [project.optional-dependencies]
-dev = ["cibuildwheel", "pybind11", "scriv", "piqtree2[doc]", "piqtree2[test]", "piqtree2[lint]", "piqtree2[typing]"]
+dev = ["cibuildwheel", "pybind11", "scriv", "piqtree2[test]", "piqtree2[lint]", "piqtree2[typing]"]
 test = ["pytest", "pytest-cov", "nox"]
 lint = ["ruff==0.8.2"]
 typing = ["mypy==1.13.0", "piqtree2[stubs]", "piqtree2[test]"]
