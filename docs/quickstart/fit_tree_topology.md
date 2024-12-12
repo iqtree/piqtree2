@@ -33,7 +33,7 @@ from piqtree2.model import DnaModel
 aln = load_aligned_seqs("my_alignment.fasta", moltype="dna")
 tree = make_tree("((Human, Chimpanzee), Rhesus, Mouse);")
 
-fitted_tree = fit_tree(aln, tree, model=Model(DnaModel.SYM))
+fitted_tree = fit_tree(aln, tree, model=Model(DnaModel.SYM), rand_seed=42)
 ```
 
 ### Multithreading
