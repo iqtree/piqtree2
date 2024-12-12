@@ -1,5 +1,7 @@
 """piqtree2 - access the power of IQ-TREE within Python."""
 
+from _piqtree2 import __iqtree_version__
+
 from piqtree2._data import dataset_names, download_dataset
 from piqtree2.iqtree import (
     TreeGenMode,
@@ -23,6 +25,7 @@ __version__ = "0.3.2"
 __all__ = [
     "Model",
     "TreeGenMode",
+    "__iqtree_version__",
     "available_freq_type",
     "available_models",
     "available_rate_type",
