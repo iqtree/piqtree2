@@ -96,11 +96,11 @@ class piqtree_fit:
 @extend_docstring_from(random_trees)
 def piqtree_random_trees(
     num_taxa: int,
-    tree_mode: TreeGenMode,
     num_trees: int,
+    tree_mode: TreeGenMode,
     rand_seed: int | None = None,
 ) -> tuple[cogent3.PhyloNode]:
-    return random_trees(num_taxa, tree_mode, num_trees, rand_seed)
+    return random_trees(num_trees, num_taxa, tree_mode, rand_seed)
 
 
 @composable.define_app

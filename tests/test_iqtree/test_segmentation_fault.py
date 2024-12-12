@@ -19,7 +19,7 @@ def test_two_build_random_trees() -> None:
     build_tree(aln, Model(DnaModel.JC), 2)
 
     with pytest.raises(IqTreeError):
-        random_trees(2, TreeGenMode.BALANCED, 3, 1)
+        random_trees(3, 2, TreeGenMode.BALANCED, 1)
 
 
 def test_two_fit_random_trees() -> None:
@@ -34,7 +34,7 @@ def test_two_fit_random_trees() -> None:
     fit_tree(aln, tree, Model(DnaModel.JC), 2)
 
     with pytest.raises(IqTreeError):
-        random_trees(2, TreeGenMode.BALANCED, 3, 1)
+        random_trees(3, 2, TreeGenMode.BALANCED, 1)
 
 
 @pytest.mark.parametrize("rate_model_class", [DiscreteGammaModel, FreeRateModel])

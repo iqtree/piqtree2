@@ -63,14 +63,14 @@ print("Log-likelihood:", tree.params["lnL"])
 ```python
 from piqtree2 import TreeGenMode, random_trees
 
-num_taxa = 5
 num_trees = 3 
+num_taxa = 5
 
 # Also supports YULE_HARDING, CATERPILLAR, BALANCED, BIRTH_DEATH and STAR_TREE
 tree_gen_mode = TreeGenMode.UNIFORM 
 
 # Randomly generate trees
-trees = random_trees(num_taxa, tree_gen_mode, num_trees, rand_seed=1) # Optionally specify a random seed.
+trees = random_trees(num_trees, num_taxa, tree_gen_mode, rand_seed=1) # Optionally specify a random seed.
 
 print(trees) # A tuple of 3 trees with 5 taxa each.
 ```
