@@ -80,12 +80,19 @@ extern vector<double> build_distmatrix(vector<string>& names,
  */
 extern string build_njtree(vector<string>& names, vector<double>& distances);
 
+/*
+ * verion number
+ */
+extern string version();
+
 int mine() {
   return 42;
 }
 
 PYBIND11_MODULE(_piqtree2, m) {
   m.doc() = "piqtree2 - Unlock the Power of IQ-TREE2 with Python!";
+
+  m.attr("__iqtree_version__") = version();
 
   m.def("iq_robinson_fould", &robinson_fould,
         "Calculates the robinson fould distance between two trees");
