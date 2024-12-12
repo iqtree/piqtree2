@@ -22,9 +22,9 @@ class TreeGenMode(Enum):
 
 
 def random_trees(
+    num_trees: int,
     num_taxa: int,
     tree_mode: TreeGenMode,
-    num_trees: int,
     rand_seed: int | None = None,
 ) -> tuple[cogent3.PhyloNode]:
     """Generate a collection of random trees.
@@ -33,12 +33,12 @@ def random_trees(
 
     Parameters
     ----------
+    num_trees : int
+        The number of trees to generate.
     num_taxa : int
         The number of taxa per tree.
     tree_mode : TreeGenMode
         How the trees are generated.
-    num_trees : int
-        The number of trees to generate.
     rand_seed : int | None, optional
         The random seed - 0 or None means no seed, by default None.
 
