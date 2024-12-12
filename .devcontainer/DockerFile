@@ -3,6 +3,7 @@ FROM continuumio/miniconda3
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
+    btop \
     cmake \
     gdb \
     gh \
@@ -33,29 +34,27 @@ RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUS
 # Configure zsh
 RUN sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
 
-# Create a new conda environment with Python 3.12 and fix the bug with VS-code terminal showing 2 conda env prompts 
+# Create a new conda environment with Python 3.12 (dev+docs) and fix the bug with VS-code terminal showing 2 conda env prompts 
 RUN . /opt/conda/etc/profile.d/conda.sh && \
     conda config --set auto_activate_base False && \
-    /opt/conda/bin/conda create -n c312 python=3.12 -y && \
-    conda activate c312
+    /opt/conda/bin/conda create -n piqtree python=3.12 -y && \
+    conda activate piqtree
 
-# Initialize conda for zsh shell
-RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.zshrc
+# Initialise conda for zsh shell
+RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.zshrc && \
+    echo 'alias sac="conda activate"' >> ~/.zshrc && \
+    echo 'alias sde="conda deactivate"' >> ~/.zshrc
 
-# Clone cogent3 using SSH
-WORKDIR /home/user/repos
-RUN git clone --branch develop https://github.com/cogent3/cogent3.git /home/user/repos/cogent3 
+# Setup submodule
+RUN git submodule update --init --recursive
 
-# Install pybind11 in the conda environment
+# Build piqtree
+RUN ./build_tools/build_iqtree.sh
+
+# Set up conda environments
 RUN . /opt/conda/etc/profile.d/conda.sh && \
-    conda activate c312 && \
-    pip install pybind11
-    
-# Install the cogent3 repository
-RUN . /opt/conda/etc/profile.d/conda.sh && \
-    conda activate c312 && \
-    cd /home/user/repos/cogent3 && \
-    pip install -e . 
+    conda activate piqtree && \
+    pip install -e ".[dev]"
 
 # Set up zsh as the default shell
 SHELL ["/bin/zsh", "-c"]
