@@ -35,7 +35,7 @@ plugins:
             merge_init_into_class: true
   - mkdocs-jupyter:
       include_requirejs: true
-      execute: false
+      execute: true
       remove_tag_config:
           remove_input_tags:
               - hide_code
