@@ -124,7 +124,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache-key: libiqtree-${{ matrix.os }}-${{ needs.build-iqtree.outputs.iqtree2-sha }}
       
-      - name: "Run Type Checking for ${{ matrix.python-version }}" 
+      - name: "Run Linting for ${{ matrix.python-version }}" 
         run: |
           pip install nox
           nox -s ruff-${{ matrix.python-version }}
