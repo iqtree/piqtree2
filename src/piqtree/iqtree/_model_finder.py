@@ -122,9 +122,7 @@ def model_finder(
     rand_seed: int | None = None,
     num_threads: int | None = None,
 ) -> ModelFinderResult | c3_types.SerialisableType:
-    """Find the models of best fit for an alignment.
-
-    _extended_summary_
+    """Find the models of best fit for an alignment using ModelFinder.
 
     Parameters
     ----------
