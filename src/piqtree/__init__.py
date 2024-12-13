@@ -4,6 +4,7 @@ from _piqtree import __iqtree_version__
 
 from piqtree._data import dataset_names, download_dataset
 from piqtree.iqtree import (
+    ModelFinderResult,
     TreeGenMode,
     build_tree,
     fit_tree,
@@ -25,6 +26,7 @@ __version__ = "0.3.2"
 
 __all__ = [
     "Model",
+    "ModelFinderResult",
     "TreeGenMode",
     "__iqtree_version__",
     "available_freq_type",

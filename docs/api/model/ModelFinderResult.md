@@ -1,0 +1,3 @@
+# ModelFinderResult
+
+::: piqtree.ModelFinderResult
