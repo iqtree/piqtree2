@@ -107,6 +107,16 @@ sym_discrete_gamma_4 = Model("SYM", rate_model=FreeRateModel())
 sym_invar_discrete_gamma_8 = Model("SYM", rate_model=FreeRateModel(8), invariant_sites=True)
 ```
 
+### Making Model Classes from IQ-TREE Strings
+
+For the supported model types, the Model class can be created by using [`make_model`](../api/model/make_model.md) on the IQ-TREE string representation of the model.
+
+```python
+from piqtree import make_model
+
+model = make_model("GTR+FQ+I+R3")
+```
+
 ## See also
 
 - Use a [`Model`](../api/model/Model.md) to construct a maximum likelihood tree: ["Construct a maximum likelihood phylogenetic tree"](construct_ml_tree.md).
