@@ -52,12 +52,17 @@ class DnaModel(SubstitutionModel):
     """DNA substitution models."""
 
     JC = "JC"
+    JC69 = "JC69"
     F81 = "F81"
     K80 = "K80"
+    K2P = "K2P"
     HKY = "HKY"
+    HKY85 = "HKY85"
     TN = "TN"
+    TN93 = "TN93"
     TNe = "TNe"
     K81 = "K81"
+    K3P = "K3P"
     K81u = "K81u"
     TPM2 = "TPM2"
     TPM2u = "TPM2u"
@@ -120,12 +125,17 @@ class DnaModel(SubstitutionModel):
     def _descriptions() -> dict[SubstitutionModel, str]:
         return {
             DnaModel.JC: "Equal substitution rates and equal base frequencies (Jukes and Cantor, 1969).",
+            DnaModel.JC69: "Equal substitution rates and equal base frequencies (Jukes and Cantor, 1969).",
             DnaModel.F81: "Equal rates but unequal base freq. (Felsenstein, 1981).",
             DnaModel.K80: "Unequal transition/transversion rates and equal base freq. (Kimura, 1980).",
+            DnaModel.K2P: "Unequal transition/transversion rates and equal base freq. (Kimura, 1980).",
             DnaModel.HKY: "Unequal transition/transversion rates and unequal base freq. (Hasegawa, Kishino and Yano, 1985).",
+            DnaModel.HKY85: "Unequal transition/transversion rates and unequal base freq. (Hasegawa, Kishino and Yano, 1985).",
             DnaModel.TN: "Like HKY but unequal purine/pyrimidine rates (Tamura and Nei, 1993).",
+            DnaModel.TN93: "Like HKY but unequal purine/pyrimidine rates (Tamura and Nei, 1993).",
             DnaModel.TNe: "Like TN but equal base freq.",
             DnaModel.K81: "Three substitution types model and equal base freq. (Kimura, 1981).",
+            DnaModel.K3P: "Three substitution types model and equal base freq. (Kimura, 1981).",
             DnaModel.K81u: "Like K81 but unequal base freq.",
             DnaModel.TPM2: "AC=AT, AG=CT, CG=GT and equal base freq.",
             DnaModel.TPM2u: "Like TPM2 but unequal base freq.",
