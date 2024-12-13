@@ -1,3 +1,5 @@
+import multiprocessing
+
 import pytest
 from cogent3 import ArrayAlignment
 
@@ -47,7 +49,11 @@ def test_model_finder_result(model: str) -> None:
 
 def test_model_finder(five_otu: ArrayAlignment) -> None:
     result1 = model_finder(five_otu, rand_seed=1)
-    result2 = model_finder(five_otu, num_threads=4, rand_seed=1)
+    result2 = model_finder(
+        five_otu,
+        num_threads=multiprocessing.cpu_count(),
+        rand_seed=1,
+    )
     assert str(result1.best_aic) == str(result2.best_aic)
     assert str(result1.best_aicc) == str(result2.best_aicc)
     assert str(result1.best_bic) == str(result2.best_bic)
