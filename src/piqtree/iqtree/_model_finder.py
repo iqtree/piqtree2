@@ -1,7 +1,6 @@
 """Python wrapper for model finder in the IQ-TREE library."""
 
 import dataclasses
-import re
 from collections.abc import Iterable
 from typing import Any
 
@@ -10,33 +9,10 @@ from _piqtree import iq_model_finder
 from cogent3.app import typing as c3_types
 from cogent3.util.misc import get_object_provenance
 
-from piqtree import model
 from piqtree.iqtree._decorator import iqtree_func
+from piqtree.model import Model, make_model
 
 iq_model_finder = iqtree_func(iq_model_finder, hide_files=True)
-
-_rate_het = re.compile(r"[GR]\d*")
-_freq = re.compile("F[^+]")
-
-
-def _get_model(raw_data: dict[str, Any], key: str) -> model.Model:
-    model_class, components = raw_data[key].split("+", maxsplit=1)
-    model_class = model.get_substitution_model(model_class)
-    invariant_sites = "I" in components
-    if rate_model := _rate_het.search(components):
-        rates_het = rate_model.group()
-    else:
-        rates_het = None
-
-    freq_type_match = _freq.search(components)
-    freq_type = freq_type_match.group() if freq_type_match else "F"
-
-    return model.Model(
-        submod_type=model_class,
-        rate_model=rates_het,
-        freq_type=freq_type,
-        invariant_sites=invariant_sites,
-    )
 
 
 @dataclasses.dataclass(slots=True, frozen=True)
@@ -72,10 +48,10 @@ class ModelResultValue:
 class ModelFinderResult:
     source: str
     raw_data: dataclasses.InitVar[dict[str, Any]]
-    best_aic: model.Model = dataclasses.field(init=False)
-    best_aicc: model.Model = dataclasses.field(init=False)
-    best_bic: model.Model = dataclasses.field(init=False)
-    model_stats: dict[model.Model | str, ModelResultValue] = dataclasses.field(
+    best_aic: Model = dataclasses.field(init=False)
+    best_aicc: Model = dataclasses.field(init=False)
+    best_bic: Model = dataclasses.field(init=False)
+    model_stats: dict[Model | str, ModelResultValue] = dataclasses.field(
         init=False,
         repr=False,
         default_factory=dict,
@@ -87,9 +63,9 @@ class ModelFinderResult:
             for key, val in raw_data.items()
             if not key.startswith(("best_", "initTree")) and isinstance(val, str)
         }
-        self.best_aic = _get_model(raw_data, "best_model_AIC")
-        self.best_aicc = _get_model(raw_data, "best_model_AICc")
-        self.best_bic = _get_model(raw_data, "best_model_BIC")
+        self.best_aic = make_model(raw_data["best_model_AIC"])
+        self.best_aicc = make_model(raw_data["best_model_AICc"])
+        self.best_bic = make_model(raw_data["best_model_BIC"])
 
         self.model_stats[self.best_aic] = ModelResultValue.from_string(
             raw_data[str(self.best_aic)],
