@@ -3,9 +3,9 @@
 from enum import Enum, auto
 
 import cogent3
-from _piqtree2 import iq_random_tree
+from _piqtree import iq_random_tree
 
-from piqtree2.iqtree._decorator import iqtree_func
+from piqtree.iqtree._decorator import iqtree_func
 
 iq_random_tree = iqtree_func(iq_random_tree)
 

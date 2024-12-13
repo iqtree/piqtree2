@@ -11,7 +11,7 @@ Construct `cogent3` alignment and tree objects, then fit branch lengths to a new
 
 ```python
 from cogent3 import load_aligned_seqs, make_tree
-from piqtree2 import Model, fit_tree
+from piqtree import Model, fit_tree
 
 aln = load_aligned_seqs("my_alignment.fasta", moltype="dna")
 tree = make_tree("((Human, Chimpanzee), Rhesus, Mouse);")
@@ -27,8 +27,8 @@ For reproducible results, a random seed may be specified.
 
 ```python
 from cogent3 import load_aligned_seqs, make_tree
-from piqtree2 import Model, fit_tree
-from piqtree2.model import DnaModel
+from piqtree import Model, fit_tree
+from piqtree.model import DnaModel
 
 aln = load_aligned_seqs("my_alignment.fasta", moltype="dna")
 tree = make_tree("((Human, Chimpanzee), Rhesus, Mouse);")
@@ -48,8 +48,8 @@ then IQ-TREE attempts to determine the optimal number of threads.
 
 ```python
 from cogent3 import load_aligned_seqs, make_tree
-from piqtree2 import Model, fit_tree
-from piqtree2.model import DnaModel, FreeRateModel
+from piqtree import Model, fit_tree
+from piqtree.model import DnaModel, FreeRateModel
 
 aln = load_aligned_seqs("my_alignment.fasta", moltype="dna")
 tree = make_tree("((Human, Chimpanzee), Rhesus, Mouse);")

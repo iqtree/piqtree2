@@ -1,6 +1,6 @@
 # jc_distances
 
-::: piqtree2.jc_distances
+::: piqtree.jc_distances
 
 ## Usage
 

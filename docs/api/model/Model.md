@@ -1,6 +1,6 @@
 # Model
 
-::: piqtree2.Model
+::: piqtree.Model
 
 ## Usage
 

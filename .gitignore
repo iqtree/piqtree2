@@ -10,8 +10,8 @@
 *.mldist
 *.treefile
 
-# piqtree2 specific ignores
-src/piqtree2/_libiqtree/**/*.a
+# piqtree specific ignores
+src/piqtree/_libiqtree/**/*.a
 
 # docs
 data

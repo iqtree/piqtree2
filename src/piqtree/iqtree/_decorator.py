@@ -10,7 +10,7 @@ from typing import TypeVar
 
 from typing_extensions import ParamSpec
 
-from piqtree2.exceptions import IqTreeError
+from piqtree.exceptions import IqTreeError
 
 Param = ParamSpec("Param")
 RetType = TypeVar("RetType")

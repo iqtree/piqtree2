@@ -1,6 +1,6 @@
 # Quickstart
 
-Want to jump right in to using `piqtree2`? This is the place to be! Here, you can find examples to:
+Want to jump right in to using `piqtree`? This is the place to be! Here, you can find examples to:
 
 - [Construct a maximum likelihood phylogenetic tree.](construct_ml_tree.md)
 - [Fit branch lengths to a tree topology from an alignment.](fit_tree_topology.md)

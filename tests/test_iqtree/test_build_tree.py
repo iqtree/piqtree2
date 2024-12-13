@@ -3,9 +3,9 @@ import re
 import pytest
 from cogent3 import ArrayAlignment, make_tree
 
-import piqtree2
-from piqtree2.exceptions import IqTreeError
-from piqtree2.model import (
+import piqtree
+from piqtree.exceptions import IqTreeError
+from piqtree.model import (
     DiscreteGammaModel,
     DnaModel,
     FreeRateModel,
@@ -32,7 +32,7 @@ def check_build_tree(
         rate_model=rate_model,
     )
 
-    got1 = piqtree2.build_tree(four_otu, model, rand_seed=1)
+    got1 = piqtree.build_tree(four_otu, model, rand_seed=1)
     got1 = got1.unrooted()
     # Check topology
     assert expected.same_topology(got1.unrooted())
@@ -40,7 +40,7 @@ def check_build_tree(
     assert all("length" in v.params for v in got1.get_edge_vector())
 
     # Should be similar for any seed
-    got2 = piqtree2.build_tree(four_otu, model, rand_seed=None)
+    got2 = piqtree.build_tree(four_otu, model, rand_seed=None)
     got2 = got2.unrooted()
     assert expected.same_topology(got2)
     assert all("length" in v.params for v in got2.get_edge_vector())
@@ -89,11 +89,11 @@ def test_rate_model_build_tree(
 
 def test_build_tree_inadequate_bootstrapping(four_otu: ArrayAlignment) -> None:
     with pytest.raises(IqTreeError, match=re.escape("#replicates must be >= 1000")):
-        piqtree2.build_tree(four_otu, Model(DnaModel.GTR), bootstrap_replicates=10)
+        piqtree.build_tree(four_otu, Model(DnaModel.GTR), bootstrap_replicates=10)
 
 
 def test_build_tree_bootstrapping(four_otu: ArrayAlignment) -> None:
-    tree = piqtree2.build_tree(four_otu, Model(DnaModel.GTR), bootstrap_replicates=1000)
+    tree = piqtree.build_tree(four_otu, Model(DnaModel.GTR), bootstrap_replicates=1000)
 
     supported_node = max(tree.children, key=lambda x: len(x.children))
     assert "support" in supported_node.params

@@ -4,7 +4,7 @@ import pickle
 
 from cogent3 import get_app, make_tree
 
-from piqtree2._app import _ALL_APP_NAMES
+from piqtree._app import _ALL_APP_NAMES
 
 
 def test_pickle() -> None:

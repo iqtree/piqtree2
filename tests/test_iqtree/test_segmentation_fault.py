@@ -3,9 +3,9 @@
 import pytest
 from cogent3 import make_aligned_seqs, make_tree
 
-from piqtree2 import TreeGenMode, build_tree, fit_tree, random_trees
-from piqtree2.exceptions import IqTreeError
-from piqtree2.model import DiscreteGammaModel, DnaModel, FreeRateModel, Model
+from piqtree import TreeGenMode, build_tree, fit_tree, random_trees
+from piqtree.exceptions import IqTreeError
+from piqtree.model import DiscreteGammaModel, DnaModel, FreeRateModel, Model
 
 
 def test_two_build_random_trees() -> None:

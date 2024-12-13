@@ -2,7 +2,7 @@ import re
 
 import pytest
 
-from piqtree2.model import AaModel, DnaModel, SubstitutionModel, get_substitution_model
+from piqtree.model import AaModel, DnaModel, SubstitutionModel, get_substitution_model
 
 
 @pytest.mark.parametrize("model_class", [DnaModel, AaModel])

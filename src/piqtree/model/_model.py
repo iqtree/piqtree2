@@ -1,6 +1,6 @@
-from piqtree2.model._freq_type import FreqType, get_freq_type
-from piqtree2.model._rate_type import RateModel, get_rate_type
-from piqtree2.model._substitution_model import SubstitutionModel, get_substitution_model
+from piqtree.model._freq_type import FreqType, get_freq_type
+from piqtree.model._rate_type import RateModel, get_rate_type
+from piqtree.model._substitution_model import SubstitutionModel, get_substitution_model
 
 
 class Model:

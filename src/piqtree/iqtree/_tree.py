@@ -6,12 +6,12 @@ import cogent3
 import cogent3.app.typing as c3_types
 import numpy as np
 import yaml
-from _piqtree2 import iq_build_tree, iq_fit_tree, iq_nj_tree
+from _piqtree import iq_build_tree, iq_fit_tree, iq_nj_tree
 from cogent3 import PhyloNode, make_tree
 
-from piqtree2.exceptions import ParseIqTreeError
-from piqtree2.iqtree._decorator import iqtree_func
-from piqtree2.model import DnaModel, Model
+from piqtree.exceptions import ParseIqTreeError
+from piqtree.iqtree._decorator import iqtree_func
+from piqtree.model import DnaModel, Model
 
 iq_build_tree = iqtree_func(iq_build_tree, hide_files=True)
 iq_fit_tree = iqtree_func(iq_fit_tree, hide_files=True)

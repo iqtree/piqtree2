@@ -89,8 +89,8 @@ int mine() {
   return 42;
 }
 
-PYBIND11_MODULE(_piqtree2, m) {
-  m.doc() = "piqtree2 - Unlock the Power of IQ-TREE 2 with Python!";
+PYBIND11_MODULE(_piqtree, m) {
+  m.doc() = "piqtree - Unlock the Power of IQ-TREE 2 with Python!";
 
   m.attr("__iqtree_version__") = version();
 

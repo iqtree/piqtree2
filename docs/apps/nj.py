@@ -1,10 +1,10 @@
 # %% [markdown]
-# The Neighbour-Joining method uses genetic distances to build a phylogenetic tree. `piqtree2` provides only `piqtree_jc_dists` for this. `cogent3` includes many more methods. The  results of either can be used to build a tree. For divergent sequences we will use Lake's paralinear measure as it accomodates divergent sequence compositions.
+# The Neighbour-Joining method uses genetic distances to build a phylogenetic tree. `piqtree` provides only `piqtree_jc_dists` for this. `cogent3` includes many more methods. The  results of either can be used to build a tree. For divergent sequences we will use Lake's paralinear measure as it accomodates divergent sequence compositions.
 
 # %%
 import cogent3
 
-from piqtree2 import download_dataset
+from piqtree import download_dataset
 
 aln_path = download_dataset("example.phy.gz", dest_dir="data")
 aln = cogent3.load_aligned_seqs(aln_path, moltype="dna", format="phylip")
@@ -32,7 +32,7 @@ tree = nj(dists)
 
 # %% [markdown]
 # > **Warning**
-# > Branch lengths can be negative in the piqtree2 NJ tree. This manifests as branches going backwards!
+# > Branch lengths can be negative in the piqtree NJ tree. This manifests as branches going backwards!
 
 # %%
 tree.get_figure().show()

@@ -1,11 +1,11 @@
-"""cogent3 apps for piqtree2."""
+"""cogent3 apps for piqtree."""
 
 import cogent3
 import cogent3.app.typing as c3_types
 from cogent3.app import composable
 from cogent3.util.misc import extend_docstring_from
 
-from piqtree2 import (
+from piqtree import (
     TreeGenMode,
     build_tree,
     fit_tree,
@@ -14,8 +14,8 @@ from piqtree2 import (
     nj_tree,
     random_trees,
 )
-from piqtree2.iqtree import ModelFinderResult
-from piqtree2.model import Model
+from piqtree.iqtree import ModelFinderResult
+from piqtree.model import Model
 
 
 @composable.define_app

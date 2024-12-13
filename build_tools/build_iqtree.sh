@@ -16,4 +16,4 @@ else
 fi
 
 cd ../..
-mv iqtree2/build/libiqtree2.a src/piqtree2/_libiqtree/
+mv iqtree2/build/libiqtree2.a src/piqtree/_libiqtree/

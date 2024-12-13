@@ -1,6 +1,6 @@
 # fit_tree
 
-::: piqtree2.fit_tree
+::: piqtree.fit_tree
 
 ## Usage
 

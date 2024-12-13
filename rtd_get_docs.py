@@ -12,7 +12,7 @@ import requests
 def download_and_extract_docs() -> None:
     token = os.environ.get("GITHUB_TOKEN")
     headers = {"Authorization": f"token {token}"}
-    api_url = "https://api.github.com/repos/iqtree/piqtree2/actions/runs"
+    api_url = "https://api.github.com/repos/iqtree/piqtree/actions/runs"
     response = requests.get(api_url, headers=headers, timeout=10)
     got = response.json()
     runs = got["workflow_runs"]

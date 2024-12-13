@@ -1,8 +1,8 @@
 # random_trees
 
-::: piqtree2.random_trees
+::: piqtree.random_trees
 
-::: piqtree2.TreeGenMode
+::: piqtree.TreeGenMode
     options:
         show_if_no_docstring: true
 

@@ -17,5 +17,5 @@ runs:
     - uses: actions/cache/restore@v4
       with:
         key: ${{ inputs.cache-key }}
-        path: src/piqtree2/_libiqtree/libiqtree2.a
+        path: src/piqtree/_libiqtree/libiqtree2.a
         fail-on-cache-miss: true

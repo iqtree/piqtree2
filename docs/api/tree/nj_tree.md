@@ -1,6 +1,6 @@
 # nj_tree
 
-::: piqtree2.nj_tree
+::: piqtree.nj_tree
 
 ## Usage
 

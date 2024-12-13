@@ -10,7 +10,7 @@ Make a pairwise distance matrix, then construct a the rapid neighbour-joining tr
 
 ```python
 from cogent3 import load_aligned_seqs
-from piqtree2 import jc_distances, nj_tree
+from piqtree import jc_distances, nj_tree
 
 aln = load_aligned_seqs("my_alignment.fasta", moltype="dna")
 
@@ -25,7 +25,7 @@ tree = nj_tree(distance_matrix)
 
 ```python
 from cogent3 import load_aligned_seqs
-from piqtree2 import nj_tree
+from piqtree import nj_tree
 
 aln = load_aligned_seqs("my_alignment.fasta", moltype="dna")
 
@@ -36,5 +36,5 @@ tree = nj_tree(distance_matrix)
 
 ## See also
 
-- For constructing the JC distance matrix with `piqtree2`, see ["Construct a rapid neighbour-joining tree from a distance matrix"](calculate_jc_distances.md).
+- For constructing the JC distance matrix with `piqtree`, see ["Construct a rapid neighbour-joining tree from a distance matrix"](calculate_jc_distances.md).
 - For constructing a maximum likelihood tree, see ["Construct a maximum likelihood phylogenetic tree"](construct_ml_tree.md).

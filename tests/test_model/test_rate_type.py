@@ -1,6 +1,6 @@
 import pytest
 
-from piqtree2.model import (
+from piqtree.model import (
     DiscreteGammaModel,
     FreeRateModel,
     RateModel,

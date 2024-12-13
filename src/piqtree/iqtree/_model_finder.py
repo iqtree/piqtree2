@@ -6,12 +6,12 @@ from collections.abc import Iterable
 from typing import Any
 
 import yaml
-from _piqtree2 import iq_model_finder
+from _piqtree import iq_model_finder
 from cogent3.app import typing as c3_types
 from cogent3.util.misc import get_object_provenance
 
-from piqtree2 import model
-from piqtree2.iqtree._decorator import iqtree_func
+from piqtree import model
+from piqtree.iqtree._decorator import iqtree_func
 
 iq_model_finder = iqtree_func(iq_model_finder, hide_files=True)
 
@@ -53,7 +53,7 @@ class ModelResultValue:
         Length of the tree (sum of branch lengths).
     """
 
-    lnL: float # noqa: N815
+    lnL: float  # noqa: N815
     nfp: int
     tree_length: float
 
@@ -61,7 +61,7 @@ class ModelResultValue:
     def from_string(cls, val: str) -> "ModelResultValue":
         """Parse the string produced by IQ-TREE model_finder for a given model."""
         try:
-            lnL, nfp, tree_length = val.split() # noqa: N806
+            lnL, nfp, tree_length = val.split()  # noqa: N806
             return cls(lnL=float(lnL), nfp=int(nfp), tree_length=float(tree_length))
         except ValueError as e:
             msg = f"Error parsing string '{val}'"
@@ -76,7 +76,9 @@ class ModelFinderResult:
     best_aicc: model.Model = dataclasses.field(init=False)
     best_bic: model.Model = dataclasses.field(init=False)
     model_stats: dict[model.Model | str, ModelResultValue] = dataclasses.field(
-        init=False, repr=False, default_factory=dict,
+        init=False,
+        repr=False,
+        default_factory=dict,
     )
 
     def __post_init__(self, raw_data: dict[str, Any]) -> None:
@@ -100,9 +102,9 @@ class ModelFinderResult:
         )
 
     def to_rich_dict(self) -> dict[str, Any]:
-        import piqtree2
+        import piqtree
 
-        result = {"version": piqtree2.__version__, "type": get_object_provenance(self)}
+        result = {"version": piqtree.__version__, "type": get_object_provenance(self)}
 
         raw_data = {
             str(model_): f"{stats.lnL} {stats.nfp} {stats.tree_length}"

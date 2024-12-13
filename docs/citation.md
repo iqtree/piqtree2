@@ -1,6 +1,6 @@
 # Citation
 
-Please cite piqtree2 as follows:
+Please cite piqtree as follows:
 
 Bui Quang Minh, Heiko A Schmidt, Olga Chernomor, Dominik Schrempf, Michael D Woodhams, Arndt von Haeseler, Robert Lanfear, IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era, Molecular Biology and Evolution, Volume 37, Issue 5, May 2020, Pages 1530–1534, [10.1093/molbev/msaa015](https://doi.org/10.1093/molbev/msaa015)
 
@@ -30,4 +30,4 @@ Huttley, G. (2021). cogent3: comparative genomics toolkit (2020.12.21). [10.5281
 }
 ```
 
-<!-- ::: piqtree2 -->
+<!-- ::: piqtree -->

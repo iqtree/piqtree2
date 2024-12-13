@@ -4,9 +4,9 @@ from collections.abc import Sequence
 
 import cogent3
 import numpy as np
-from _piqtree2 import iq_robinson_fould
+from _piqtree import iq_robinson_fould
 
-from piqtree2.iqtree._decorator import iqtree_func
+from piqtree.iqtree._decorator import iqtree_func
 
 iq_robinson_fould = iqtree_func(iq_robinson_fould)
 
