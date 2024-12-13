@@ -1,8 +1,8 @@
 import pytest
 from cogent3 import ArrayAlignment, get_app, make_tree
 
-import piqtree2
-from piqtree2 import jc_distances
+import piqtree
+from piqtree import jc_distances
 
 
 def test_piqtree_phylo(four_otu: ArrayAlignment) -> None:
@@ -34,11 +34,11 @@ def test_piqtree_fit(three_otu: ArrayAlignment) -> None:
 
 @pytest.mark.parametrize("num_trees", [1, 10, 20])
 @pytest.mark.parametrize("num_taxa", [10, 50, 100])
-@pytest.mark.parametrize("tree_mode", list(piqtree2.TreeGenMode))
+@pytest.mark.parametrize("tree_mode", list(piqtree.TreeGenMode))
 def test_piqtree_random_trees(
     num_trees: int,
     num_taxa: int,
-    tree_mode: piqtree2.TreeGenMode,
+    tree_mode: piqtree.TreeGenMode,
 ) -> None:
     app = get_app(
         "piqtree_random_trees",
@@ -92,7 +92,7 @@ def test_piqtree_nj(five_otu: ArrayAlignment) -> None:
 
 
 def test_mfinder(five_otu: ArrayAlignment) -> None:
-    from piqtree2.iqtree import ModelFinderResult
+    from piqtree.iqtree import ModelFinderResult
 
     app = get_app("piqtree_mfinder")
     got = app(five_otu)
@@ -100,7 +100,7 @@ def test_mfinder(five_otu: ArrayAlignment) -> None:
 
 
 def test_mfinder_result_roundtrip(five_otu: ArrayAlignment) -> None:
-    from piqtree2.iqtree import ModelFinderResult
+    from piqtree.iqtree import ModelFinderResult
 
     app = get_app("piqtree_mfinder")
     got = app(five_otu)

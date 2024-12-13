@@ -5,9 +5,9 @@ from typing import Literal
 
 from cogent3 import _Table, make_table
 
-from piqtree2.model._freq_type import FreqType
-from piqtree2.model._rate_type import ALL_BASE_RATE_TYPES, get_description
-from piqtree2.model._substitution_model import (
+from piqtree.model._freq_type import FreqType
+from piqtree.model._rate_type import ALL_BASE_RATE_TYPES, get_description
+from piqtree.model._substitution_model import (
     ALL_MODELS_CLASSES,
     AaModel,
     DnaModel,

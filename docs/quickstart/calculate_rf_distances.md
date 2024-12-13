@@ -10,7 +10,7 @@ Construct a collection of cogent3 tree objects, then use [`robinson_foulds`](../
 
 ```python
 from cogent3 import make_tree
-from piqtree2 import robinson_foulds
+from piqtree import robinson_foulds
 
 tree1 = make_tree("(a,b,(c,(d,e)));")
 tree2 = make_tree("(e,b,(c,(d,a)));")

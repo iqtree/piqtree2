@@ -3,8 +3,8 @@ requires = ["setuptools >= 61.0", "pybind11 >= 2.12"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "piqtree2"
-dependencies = ["cogent3", "pyyaml", "requests"]
+name = "piqtree"
+dependencies = ["cogent3>=2024.11.29a2", "pyyaml", "requests"]
 requires-python = ">=3.10, <3.13"
 
 authors = [{name="Gavin Huttley"}, {name="Robert McArthur"}, {name="Bui Quang Minh "}, {name="Richard Morris"}, {name="Thomas Wong"}]
@@ -36,15 +36,15 @@ classifiers = [
 ]
 
 [project.urls]
-Repository = "https://github.com/cogent3/piqtree2"
-Documentation = "https://piqtree2.readthedocs.io"
+Repository = "https://github.com/cogent3/piqtree"
+Documentation = "https://piqtree.readthedocs.io"
 
 
 [project.optional-dependencies]
-dev = ["cibuildwheel", "pybind11", "scriv", "piqtree2[test]", "piqtree2[lint]", "piqtree2[typing]"]
+dev = ["cibuildwheel", "pybind11", "scriv", "piqtree[test]", "piqtree[lint]", "piqtree[typing]"]
 test = ["pytest", "pytest-cov", "nox"]
 lint = ["ruff==0.8.2"]
-typing = ["mypy==1.13.0", "piqtree2[stubs]", "piqtree2[test]"]
+typing = ["mypy==1.13.0", "piqtree[stubs]", "piqtree[test]"]
 stubs = ["types-PyYAML", "types-requests"]
 extra = ["cogent3[extra]"]
 doc = [
@@ -53,7 +53,7 @@ doc = [
     "mkdocs-jupyter",
     "pymdown-extensions",
     "jupytext",
-    "piqtree2[test]",
+    "piqtree[test]",
     "cogent3[extra]",
     "diverse-seq",
     "jupyter",
@@ -61,15 +61,15 @@ doc = [
     ]
 
 [project.entry-points."cogent3.app"]
-piqtree_phylo = "piqtree2._app:piqtree_phylo"
-piqtree_fit = "piqtree2._app:piqtree_fit"
-piqtree_random_trees = "piqtree2._app:piqtree_random_trees"
-piqtree_jc_dists = "piqtree2._app:piqtree_jc_dists"
-piqtree_nj = "piqtree2._app:piqtree_nj"
-piqtree_mfinder = "piqtree2._app:piqtree_mfinder"
+piqtree_phylo = "piqtree._app:piqtree_phylo"
+piqtree_fit = "piqtree._app:piqtree_fit"
+piqtree_random_trees = "piqtree._app:piqtree_random_trees"
+piqtree_jc_dists = "piqtree._app:piqtree_jc_dists"
+piqtree_nj = "piqtree._app:piqtree_nj"
+piqtree_mfinder = "piqtree._app:piqtree_mfinder"
 
 [tool.setuptools.dynamic]
-version = {attr = "piqtree2.__version__"}
+version = {attr = "piqtree.__version__"}
 
 [tool.ruff]
 exclude = [
@@ -146,10 +146,10 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "N803",
     "D"
 ]
-"src/piqtree2/_app/__init__.py" = [
+"src/piqtree/_app/__init__.py" = [
     "N801", # apps follow function naming convention
 ]
-"src/piqtree2/model/_substitution_model.py" = ["N815"] # use IQ-TREE naming scheme
+"src/piqtree/model/_substitution_model.py" = ["N815"] # use IQ-TREE naming scheme
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.
@@ -182,11 +182,11 @@ docstring-code-line-length = "dynamic"
 format="md"
 categories=["Contributors", "ENH", "BUG", "DOC", "Deprecations", "Discontinued"]
 output_file="changelog.md"
-version = "literal: src/piqtree2/__init__.py: __version__"
+version = "literal: src/piqtree/__init__.py: __version__"
 skip_fragments="README.*"
 new_fragment_template="file: changelog.d/templates/new.md.j2"
 entry_title_template="file: changelog.d/templates/title.md.j2"
 
 [[tool.mypy.overrides]]
-module = ['cogent3.*', "_piqtree2"]
+module = ['cogent3.*', "_piqtree"]
 ignore_missing_imports = true

@@ -1,26 +1,26 @@
-# piqtree2
+# piqtree
 
-[![PyPI Version](https://img.shields.io/pypi/v/piqtree2)](https://pypi.org/project/piqtree2/)
-[![Python Version](https://img.shields.io/pypi/pyversions/piqtree2)](https://pypi.org/project/piqtree2/)
-[![License](https://img.shields.io/github/license/iqtree/piqtree2)](https://github.com/iqtree/piqtree2/blob/main/LICENSE)
+[![PyPI Version](https://img.shields.io/pypi/v/piqtree)](https://pypi.org/project/piqtree/)
+[![Python Version](https://img.shields.io/pypi/pyversions/piqtree)](https://pypi.org/project/piqtree/)
+[![License](https://img.shields.io/github/license/iqtree/piqtree)](https://github.com/iqtree/piqtree/blob/main/LICENSE)
 
-[![CI](https://github.com/iqtree/piqtree2/workflows/CI/badge.svg)](https://github.com/iqtree/piqtree2/actions/workflows/ci.yml)
-[![Coverage Status](https://coveralls.io/repos/github/iqtree/piqtree2/badge.svg?branch=main)](https://coveralls.io/github/iqtree/piqtree2?branch=main)
-[![Documentation Status](https://readthedocs.org/projects/piqtree2/badge/?version=latest)](https://piqtree2.readthedocs.io/en/latest/?badge=latest)
+[![CI](https://github.com/iqtree/piqtree/workflows/CI/badge.svg)](https://github.com/iqtree/piqtree/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/iqtree/piqtree/badge.svg?branch=main)](https://coveralls.io/github/iqtree/piqtree?branch=main)
+[![Documentation Status](https://readthedocs.org/projects/piqtree/badge/?version=latest)](https://piqtree.readthedocs.io/en/latest/?badge=latest)
 
-`piqtree2` is a library which allows you use IQ-TREE directly from Python! The interface with python is through [cogent3](https://cogent3.org) objects.
-For usage, please refer to the [documentation](https://piqtree2.readthedocs.io/) or the examples below.
+`piqtree` is a library which allows you use IQ-TREE directly from Python! The interface with python is through [cogent3](https://cogent3.org) objects.
+For usage, please refer to the [documentation](https://piqtree.readthedocs.io/) or the examples below.
 
-If you encounter any problems or have any feature requests feel free to raise an [issue](https://github.com/iqtree/piqtree2/issues)!
+If you encounter any problems or have any feature requests feel free to raise an [issue](https://github.com/iqtree/piqtree/issues)!
 
 ## Examples
 
 ### Phylogenetic Reconstruction
 
 ```python
-from piqtree2 import build_tree
-from piqtree2.model import Model
-from cogent3 import load_aligned_seqs # Included with piqtree2!
+from piqtree import build_tree
+from piqtree.model import Model
+from cogent3 import load_aligned_seqs # Included with piqtree!
 
 # Load Sequences
 aln = load_aligned_seqs("tests/data/example.fasta", moltype="dna")
@@ -40,9 +40,9 @@ print("Log-likelihood:", tree.params["lnL"])
 ### Fit Branch Lengths to Tree Topology
 
 ```python
-from piqtree2 import fit_tree
-from piqtree2.model import Model
-from cogent3 import load_aligned_seqs, make_tree # Included with piqtree2!
+from piqtree import fit_tree
+from piqtree.model import Model
+from cogent3 import load_aligned_seqs, make_tree # Included with piqtree!
 
 # Load Sequences
 aln = load_aligned_seqs("tests/data/example.fasta", moltype="dna")
@@ -61,7 +61,7 @@ print("Log-likelihood:", tree.params["lnL"])
 ### Create a Collection of Random Trees
 
 ```python
-from piqtree2 import TreeGenMode, random_trees
+from piqtree import TreeGenMode, random_trees
 
 num_trees = 3 
 num_taxa = 5
@@ -78,8 +78,8 @@ print(trees) # A tuple of 3 trees with 5 taxa each.
 ### Pairwise Robinson-Foulds Distance between Trees
 
 ```python
-from piqtree2 import robinson_foulds
-from cogent3 import make_tree # Included with piqtree2!
+from piqtree import robinson_foulds
+from cogent3 import make_tree # Included with piqtree!
 
 # Construct trees
 tree1 = make_tree("(a,b,(c,(d,e)));")

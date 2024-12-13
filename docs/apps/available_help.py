@@ -1,5 +1,5 @@
 # %% [markdown]
-# To see the apps that `piqtree2` makes available, use the cogent3 function `available_apps()` as follows.
+# To see the apps that `piqtree` makes available, use the cogent3 function `available_apps()` as follows.
 
 # %%
 from cogent3 import available_apps

@@ -2,10 +2,10 @@ from collections.abc import Sequence
 
 import cogent3.app.typing as c3_types
 import numpy as np
-from _piqtree2 import iq_jc_distances
+from _piqtree import iq_jc_distances
 from cogent3.evolve.fast_distance import DistanceMatrix
 
-from piqtree2.iqtree._decorator import iqtree_func
+from piqtree.iqtree._decorator import iqtree_func
 
 iq_jc_distances = iqtree_func(iq_jc_distances, hide_files=True)
 

@@ -1,4 +1,4 @@
-"""setup for piqtree2."""
+"""setup for piqtree."""
 
 import os
 import platform
@@ -8,7 +8,7 @@ from pathlib import Path
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup
 
-LIBRARY_DIR = "src/piqtree2/_libiqtree"
+LIBRARY_DIR = "src/piqtree/_libiqtree"
 
 
 def get_brew_prefix(package: str) -> Path:
@@ -44,8 +44,8 @@ else:
 
 ext_modules = [
     Pybind11Extension(
-        "_piqtree2",
-        ["src/piqtree2/_libiqtree/_piqtree2.cpp"],
+        "_piqtree",
+        ["src/piqtree/_libiqtree/_piqtree.cpp"],
         library_dirs=[
             *library_dirs,
             LIBRARY_DIR,

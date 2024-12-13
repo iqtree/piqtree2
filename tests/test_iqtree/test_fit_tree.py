@@ -3,8 +3,8 @@ from cogent3 import ArrayAlignment, get_app, make_tree
 from cogent3.app.result import model_result
 from cogent3.core.tree import PhyloNode
 
-import piqtree2
-from piqtree2.model import DnaModel, Model
+import piqtree
+from piqtree.model import DnaModel, Model
 
 
 def check_likelihood(got: PhyloNode, expected: model_result) -> None:
@@ -83,14 +83,14 @@ def test_fit_tree(three_otu: ArrayAlignment, iq_model: DnaModel, c3_model: str) 
     app = get_app("model", c3_model, tree=tree_topology)
     expected = app(three_otu)
 
-    got1 = piqtree2.fit_tree(three_otu, tree_topology, Model(iq_model), rand_seed=1)
+    got1 = piqtree.fit_tree(three_otu, tree_topology, Model(iq_model), rand_seed=1)
     check_likelihood(got1, expected)
     check_motif_probs(got1, expected.tree)
     check_rate_parameters(got1, expected.tree)
     check_branch_lengths(got1, expected.tree)
 
     # Should be within an approximation for any seed
-    got2 = piqtree2.fit_tree(three_otu, tree_topology, Model(iq_model), rand_seed=None)
+    got2 = piqtree.fit_tree(three_otu, tree_topology, Model(iq_model), rand_seed=None)
     check_likelihood(got2, expected)
     check_motif_probs(got2, expected.tree)
     check_rate_parameters(got2, expected.tree)

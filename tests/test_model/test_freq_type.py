@@ -1,6 +1,6 @@
 import pytest
 
-from piqtree2.model import FreqType, get_freq_type
+from piqtree.model import FreqType, get_freq_type
 
 
 def test_number_of_descriptions() -> None:

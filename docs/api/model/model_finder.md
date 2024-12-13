@@ -1,3 +1,3 @@
 # model_finder
 
-::: piqtree2.model_finder
+::: piqtree.model_finder

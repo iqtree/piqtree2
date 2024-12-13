@@ -1,18 +1,18 @@
 import pytest
 
-import piqtree2
-import piqtree2.exceptions
+import piqtree
+import piqtree.exceptions
 
 
 @pytest.mark.parametrize("num_trees", [1, 10, 20])
 @pytest.mark.parametrize("num_taxa", [10, 50, 100])
-@pytest.mark.parametrize("tree_mode", list(piqtree2.TreeGenMode))
+@pytest.mark.parametrize("tree_mode", list(piqtree.TreeGenMode))
 def test_random_trees(
     num_trees: int,
     num_taxa: int,
-    tree_mode: piqtree2.TreeGenMode,
+    tree_mode: piqtree.TreeGenMode,
 ) -> None:
-    trees = piqtree2.random_trees(
+    trees = piqtree.random_trees(
         num_trees,
         num_taxa,
         tree_mode,
@@ -26,13 +26,13 @@ def test_random_trees(
 
 @pytest.mark.parametrize("num_trees", [1, 10, 20])
 @pytest.mark.parametrize("num_taxa", [10, 50, 100])
-@pytest.mark.parametrize("tree_mode", list(piqtree2.TreeGenMode))
+@pytest.mark.parametrize("tree_mode", list(piqtree.TreeGenMode))
 def test_random_trees_no_seed(
     num_taxa: int,
-    tree_mode: piqtree2.TreeGenMode,
+    tree_mode: piqtree.TreeGenMode,
     num_trees: int,
 ) -> None:
-    trees = piqtree2.random_trees(
+    trees = piqtree.random_trees(
         num_trees,
         num_taxa,
         tree_mode,
@@ -44,13 +44,13 @@ def test_random_trees_no_seed(
 
 
 @pytest.mark.parametrize("num_taxa", [-1, 0, 1, 2])
-@pytest.mark.parametrize("tree_mode", list(piqtree2.TreeGenMode))
+@pytest.mark.parametrize("tree_mode", list(piqtree.TreeGenMode))
 def test_invalid_taxa(
     num_taxa: int,
-    tree_mode: piqtree2.TreeGenMode,
+    tree_mode: piqtree.TreeGenMode,
 ) -> None:
-    with pytest.raises(piqtree2.exceptions.IqTreeError):
-        _ = piqtree2.random_trees(
+    with pytest.raises(piqtree.exceptions.IqTreeError):
+        _ = piqtree.random_trees(
             2,
             num_taxa,
             tree_mode,

@@ -4,8 +4,8 @@ from typing import Any
 import pytest
 from cogent3 import make_tree
 
-from piqtree2.exceptions import ParseIqTreeError
-from piqtree2.iqtree._tree import _process_tree_yaml, _tree_equal
+from piqtree.exceptions import ParseIqTreeError
+from piqtree.iqtree._tree import _process_tree_yaml, _tree_equal
 
 
 @pytest.fixture

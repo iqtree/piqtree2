@@ -1,6 +1,6 @@
 # FreqType
 
-::: piqtree2.model.FreqType
+::: piqtree.model.FreqType
     options:
         show_if_no_docstring: true
 

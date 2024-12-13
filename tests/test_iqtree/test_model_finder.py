@@ -1,6 +1,6 @@
 import pytest
 
-from piqtree2.iqtree._model_finder import ModelFinderResult, ModelResultValue
+from piqtree.iqtree._model_finder import ModelFinderResult, ModelResultValue
 
 
 def test_model_result_value_from_string() -> None:

@@ -1,6 +1,6 @@
 # robinson_foulds
 
-::: piqtree2.robinson_foulds
+::: piqtree.robinson_foulds
 
 ## Usage
 

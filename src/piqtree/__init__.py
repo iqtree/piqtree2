@@ -1,9 +1,9 @@
-"""piqtree2 - access the power of IQ-TREE within Python."""
+"""piqtree - access the power of IQ-TREE within Python."""
 
-from _piqtree2 import __iqtree_version__
+from _piqtree import __iqtree_version__
 
-from piqtree2._data import dataset_names, download_dataset
-from piqtree2.iqtree import (
+from piqtree._data import dataset_names, download_dataset
+from piqtree.iqtree import (
     TreeGenMode,
     build_tree,
     fit_tree,
@@ -13,7 +13,7 @@ from piqtree2.iqtree import (
     random_trees,
     robinson_foulds,
 )
-from piqtree2.model import (
+from piqtree.model import (
     Model,
     available_freq_type,
     available_models,

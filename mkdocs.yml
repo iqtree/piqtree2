@@ -1,7 +1,7 @@
-site_name: piqtree2
-site_url: "https://github.com/iqtree/piqtree2"
+site_name: piqtree
+site_url: "https://github.com/iqtree/piqtree"
 site_author: "Gavin Huttley"
-repo_url: "https://github.com/iqtree/piqtree2"
+repo_url: "https://github.com/iqtree/piqtree"
 repo_name: 'GitHub'
 theme:
     name: material

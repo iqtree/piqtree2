@@ -3,7 +3,7 @@
 
 
 # %%
-from piqtree2 import available_rate_type
+from piqtree import available_rate_type
 
 available_rate_type()
 
@@ -12,7 +12,7 @@ available_rate_type()
 
 # %% tags=hide_code
 
-from piqtree2 import available_freq_type
+from piqtree import available_freq_type
 
 available_freq_type()
 
@@ -25,6 +25,6 @@ available_freq_type()
 
 
 # %%
-from piqtree2 import available_models
+from piqtree import available_models
 
 available_models()

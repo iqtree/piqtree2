@@ -1,8 +1,8 @@
 # RateModel
 
-::: piqtree2.model.DiscreteGammaModel
+::: piqtree.model.DiscreteGammaModel
 
-::: piqtree2.model.FreeRateModel
+::: piqtree.model.FreeRateModel
 
 ## Usage
 

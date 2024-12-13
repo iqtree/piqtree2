@@ -1,4 +1,4 @@
-"""Contains piqtree2 exceptions."""
+"""Contains piqtree exceptions."""
 
 
 class IqTreeError(Exception):

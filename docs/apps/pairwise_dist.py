@@ -4,7 +4,7 @@
 # %%
 import cogent3
 
-from piqtree2 import download_dataset
+from piqtree import download_dataset
 
 aln_path = download_dataset("example.phy.gz", dest_dir="data")
 aln = cogent3.load_aligned_seqs(aln_path, moltype="dna", format="phylip")

@@ -23,7 +23,7 @@ runs:
       id: cache
       with:
         key: libiqtree-${{ inputs.os }}-${{ steps.iqtree2-sha.outputs.iqtree2-sha }}
-        path: src/piqtree2/_libiqtree/libiqtree2.a
+        path: src/piqtree/_libiqtree/libiqtree2.a
         lookup-only: true
 
     - name: Build IQ-TREE

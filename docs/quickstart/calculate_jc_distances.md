@@ -11,7 +11,7 @@ Construct a `cogent3` alignment object, then calculate the pairwise JC distance 
 
 ```python
 from cogent3 import load_aligned_seqs
-from piqtree2 import jc_distances
+from piqtree import jc_distances
 
 aln = load_aligned_seqs("my_alignment.fasta", moltype="dna")
 
@@ -28,7 +28,7 @@ The number of threads to be used may be specified. By default, or if 0 is specif
 
 ```python
 from cogent3 import load_aligned_seqs
-from piqtree2 import jc_distances
+from piqtree import jc_distances
 
 aln = load_aligned_seqs("my_alignment.fasta", moltype="dna")
 

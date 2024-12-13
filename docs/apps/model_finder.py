@@ -4,7 +4,7 @@
 # %%
 from cogent3 import app_help, get_app, load_aligned_seqs
 
-from piqtree2 import download_dataset
+from piqtree import download_dataset
 
 aln_path = download_dataset("example.phy.gz", dest_dir="data")
 # format argument not required after cogent3 2024.11 release
