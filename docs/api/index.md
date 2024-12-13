@@ -16,6 +16,7 @@
 | [model_finder](model/model_finder.md) | Determine the best-fit model for your data. |
 | [ModelFinderResult](model/ModelFinderResult.md) | Collection of data returned by IQ-TREE's ModelFinder. |
 | [Model](model/Model.md) |  Class for substitution models. |
+| [make_model](model/make_model.md) |  Function to construct Model classes from IQ-TREE strings. |
 | [SubstitutionModel](model/SubstitutionModel.md) | Enums for substitution models. |
 | [FreqType](model/FreqType.md) | Enum for base frequencies. |
 | [RateModel](model/RateModel.md) | Classes for rate heterogeneity. |
