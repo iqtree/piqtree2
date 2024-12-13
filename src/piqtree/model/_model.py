@@ -92,6 +92,18 @@ class Model:
 
 
 def make_model(iqtree_str: str) -> Model:
+    """Convert an IQ-TREE model specification into a Model class.
+
+    Parameters
+    ----------
+    iqtree_str : str
+        The IQ-TREE model string.
+
+    Returns
+    -------
+    Model
+        The equivalent Model class.
+    """
     if "+" not in iqtree_str:
         return Model(iqtree_str)
 
