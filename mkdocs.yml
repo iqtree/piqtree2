@@ -61,7 +61,9 @@ nav:
       - api/tree/random_trees.md
     - Substitution Models:
       - api/model/model_finder.md
+      - api/model/ModelFinderResult.md
       - api/model/Model.md
+      - api/model/make_model.md
       - api/model/SubstitutionModel.md
       - api/model/FreqType.md
       - api/model/RateModel.md
