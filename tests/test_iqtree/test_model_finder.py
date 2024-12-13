@@ -1,6 +1,7 @@
 import pytest
+from cogent3 import ArrayAlignment
 
-from piqtree.iqtree._model_finder import ModelFinderResult, ModelResultValue
+from piqtree.iqtree import ModelFinderResult, ModelResultValue, model_finder
 
 
 def test_model_result_value_from_string() -> None:
@@ -42,3 +43,18 @@ def test_model_finder_result(model: str) -> None:
     assert result.model_stats[model].lnL == 123.45
     assert result.model_stats[model].nfp == 10
     assert result.model_stats[model].tree_length == 0.678
+
+
+def test_model_finder(five_otu: ArrayAlignment) -> None:
+    result1 = model_finder(five_otu, rand_seed=1)
+    result2 = model_finder(five_otu, num_threads=4, rand_seed=1)
+    assert str(result1.best_aic) == str(result2.best_aic)
+    assert str(result1.best_aicc) == str(result2.best_aicc)
+    assert str(result1.best_bic) == str(result2.best_bic)
+
+
+def test_model_finder_restricted_submod(five_otu: ArrayAlignment) -> None:
+    result = model_finder(five_otu, rand_seed=1, model_set={"HKY", "TIM"})
+    assert str(result.best_aic).startswith(("HKY", "TIM"))
+    assert str(result.best_aicc).startswith(("HKY", "TIM"))
+    assert str(result.best_bic).startswith(("HKY", "TIM"))
