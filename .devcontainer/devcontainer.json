@@ -1,6 +1,6 @@
 {
-    "name": "piqtree2 devcontainer",
-    "image": "ghcr.io/cogent3/piqtree2:latest",
+    "name": "piqtree devcontainer",
+    "image": "ghcr.io/iqtree/piqtree:latest",
     "customizations": {
         "vscode": {
             "settings": {
@@ -10,7 +10,12 @@
                         "path": "zsh"
                     }
                 },
-                "python.defaultInterpreterPath": "/home/user/.conda/envs/c312/bin/python"
+                "python.defaultInterpreterPath": "/home/user/.conda/envs/piq-dev/bin/python",
+                "C_Cpp.default.includePath": [
+                    "${workspaceFolder}/**",
+                    "/home/user/.conda/envs/piq-dev/lib/python3.12/site-packages/pybind11/include/",
+                    "/home/user/.conda/envs/piq-dev/include/python3.12/"
+                ]
             },
             "extensions": [
                 "ms-python.python",

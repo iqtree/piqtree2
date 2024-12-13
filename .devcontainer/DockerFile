@@ -3,6 +3,7 @@ FROM continuumio/miniconda3
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
+    btop \
     cmake \
     gdb \
     gh \
@@ -36,26 +37,16 @@ RUN sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highligh
 # Create a new conda environment with Python 3.12 and fix the bug with VS-code terminal showing 2 conda env prompts 
 RUN . /opt/conda/etc/profile.d/conda.sh && \
     conda config --set auto_activate_base False && \
-    /opt/conda/bin/conda create -n c312 python=3.12 -y && \
-    conda activate c312
+    /opt/conda/bin/conda create -n piq-dev python=3.12 -y && \
+    conda activate piq-dev
 
 # Initialize conda for zsh shell
 RUN echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.zshrc
 
-# Clone cogent3 using SSH
-WORKDIR /home/user/repos
-RUN git clone --branch develop https://github.com/cogent3/cogent3.git /home/user/repos/cogent3 
-
 # Install pybind11 in the conda environment
 RUN . /opt/conda/etc/profile.d/conda.sh && \
-    conda activate c312 && \
+    conda activate piq-dev && \
     pip install pybind11
-    
-# Install the cogent3 repository
-RUN . /opt/conda/etc/profile.d/conda.sh && \
-    conda activate c312 && \
-    cd /home/user/repos/cogent3 && \
-    pip install -e . 
 
 # Set up zsh as the default shell
 SHELL ["/bin/zsh", "-c"]
