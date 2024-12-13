@@ -3,7 +3,7 @@ name: Release
 on: [workflow_dispatch]
 
 jobs:
-  build_wheels:
+  build-wheels:
     name: Build Wheels for ${{matrix.platform_id}} on ${{matrix.os}}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -51,9 +51,57 @@ jobs:
           name: cibw-wheels-${{ matrix.platform_id }}
           path: ./wheelhouse/*.whl
   
-  release_test:
+  build-iqtree:
+    name: Fetch or Build IQ-TREE 2 Static Library
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - id: build
+        uses: ./.github/actions/build-iqtree
+        with:
+          os: ubuntu-latest
+    
+    outputs:
+      iqtree2-sha: ${{steps.build.outputs.iqtree2-sha}}
+        
+  build-docs:
+    runs-on: ubuntu-latest
+    needs: build-iqtree
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - uses: ./.github/actions/setup-piqtree
+        with:
+          python-version: "3.12"
+          cache-key: libiqtree-ubuntu-latest-${{ needs.build-iqtree.outputs.iqtree2-sha }}
+      
+      - name: Install Docs Dependencies
+        run: |
+          pip install .[doc]
+
+      - name: Build documentation
+        run: |
+          echo `pwd`
+          mkdocs build
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload documentation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: piqtree-docs-html
+          path: site
+
+  release-test:
     name: Release to Test PyPI
-    needs: build_wheels
+    needs: [build-wheels, build-docs]
     environment: release
     runs-on: ubuntu-latest
     permissions:
@@ -74,7 +122,7 @@ jobs:
   
   release:
     name: Release to PyPI
-    needs: release_test
+    needs: release-test
     environment: release
     runs-on: ubuntu-latest
     permissions:
