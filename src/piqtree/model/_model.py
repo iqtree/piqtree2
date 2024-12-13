@@ -118,7 +118,7 @@ def make_model(iqtree_str: str) -> Model:
                 raise ValueError(msg)
             rate_model = component
         else:
-            msg = f"Model {iqtree_str!r} contains unexpected setting."
+            msg = f"Model {iqtree_str!r} contains unexpected component."
             raise ValueError(msg)
 
     return Model(sub_mod_str, freq_type, rate_model, invariant_sites=invariant_sites)
