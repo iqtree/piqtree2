@@ -12,6 +12,7 @@
 
 ## ENH
 
+- piqtree2 renamed piqtree to support future major releases of IQ-TREE.
 - piqtree now supports multithreading!
 - New function `nj_tree` constructs a rapid neighbour-joining tree from a pairwise distance matrix.
 - New function `model_finder` finds the best model for a given alignment.
@@ -22,6 +23,7 @@
 - Model parameters are now extracted from IQ-TREE where for now possible.
 - `build_tree` now supports ultrafast bootstrapping.
 - `Model` creation is now more robust.
+- Use `piqtree.__iqtree_version__` to see what version of piqtree is being used.
 - See what can now be done in our [new documentation](https://piqtree.readthedocs.io)!
 
 ## DOC
