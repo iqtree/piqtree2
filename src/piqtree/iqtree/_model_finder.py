@@ -46,6 +46,24 @@ class ModelResultValue:
 
 @dataclasses.dataclass(slots=True)
 class ModelFinderResult:
+    """Data returned by ModelFinder.
+
+    Attributes
+    ----------
+    source: str
+        Source of the alignment.
+    raw_data: dict[str, Any]
+        Raw data returned by ModelFinder.
+    best_aic: Model
+        The best AIC model.
+    best_aicc: Model
+        The best AICc model.
+    best_bic: Model
+        The best BIC model.
+    model_stats:
+        Semi-processed representation of raw_data.
+    """
+
     source: str
     raw_data: dataclasses.InitVar[dict[str, Any]]
     best_aic: Model = dataclasses.field(init=False)
@@ -104,6 +122,34 @@ def model_finder(
     rand_seed: int | None = None,
     num_threads: int | None = None,
 ) -> ModelFinderResult | c3_types.SerialisableType:
+    """Find the models of best fit for an alignment.
+
+    _extended_summary_
+
+    Parameters
+    ----------
+    aln : c3_types.AlignedSeqsType
+        The alignment to find the model of best fit for.
+    model_set : Iterable[str] | None, optional
+        Search space for models.
+        Equivalent to IQ-TREE's mset parameter, by default None
+    freq_set : Iterable[str] | None, optional
+        Search space for frequency types.
+        Equivalent to IQ-TREE's mfreq parameter, by default None
+    rate_set : Iterable[str] | None, optional
+        Search space for rate heterogeneity types.
+        Equivalent to IQ-TREE's mrate parameter, by default None
+    rand_seed : int | None, optional
+        The random seed - 0 or None means no seed, by default None.
+    num_threads: int | None, optional
+        Number of threads for IQ-TREE 2 to use, by default None (single-threaded).
+        If 0 is specified, IQ-TREE attempts to find the optimal number of threads.
+
+    Returns
+    -------
+    ModelFinderResult | c3_types.SerialisableType
+        Collection of data returned from IQ-TREE's ModelFinder.
+    """
     source = aln.info.source
     if rand_seed is None:
         rand_seed = 0  # The default rand_seed in IQ-TREE
