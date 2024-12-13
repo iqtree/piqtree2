@@ -14,6 +14,7 @@
 | Name | Summary |
 |------|---------|
 | [model_finder](model/model_finder.md) | Determine the best-fit model for your data. |
+| [ModelFinderResult](model/ModelFinderResult.md) | Collection of data returned by IQ-TREE's ModelFinder. |
 | [Model](model/Model.md) |  Class for substitution models. |
 | [SubstitutionModel](model/SubstitutionModel.md) | Enums for substitution models. |
 | [FreqType](model/FreqType.md) | Enum for base frequencies. |
