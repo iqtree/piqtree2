@@ -72,4 +72,5 @@ tree = build_tree(aln, model, num_threads=4)
 ## See also
 
 - For how to specify a `Model`, see ["Use different kinds of substitution models"](using_substitution_models.md).
+- For selecting the best `Model`, see ["Find the model of best fit with ModelFinder"](using_model_finder.md).
 - For fitting branch lengths to a tree topology see ["Fit branch lengths to a tree topology from an alignment"](fit_tree_topology.md).
