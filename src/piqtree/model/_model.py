@@ -89,3 +89,36 @@ class Model:
 
         """
         return self.rate_type.invariant_sites if self.rate_type else False
+
+
+def make_model(iqtree_str: str) -> Model:
+    if "+" not in iqtree_str:
+        return Model(iqtree_str)
+
+    sub_mod_str, components = iqtree_str.split("+", maxsplit=1)
+
+    freq_type = None
+    invariant_sites = False
+    rate_model = None
+
+    for component in components.split("+"):
+        if component.startswith("F"):
+            if freq_type is not None:
+                msg = f"Model {iqtree_str!r} contains multiple base frequency specifications."
+                raise ValueError(msg)
+            freq_type = component
+        elif component.startswith("I"):
+            if invariant_sites:
+                msg = f"Model {iqtree_str!r} contains multiple specifications for invariant sites."
+                raise ValueError(msg)
+            invariant_sites = True
+        elif component.startswith(("G", "R")):
+            if rate_model is not None:
+                msg = f"Model {iqtree_str!r} contains multiple rate heterogeneity specifications."
+                raise ValueError(msg)
+            rate_model = component
+        else:
+            msg = f"Model {iqtree_str!r} contains unexpected setting."
+            raise ValueError(msg)
+
+    return Model(sub_mod_str, freq_type, rate_model, invariant_sites=invariant_sites)

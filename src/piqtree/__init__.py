@@ -18,6 +18,7 @@ from piqtree.model import (
     available_freq_type,
     available_models,
     available_rate_type,
+    make_model,
 )
 
 __version__ = "0.3.2"
@@ -34,6 +35,7 @@ __all__ = [
     "download_dataset",
     "fit_tree",
     "jc_distances",
+    "make_model",
     "model_finder",
     "nj_tree",
     "random_trees",
